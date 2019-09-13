@@ -50,10 +50,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\TypressLoginPacket\TypressLoginPacket\TypressLoginPacket.csproj">
-      <Project>{93a6e175-66f3-42a5-bb3d-9d9c2f1a7564}</Project>
-      <Name>TypressLoginPacket</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\TypressPacket\TypressPacket\TypressPacket.csproj">
       <Project>{e0139b1f-ccd4-4c16-9738-7923795089c5}</Project>
       <Name>TypressPacket</Name>

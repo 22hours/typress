@@ -1,5 +1,6 @@
 ﻿// NameSpace 선언
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -7,7 +8,6 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
 using TypressPacket;
-using Login;
 
 namespace ServerSideSocket
 {
@@ -25,53 +25,60 @@ namespace ServerSideSocket
 
     class ServerClass
     {
-        public static bool IsLogin = false;
-        public static string Name = null, Group = null;
-
-        public static TcpListener Server = null;
-        public static TcpClient Client = null;
+        public static DataPacket nowPacket = null, packet = null;
+        public static IFormatter formatter = null;
+        public static NetworkStream stream = null;
+        public static Socket server, client;
+        public static byte[] getbyte = new byte[1024];
+        public static byte[] setbyte = new byte[1024];
+        public const int sPort = 5000;
 
 
         [STAThread]
         static void Main(string[] args)
         {
-            Server = new TcpListener(IPAddress.Parse("127.0.0.1"), 13000);
-            Server.Start();
-
 
             while (true)
             {
                 try
                 {
+                    IPAddress serverIP = IPAddress.Parse("127.0.0.1");
+                    IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
+
+                    server = new Socket(
+                      AddressFamily.InterNetwork,
+                      SocketType.Stream, ProtocolType.Tcp);
+
+                    server.Bind(serverEndPoint);
+                    server.Listen(10);
+
                     Console.WriteLine("------------------------");
                     Console.WriteLine("22Hours's Typress Controller.exe \n" +
                         "[ Client Waiting... ]");
                     Console.WriteLine("------------------------");
 
-                    Client = Server.AcceptTcpClient(); // Client wait.
+                    client = server.Accept(); // Client wait.
                     Console.WriteLine("Client 연결되었습니다!");
 
                     while (true)
                     {
                         Console.WriteLine("[ Client\\Login Waiting... ]");
-                        if (IsLogin)
+                        SendIsLogin(); // <- setbyte
+
+                        if (nowPacket != null && nowPacket.IsLogin)
                         {
-                            SendIsLogin();// Client로 로그인 성공 code 보내기.
+                            //Client : TypressUI
                             Console.WriteLine("[ Client\\Login\\Print Waiting... ]");
                             printChk();
                         }
-                        else
+                        else 
                         {
-                            // Client로 로그인 실패 code 보내기.
-                            SendIsLogin();
-
-                            // Client로부터 로그인 값 전달받기
-                            ReceiveLogin();
+                            //Client : LoginUI
+                            ReceiveLogin(); // <- getbyte
                         }
-                         
-                         // 위치가 여기가 맞는지?
+                        getbyte = new byte[1024];
+                        setbyte = new byte[1024];
                     }
-                    // Client.Close(); // 위치가 어디인지?
                 }
                 catch (SocketException socketEx)
                 {
@@ -83,25 +90,42 @@ namespace ServerSideSocket
                 }
                 finally
                 {
+                    client.Close();
+                    stream.Close();
+                    
                     Console.WriteLine("연결이 종료되었습니다.");
-                    Server.Stop();
+                    server.Close();
                 }
             }
         }
 
         public static void SendIsLogin()
         {
+            DataPacket packet = new DataPacket(); 
 
-            DataPacket Packet = new DataPacket();
-            NetworkStream stream = Client.GetStream();
-            IFormatter formatter = new BinaryFormatter();
-            formatter.Binder = new AllowAllAssemblyVersionsDeserializationBinder();
+            if (nowPacket != null && nowPacket.IsLogin == true)  // 이미 로그인 되어있는 경우
+            {
+                packet = nowPacket;
+            }
+            setbyte = ObjectToByteArray(packet);
+            client.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
 
-            formatter.Serialize(stream, Packet);
-            stream.Close();
         }
-        public static void ReceiveLogin()
+        public static void ReceiveLogin() // Packet에 ID, PW만 온다.
         {
+         
+            client.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
+            packet = (DataPacket)ByteArrayToObject(getbyte);
+
+            //DB에 ID와 PW로 접근.
+            //if () Access Fail -> Loop.
+            //if () Access Success
+
+            packet.IsLogin = true;
+            packet.Name = "종원";
+            packet.Group = "F.A.N";
+            packet.Major = "CSIE";
+            nowPacket = packet;
 
         }
         public static bool printChk()
@@ -109,6 +133,29 @@ namespace ServerSideSocket
             // Waiting Printer Ruest ....
             return true;
 
+        }
+        public static byte[] ObjectToByteArray(Object obj)
+        {
+            if (obj == null)
+                return null;
+
+            BinaryFormatter bf = new BinaryFormatter();
+            MemoryStream ms = new MemoryStream();
+            bf.Serialize(ms, obj);
+
+            return ms.ToArray();
+        }
+
+        // Convert a byte array to an Object
+        public static Object ByteArrayToObject(byte[] arrBytes)
+        {
+            MemoryStream memStream = new MemoryStream();
+            BinaryFormatter binForm = new BinaryFormatter();
+            memStream.Write(arrBytes, 0, arrBytes.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            Object obj = (Object)binForm.Deserialize(memStream);
+
+            return obj;
         }
     }
 }
