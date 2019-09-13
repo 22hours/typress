@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typressServer", "typressServer\typressServer.csproj", "{2B391144-1046-424A-90C4-BCE89597B0DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypressPacket", "..\TypressPacket\TypressPacket\TypressPacket.csproj", "{E0139B1F-CCD4-4C16-9738-7923795089C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypressLoginPacket", "..\TypressLoginPacket\TypressLoginPacket\TypressLoginPacket.csproj", "{93A6E175-66F3-42A5-BB3D-9D9C2F1A7564}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B391144-1046-424A-90C4-BCE89597B0DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B391144-1046-424A-90C4-BCE89597B0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B391144-1046-424A-90C4-BCE89597B0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B391144-1046-424A-90C4-BCE89597B0DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0139B1F-CCD4-4C16-9738-7923795089C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0139B1F-CCD4-4C16-9738-7923795089C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0139B1F-CCD4-4C16-9738-7923795089C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0139B1F-CCD4-4C16-9738-7923795089C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93A6E175-66F3-42A5-BB3D-9D9C2F1A7564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93A6E175-66F3-42A5-BB3D-9D9C2F1A7564}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93A6E175-66F3-42A5-BB3D-9D9C2F1A7564}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93A6E175-66F3-42A5-BB3D-9D9C2F1A7564}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {81D2E5B7-A4C8-45A8-B3BE-DA0A9BC9C337}
+	EndGlobalSection
+EndGlobal
