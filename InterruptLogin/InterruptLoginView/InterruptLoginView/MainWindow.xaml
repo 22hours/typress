@@ -1,0 +1,75 @@
+﻿<Window x:Class="InterruptLoginView.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InterruptLoginView"
+        mc:Ignorable="d"
+                        AllowsTransparency="True"
+
+        WindowStyle="none"
+        Background="{x:Null}"
+        ResizeMode="NoResize"
+        Title="MainWindow" Height="373" Width="447.5">
+    <Border BorderBrush="Gray" 
+            BorderThickness="0"
+            Background="White" Margin="5">
+        <Border.Effect>
+            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Gray"></DropShadowEffect>
+        </Border.Effect>
+        <Grid>
+            <StackPanel>
+                <StackPanel Height="76">
+                    <TextBlock Height="57" Text="Login Typress" FontSize="40" FontFamily="Segoe UI Black" Margin="0" Foreground="#FF4285F4" TextAlignment="Center"/>
+                    <StackPanel Height="19">
+                        <TextBlock Text="FAN 출력 보안 시스템" TextAlignment="Center" Background="#FF4285F4" Foreground="White"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Margin="0,0,142,0"/>
+                <StackPanel Height="282" Margin="0,5,0,0">
+                    <StackPanel Height="54" Orientation="Horizontal" Margin="0,20,0,0">
+                        <StackPanel Width="100" Margin="10,0,0,0">
+                            <TextBlock Text="ID" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="#FF333232"/>
+                        </StackPanel>
+                        <Border Width="1" Background="#FFC1BEBE" Height="40" Margin="20,0,0,0"/>
+                        <StackPanel Width="296">
+                            <TextBox x:Name="id" Text="" Height="30" Margin="20,15,0,0" BorderThickness="0,0,0,2" BorderBrush="#FFABB0B5" FontSize="16" Width="252" HorizontalAlignment="Left" />
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Height="54" Orientation="Horizontal" Margin="0,5,10,0">
+                        <StackPanel Width="100" Margin="10,0,0,0">
+                            <TextBlock Text="Password" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="#FF333232"/>
+                        </StackPanel>
+                        <Border Width="1" Background="#FFC1BEBE" Height="40" Margin="20,0,0,0"/>
+                        <StackPanel Width="287">
+                            <PasswordBox x:Name="password"  Height="30" Margin="20,15,0,0" BorderThickness="0,0,0,2" BorderBrush="#FFABB0B5"   FontSize="16" Width="250" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="80" Margin="0" HorizontalAlignment="Left" Width="428">
+                        <Border Background="#FFE84242" Height="40"  BorderThickness="1" CornerRadius="10" Width="170"  Margin="40,0,0,0"  >
+                            <TextBlock><Hyperlink 
+                                        
+                                    TextDecorations="{x:Null}" Foreground="White"><InlineUIContainer>
+                                        <TextBlock TextDecorations="{x:Null}"  Text="Close" HorizontalAlignment="Center" VerticalAlignment="Center" Width="167" TextAlignment="Center" Height="20" Margin="0,9,0,0" FontFamily="Impact" FontSize="18" />
+                                    </InlineUIContainer></Hyperlink></TextBlock>
+                        </Border>
+                        <Border Background="#FF347EF9" Height="40"  BorderThickness="1" CornerRadius="10" Width="170" Margin="30,0,0,0"  >
+                            <TextBlock><Hyperlink  Click="ClickLogin"
+                                        
+                                    TextDecorations="{x:Null}" Foreground="White"><InlineUIContainer>
+                                        <TextBlock TextDecorations="{x:Null}"  Text="Login!" HorizontalAlignment="Center" VerticalAlignment="Center" Width="167" TextAlignment="Center" Height="20" Margin="0,9,0,0" FontFamily="Impact" FontSize="18" />
+                                    </InlineUIContainer></Hyperlink></TextBlock>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Height="71">
+                        <TextBlock Text="인쇄를 하시려면 로그인 하셔야 됩니다." TextAlignment="Center" Height="21" Foreground="#FF757070"></TextBlock>
+                        <TextBlock TextAlignment="Center" Height="19" Foreground="#FF757070"><Run Text="ID/PW 문의 "/><Run Text="FAN 회장 이정환 : "/><Run Text="010.9011.7518"/></TextBlock>
+                        <StackPanel Height="34" Background="#FF383737">
+                        <TextBlock TextAlignment="Center" Height="19" Foreground="#FFE4E3E3" Text="Copyrighted By @22Hours (이종원,이정환,하정구)" FontSize="8" Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
