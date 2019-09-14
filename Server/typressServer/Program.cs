@@ -53,28 +53,34 @@ namespace ServerSideSocket
                     server.Listen(10);
 
                     Console.WriteLine("------------------------");
-                    Console.WriteLine("22Hours's Typress Controller.exe \n" +
+                    Console.WriteLine("22Hours's Typress Controller.exe (Server)\n" +
                         "[ Client Waiting... ]");
                     Console.WriteLine("------------------------");
 
                     client = server.Accept(); // Client wait.
-                    Console.WriteLine("Client 연결되었습니다!");
+                    Console.WriteLine("☆★☆ Client 연결되었습니다! ☆★☆");
 
                     while (true)
                     {
-                        Console.WriteLine("[ Client\\Login Waiting... ]");
-                        SendIsLogin(); // <- setbyte
+                        Console.WriteLine("[ Client\\Login Waiting... \n");
+
+                        Console.WriteLine("Server -> Client : Login 여부를 전송합니다.");
+                        SendPakcetToClient(); // <- setbyte
 
                         if (nowPacket != null && nowPacket.IsLogin)
                         {
+                            Console.WriteLine("--Server에 로그인 O ");
+                            Console.WriteLine("[ Client\\Login\\Typress... ]");
                             //Client : TypressUI
-                            Console.WriteLine("[ Client\\Login\\Print Waiting... ]");
                             printChk();
                         }
                         else 
                         {
+                            Console.WriteLine("--Server에 로그인 X");
+                            Console.WriteLine("--Server는 Client로부터 Packet 수신대기중 ... ");
                             //Client : LoginUI
-                            ReceiveLogin(); // <- getbyte
+
+                            ReceivePacketFromClient(); // <- getbyte
                         }
                         getbyte = new byte[1024];
                         setbyte = new byte[1024];
@@ -99,7 +105,7 @@ namespace ServerSideSocket
             }
         }
 
-        public static void SendIsLogin()
+        public static void SendPakcetToClient()
         {
             DataPacket packet = new DataPacket(); 
 
@@ -111,7 +117,7 @@ namespace ServerSideSocket
             client.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
 
         }
-        public static void ReceiveLogin() // Packet에 ID, PW만 온다.
+        public static void ReceivePacketFromClient() // Packet에 ID, PW만 온다.
         {
          
             client.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
@@ -128,11 +134,11 @@ namespace ServerSideSocket
             nowPacket = packet;
 
         }
-        public static bool printChk()
+        public static void printChk()
         {
             // Waiting Printer Ruest ....
-            return true;
-
+            Console.WriteLine("> Printer 요청 대기중 ... [Enter]");
+            Console.ReadLine();
         }
         public static byte[] ObjectToByteArray(Object obj)
         {

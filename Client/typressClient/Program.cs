@@ -26,8 +26,11 @@ namespace ClientSideSocket
     {
 
         public static Socket socket;
+        public static DataPacket packet;
         public static byte[] getbyte = new byte[1024];
         public static byte[] setbyte = new byte[1024];
+        public static typressClient.TypressUI tpUI = null;
+        public static typressClient.LoginUI lgUI = null;
 
         public const int sPort = 5000;
 
@@ -45,52 +48,61 @@ namespace ClientSideSocket
                         AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
                     Console.WriteLine("-------------------------------");
-                    Console.WriteLine(" 22Hours's Typress Login.exe ");
+                    Console.WriteLine(" 22Hours's Typress Login.exe (Client)");
+                    Console.WriteLine(" [ Server Searching... ]");
                     Console.WriteLine("-------------------------------");
-                    Console.WriteLine(" Please Enter Key... ");
+                    Console.WriteLine(" Please [Enter] Key... ");
 
                     Console.ReadLine();
 
                     socket.Connect(serverEndPoint);
+
+                    Console.WriteLine("★☆★ Server에 연결되었습니다! ★☆★");
                     Console.WriteLine(">> Typress Controller 실행중....");
                     // Server : LoginCode Transmission
                     // View가 뜨기 전
                     while (true)
                     {
-                        Console.WriteLine(">> 로그인 Code 수신대기중...");
-                        socket.Receive(getbyte, 0,
-                          getbyte.Length, SocketFlags.None);
+                        Console.WriteLine("--Server로부터 로그인 Code 수신대기중...");
 
-                        DataPacket packet = (DataPacket)ByteArrayToObject(getbyte);
-                        Console.WriteLine(">> 로그인 Code 수신완료!");
+                        ReceivePacketFromServer();
+                        Console.WriteLine("--Client <- Server 로그인 Code 수신완료!\n");
 
                         // Server : 로그인 되어있음.(로그인 계정정보까지 전달해줬음)
                         // UI : TypressUI
                         if (packet.IsLogin == true)
                         {
+
+                            Console.WriteLine("--Code : 로그인되어있는 상태!");
                             // TypressClient.exe : CreateProcess
-                            typressClient.TypressUI tpUI = new typressClient.TypressUI(packet);
+                            tpUI = new typressClient.TypressUI(packet);
                         }
                         // Server : 로그인 안되어있음.(IsLogin == False)
                         else
                         {
+
+                            Console.WriteLine("--Code : 로그인 안돼있는 상태!");
                             // LoginUI.exe : CreateProcess
-                            typressClient.LoginUI lgUI = new typressClient.LoginUI();
+                            lgUI = new typressClient.LoginUI();
+
+                            SendPacketToServer();
                         }
                         getbyte = new byte[1024];
                         setbyte = new byte[1024];
                     }
-                    socket.Close();
-                    Console.WriteLine("Typress ver 1.0.0 을 종료합니다.");
-                    
                 }
                 catch (SocketException se)
                 {
                     Console.WriteLine("SocketException : {0} \n\n", se.Message.ToString());
+                    socket.Close();
+                    Console.WriteLine("Typress ver 1.0.0 을 종료합니다.");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Exception : {0} \n\n", ex.Message.ToString());
+                    socket.Close();
+                    Console.WriteLine("Typress ver 1.0.0 을 종료합니다.");
+
                 }
             }
         }
@@ -116,6 +128,19 @@ namespace ClientSideSocket
             Object obj = (Object)binForm.Deserialize(memStream);
 
             return obj;
+        }
+        public static void ReceivePacketFromServer()
+        {
+            socket.Receive(getbyte, 0,
+                getbyte.Length, SocketFlags.None);
+
+            packet = (DataPacket)ByteArrayToObject(getbyte);
+        }
+        public static void SendPacketToServer()
+        {
+            DataPacket tp = lgUI.P;
+            setbyte = ObjectToByteArray(tp);
+            socket.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
         }
     }
 }

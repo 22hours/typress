@@ -16,18 +16,21 @@ namespace typressClient
 {
     class LoginUI
     {
-        public static string Id { get; set; }
-        public static string Pw { get; set; }
+        public DataPacket P { get; set; }
+ 
         public LoginUI()
         {
-            DataPacket packet = new DataPacket();
+            DataPacket p = new DataPacket();
             Console.WriteLine("---------Login UI---------");
             Console.WriteLine("> 로그인화면입니다. (0, 0 종료)");
             Console.Write("ID : "); string id = Console.ReadLine();
             Console.Write("PW : "); string pw = Console.ReadLine();
-            Id = id;
-            Pw = pw;
+            p.Id = id;
+            p.Pw = pw;
+            p.IsLogin = true;
+            P = p;
         }
+
     }
     class TypressUI
     {
