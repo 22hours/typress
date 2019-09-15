@@ -8,6 +8,9 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
 using TypressPacket;
+using System.Threading;
+using Nektra.Deviare2;
+using System.Diagnostics;
 
 namespace ServerSideSocket
 {
@@ -59,8 +62,8 @@ namespace ServerSideSocket
 
                     client = server.Accept(); // Client wait.
                     Console.WriteLine("☆★☆ Client 연결되었습니다! ☆★☆");
-
-                    while (true)
+                        
+                        while (true)
                     {
                         Console.WriteLine("[ Client\\Login Waiting... \n");
 
@@ -137,7 +140,8 @@ namespace ServerSideSocket
         public static void printChk()
         {
             // Waiting Printer Ruest ....
-            Console.WriteLine("> Printer 요청 대기중 ... [Enter]");
+            Console.WriteLine("☆★☆ PrintLogger가 시작되었습니다. ☆★☆");
+            PrintLogger PL = new PrintLogger();
             Console.ReadLine();
         }
         public static byte[] ObjectToByteArray(Object obj)
