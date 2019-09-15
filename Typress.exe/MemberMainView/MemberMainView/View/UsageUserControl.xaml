@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="MemberMainView.View.UsageUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MemberMainView.View"
+             mc:Ignorable="d" 
+  d:DesignHeight="617" d:DesignWidth="928">
+    <Grid Background="White">
+        <StackPanel Margin="0,0,0,488">
+            <TextBlock Height="100" Text="Usage Report" FontSize="72" FontFamily="Segoe UI Black" Width="800" Margin="64,10,64,0" Foreground="#FF4285F4"/>
+        </StackPanel>
+        <StackPanel Margin="0,129,0,10">
+            <StackPanel Height="62" Orientation="Horizontal">
+                <Border BorderThickness="0,0,0,1.5" BorderBrush="#FF4285F4" Height="52" Margin="64,0,0,0">
+                    <StackPanel Orientation="Horizontal" Width="800">
+
+                        <TextBlock Text="Total" FontSize="30" FontWeight="Bold" Margin="0,0,400,0" Width="275" FontFamily="NanumGothic"/>
+                        <Border Background="#FF4285F4" Height="41" Margin="10,3,10,0"  BorderThickness="1" CornerRadius="10"  />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <StackPanel Height="143">
+                <Border Height="123" Margin="64,10,64,5" Width="800" Background="#FFFDFDFD" BorderThickness="0,0,0,0">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#FFDAD2D2" Direction="300" RenderingBias="Quality"/>
+                    </Border.Effect>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Width="260" Margin="8,0,0,0">
+                            <Border Background="#FFFF2F68" Height="45" Margin="35,3,45,0"  BorderThickness="1" CornerRadius="10" Width="180"  >
+                                <TextBlock FontWeight="Bold"><Hyperlink 
+                                        
+                                        TextDecorations="{x:Null}" Foreground="White"><InlineUIContainer>
+                                            <TextBlock TextDecorations="{x:Null}"  Text="이번주 사용량" TextAlignment="Center" FontFamily="MV Boli" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Width="226" Height="35" Margin="0,6,0,0" Foreground="White" FontWeight="Normal" />
+                                        </InlineUIContainer></Hyperlink></TextBlock>
+                            </Border>
+                            <TextBlock Text="{Binding week1}" Height="79" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" FontFamily="Impact" FontWeight="Bold" Margin="0,10,0,0" Foreground="#FFFF2F68"/>
+                        </StackPanel>
+                        <StackPanel Background="#FFD4D0D0" Width="2" Height="130"/>
+                        <StackPanel Width="260">
+                            <Border Background="#FFA7284B" Height="45" Margin="35,3,45,0"  BorderThickness="1" CornerRadius="10" Width="180"  >
+                                <TextBlock FontWeight="Bold"><Hyperlink 
+                                        
+                                        TextDecorations="{x:Null}" Foreground="White"><InlineUIContainer>
+                                            <TextBlock TextDecorations="{x:Null}"  Text="지난 2주 사용량" TextAlignment="Center" FontFamily="MV Boli" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Width="226" Height="35" Margin="0,6,0,0" Foreground="White" FontWeight="Normal" />
+                                        </InlineUIContainer></Hyperlink></TextBlock>
+                            </Border>
+                            <TextBlock Text="{Binding week2}" Height="79" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" FontFamily="Impact" FontWeight="Bold" Margin="89.931,10,89.931,0" Foreground="#FFA7284B"/>
+                        </StackPanel>
+                        <StackPanel Background="#FFD4D0D0" Width="2" Height="130"/>
+                        <StackPanel Width="260" Height="123" VerticalAlignment="Bottom">
+                            <Border Background="#FF481624" Height="45" Margin="35,3,45,0"  BorderThickness="1" CornerRadius="10" Width="180"  >
+                                <TextBlock FontWeight="Bold"><Hyperlink 
+                                        
+                                        TextDecorations="{x:Null}" Foreground="White"><InlineUIContainer>
+                                            <TextBlock TextDecorations="{x:Null}"  Text="지난 3주 사용량" TextAlignment="Center" FontFamily="MV Boli" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Width="226" Height="35" Margin="0,6,0,0" Foreground="White" FontWeight="Normal" />
+                                        </InlineUIContainer></Hyperlink></TextBlock>
+                            </Border>
+                            <TextBlock Text="{Binding week3}" Height="79" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" FontFamily="Impact" FontWeight="Bold" Margin="89.931,10,89.931,0" Foreground="#FF481624"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <StackPanel Height="52" Margin="0,10,0,0">
+                <Border BorderThickness="0,0,0,1.5" BorderBrush="#FF4285F4" Height="52" Margin="64,0">
+                    <StackPanel Orientation="Horizontal" Width="800" Margin="0,5,0,0">
+
+                        <TextBlock Text="All Total" FontSize="30" FontWeight="Bold" Margin="0,0,400,0" FontFamily="NanumGothic"/>
+                        <Border Background="#FF4285F4" Height="41" Margin="10,3,10,0"  BorderThickness="1" CornerRadius="10"  />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <StackPanel Height="181">
+                <TextBlock Text="{Binding totalCount}" TextAlignment="Center" FontSize="24"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

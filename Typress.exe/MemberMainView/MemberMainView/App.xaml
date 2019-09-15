@@ -1,0 +1,35 @@
+﻿<Application x:Class="MemberMainView.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MemberMainView"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary 
+            xmlns:local="clr-namespace:MemberMainView"
+     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+            xmlns:uc="clr-namespace:MemberMainView.View"
+           xmlns:vm="clr-namespace:MemberMainView.VM">
+            <ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type vm:ChargeViewModel}">
+                <uc:ChargeUserControl></uc:ChargeUserControl>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:MyPageViewModel}">
+                <uc:MyPageUserControl></uc:MyPageUserControl>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:LicenseViewModel}">
+                <uc:LicenseUserControl></uc:LicenseUserControl>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:UsageViewModel}">
+                <uc:UsageUserControl></uc:UsageUserControl>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:EditViewModel}">
+                <uc:EditUserControl></uc:EditUserControl>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+                <uc:LoginUserControl></uc:LoginUserControl>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
