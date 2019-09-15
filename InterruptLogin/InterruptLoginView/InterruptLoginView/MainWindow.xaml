@@ -28,27 +28,27 @@
                 <StackPanel Margin="0,0,142,0"/>
                 <StackPanel Height="282" Margin="0,5,0,0">
                     <StackPanel Height="54" Orientation="Horizontal" Margin="0,20,0,0">
-                        <StackPanel Width="100" Margin="10,0,0,0">
+                        <StackPanel Width="100" Margin="17,0,0,0">
                             <TextBlock Text="ID" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="#FF333232"/>
                         </StackPanel>
                         <Border Width="1" Background="#FFC1BEBE" Height="40" Margin="20,0,0,0"/>
                         <StackPanel Width="296">
-                            <TextBox x:Name="id" Text="" Height="30" Margin="20,15,0,0" BorderThickness="0,0,0,2" BorderBrush="#FFABB0B5" FontSize="16" Width="252" HorizontalAlignment="Left" />
+                            <TextBox MaxLength="10" x:Name="id" Text="" Height="30" Margin="20,15,0,0" BorderThickness="0,0,0,2" BorderBrush="#FFABB0B5" FontSize="16" Width="252" HorizontalAlignment="Left" />
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Height="54" Orientation="Horizontal" Margin="0,5,10,0">
-                        <StackPanel Width="100" Margin="10,0,0,0">
+                    <StackPanel Height="54" Orientation="Horizontal" Margin="0,5,0,0">
+                        <StackPanel Width="100" Margin="17,0,0,0">
                             <TextBlock Text="Password" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="#FF333232"/>
                         </StackPanel>
                         <Border Width="1" Background="#FFC1BEBE" Height="40" Margin="20,0,0,0"/>
                         <StackPanel Width="287">
-                            <PasswordBox x:Name="password"  Height="30" Margin="20,15,0,0" BorderThickness="0,0,0,2" BorderBrush="#FFABB0B5"   FontSize="16" Width="250" HorizontalAlignment="Left"/>
+                            <PasswordBox MaxLength="10" x:Name="password"  Height="30" Margin="20,15,0,0" BorderThickness="0,0,0,2" BorderBrush="#FFABB0B5"   FontSize="16" Width="250" HorizontalAlignment="Left"/>
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Height="80" Margin="0" HorizontalAlignment="Left" Width="428">
+                    <StackPanel Orientation="Horizontal" Height="69" Margin="0" HorizontalAlignment="Left" Width="438">
                         <Border Background="#FFE84242" Height="40"  BorderThickness="1" CornerRadius="10" Width="170"  Margin="40,0,0,0"  >
                             <TextBlock><Hyperlink 
-                                        
+                                        Click="ClickQuit"
                                     TextDecorations="{x:Null}" Foreground="White"><InlineUIContainer>
                                         <TextBlock TextDecorations="{x:Null}"  Text="Close" HorizontalAlignment="Center" VerticalAlignment="Center" Width="167" TextAlignment="Center" Height="20" Margin="0,9,0,0" FontFamily="Impact" FontSize="18" />
                                     </InlineUIContainer></Hyperlink></TextBlock>
@@ -57,15 +57,15 @@
                             <TextBlock><Hyperlink  Click="ClickLogin"
                                         
                                     TextDecorations="{x:Null}" Foreground="White"><InlineUIContainer>
-                                        <TextBlock TextDecorations="{x:Null}"  Text="Login!" HorizontalAlignment="Center" VerticalAlignment="Center" Width="167" TextAlignment="Center" Height="20" Margin="0,9,0,0" FontFamily="Impact" FontSize="18" />
+                                        <TextBlock TextDecorations="{x:Null}"  Text="Login" HorizontalAlignment="Center" VerticalAlignment="Center" Width="167" TextAlignment="Center" Height="20" Margin="0,9,0,0" FontFamily="Impact" FontSize="18" />
                                     </InlineUIContainer></Hyperlink></TextBlock>
                         </Border>
                     </StackPanel>
-                    <StackPanel Height="71">
+                    <StackPanel Height="81">
                         <TextBlock Text="인쇄를 하시려면 로그인 하셔야 됩니다." TextAlignment="Center" Height="21" Foreground="#FF757070"></TextBlock>
-                        <TextBlock TextAlignment="Center" Height="19" Foreground="#FF757070"><Run Text="ID/PW 문의 "/><Run Text="FAN 회장 이정환 : "/><Run Text="010.9011.7518"/></TextBlock>
-                        <StackPanel Height="34" Background="#FF383737">
-                        <TextBlock TextAlignment="Center" Height="19" Foreground="#FFE4E3E3" Text="Copyrighted By @22Hours (이종원,이정환,하정구)" FontSize="8" Margin="0,10,0,0"/>
+                        <TextBlock TextAlignment="Center" Height="30" Foreground="#FF757070"><Run Text="ID/PW 문의 "/><Run Text="FAN 회장 이정환 : "/><Run Text="010.9011.7518"/></TextBlock>
+                        <StackPanel Height="40" Background="#FF383737">
+                            <TextBlock TextAlignment="Center" Height="19" Foreground="#FFE4E3E3" Text="Copyrighted By @22Hours (이종원,이정환,하정구)" FontSize="8" Margin="0,10,0,0"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

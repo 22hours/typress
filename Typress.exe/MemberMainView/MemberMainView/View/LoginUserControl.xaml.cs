@@ -16,14 +16,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-namespace InterruptLoginView
+using MemberMainView.M;
+
+namespace MemberMainView.View
 {
     /// <summary>
-    /// MainWindow.xaml에 대한 상호 작용 논리
+    /// LoginUserControl.xaml에 대한 상호 작용 논리
     /// </summary>
-    ///
 
-    public partial class MainWindow : Window
+
+    public partial class LoginUserControl : UserControl
     {
         sealed class AllowAllAssemblyVersionsDeserializationBinder : System.Runtime.Serialization.SerializationBinder
         {
@@ -39,22 +41,11 @@ namespace InterruptLoginView
         public static TcpClient Client = null;
         public static NetworkStream Stream = null;
         public static IFormatter formatter = null;
-        public MainWindow()
+        public LoginUserControl()
         {
-            InitializeComponent();
-            this.MouseLeftButtonDown += MoveWindow;
-            this.PreviewKeyDown += new KeyEventHandler(HandleEsc);   
-         }
-        private void HandleEsc(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-                Close();
-        }
-        void MoveWindow(object sender, MouseEventArgs e)
-        {
-            this.DragMove();
-        }
 
+            InitializeComponent();
+        }
         void ClickLogin(object sender, RoutedEventArgs e)
         {
             DataPacket Packet = new DataPacket();
@@ -70,17 +61,13 @@ namespace InterruptLoginView
                 Stream.Close();
 
             }
-            catch ( Exception ea)
+            catch (Exception ea)
             {
                 MessageBox.Show("Server가 현재 동작하지 않습니다.");
             }
             finally
             {
             }
-        }
-        void ClickQuit(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }
