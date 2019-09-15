@@ -78,6 +78,9 @@ namespace InterruptLoginView
             {
             }
         }
-
+        void ClickQuit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
