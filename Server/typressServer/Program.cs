@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Reflection;
 using TypressPacket;
+using MySql.Data.MySqlClient;
 using System.Threading;
 using Nektra.Deviare2;
 using System.Diagnostics;
@@ -63,7 +64,7 @@ namespace ServerSideSocket
                     client = server.Accept(); // Client wait.
                     Console.WriteLine("☆★☆ Client 연결되었습니다! ☆★☆");
                         
-                        while (true)
+                    while (true)
                     {
                         Console.WriteLine("[ Client\\Login Waiting... \n");
 
@@ -122,7 +123,10 @@ namespace ServerSideSocket
         }
         public static void ReceivePacketFromClient() // Packet에 ID, PW만 온다.
         {
-         
+
+            string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
+            MySqlConnection conn = new MySqlConnection(strConn);
+
             client.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
             packet = (DataPacket)ByteArrayToObject(getbyte);
 
@@ -130,11 +134,10 @@ namespace ServerSideSocket
             //if () Access Fail -> Loop.
             //if () Access Success
 
-            packet.IsLogin = true;
-            packet.Name = "종원";
-            packet.Group = "F.A.N";
-            packet.Major = "CSIE";
+            packet = SelectUsingReader(conn, packet);
             nowPacket = packet;
+            if (nowPacket.IsLogin == false)
+                Console.WriteLine("ID/PW가 잘못되었습니다.\n\n");
 
         }
         public static void printChk()
@@ -166,6 +169,31 @@ namespace ServerSideSocket
             Object obj = (Object)binForm.Deserialize(memStream);
 
             return obj;
+        }
+
+        public static DataPacket SelectUsingReader(MySqlConnection cn, DataPacket pk)
+        {
+            DataPacket p = new DataPacket();
+            cn.Open();
+            string sql = "SELECT * FROM typress.members WHERE ID='" + pk.Id + "' AND PW='" + pk.Pw + "';";
+            //string sql = "SELECT * FROM members";
+            MySqlCommand cmd = new MySqlCommand(sql, cn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                //Console.WriteLine("{0}: {1}, {2}", rdr["NAME"], rdr["GROUP"], rdr["MAJOR"]);
+                p.IsLogin = true;
+                p.Id = (string)rdr["ID"];
+                p.Pw = (string)rdr["PW"];
+                p.Name = (string)rdr["NAME"];
+                p.Group = (string)rdr["GROUP"];
+                p.Major = (string)rdr["MAJOR"];
+                p.Money = (int)rdr["MONEY"];
+                p.Memo = (string)rdr["MEMO"];
+                p.JoinDate = (DateTime)rdr["JOINDATE"];
+            }
+            rdr.Close();
+            return p;
         }
     }
 }

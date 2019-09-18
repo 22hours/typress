@@ -32,6 +32,7 @@ namespace ServerSideSocket
             if (_process == null)
             {
                 // MessageBox.Show("Please start \"spoolsv.exe\" before!", "Error");
+                Console.WriteLine("spoolsv.exe가 실행이 안되었습니다.");
                 Environment.Exit(0);
             }
             Thread WaitHook = new Thread(new ThreadStart(PrintLogger_Load));
