@@ -68,13 +68,14 @@ namespace ServerSideSocket
                     {
                         Console.WriteLine("[ Client\\Login Waiting... \n");
 
-                        Console.WriteLine("Server -> Client : Login 여부를 전송합니다.");
-                        SendPakcetToClient(); // <- setbyte
+                        //Console.WriteLine("Server -> Client : Login 여부를 전송합니다.");
+                        //SendPakcetToClient(); // <- setbyte
 
                         if (nowPacket != null && nowPacket.IsLogin)
                         {
                             Console.WriteLine("--Server에 로그인 O ");
                             Console.WriteLine("[ Client\\Login\\Typress... ]");
+                            OpenMainView();
                             //Client : TypressUI
                             printChk();
                         }
@@ -194,6 +195,13 @@ namespace ServerSideSocket
             }
             rdr.Close();
             return p;
+        }
+
+        public static void OpenMainView()
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\Typress.exe\\MemberMainView\\MemberMainView\\bin\\x64\\Release\\MemberMainView.exe";
+            Process.Start(startInfo);
         }
     }
 }
