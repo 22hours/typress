@@ -32,11 +32,12 @@ namespace ServerSideSocket
         public static DataPacket nowPacket = null, packet = null;
         public static IFormatter formatter = null;
         public static NetworkStream stream = null;
-        public static Socket server, client;
+        public static Socket serverLogin, serverMain, clientLogin, clientMain;
         public static byte[] getbyte = new byte[1024];
         public static byte[] setbyte = new byte[1024];
-        public const int sPort = 5000;
-
+        //public const int sPort = 5000;
+        public static Thread PrintHooker = null;
+        public static Thread ServerOpener = null;
 
         [STAThread]
         static void Main(string[] args)
@@ -46,22 +47,24 @@ namespace ServerSideSocket
             {
                 try
                 {
-                    IPAddress serverIP = IPAddress.Parse("127.0.0.1");
-                    IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
-
-                    server = new Socket(
-                      AddressFamily.InterNetwork,
-                      SocketType.Stream, ProtocolType.Tcp);
-
-                    server.Bind(serverEndPoint);
-                    server.Listen(10);
-
                     Console.WriteLine("------------------------");
-                    Console.WriteLine("22Hours's Typress Controller.exe (Server)\n" +
+                    Console.WriteLine("22Hours's Typress");
+                    Console.WriteLine("Controller.exe (PrintHooker)");
+                    PrintHooker = new Thread(new ThreadStart(PrintHookOpen));
+                    PrintHooker.Start();
+
+                    //ServerOpener = new Thread(new ThreadStart(ServerOpen));
+                    //ServerOpener.Start();
+                    ServerOpenLogin((int)5000);
+
+                    
+                    Console.WriteLine("Controller.exe (Server)\n" +
                         "[ Client Waiting... ]");
                     Console.WriteLine("------------------------");
 
-                    client = server.Accept(); // Client wait.
+
+                    clientLogin = serverLogin.Accept();
+
                     Console.WriteLine("☆★☆ Client 연결되었습니다! ☆★☆");
                         
                     while (true)
@@ -75,9 +78,14 @@ namespace ServerSideSocket
                         {
                             Console.WriteLine("--Server에 로그인 O ");
                             Console.WriteLine("[ Client\\Login\\Typress... ]");
+
+                            Thread MainViewController = new Thread(new ParameterizedThreadStart(ServerOpenMain));
+                            MainViewController.Start((int)5001);
+
                             OpenMainView();
+                            SendPacketFromServerToMain();
                             //Client : TypressUI
-                            printChk();
+                            Console.ReadLine();
                         }
                         else 
                         {
@@ -101,13 +109,64 @@ namespace ServerSideSocket
                 }
                 finally
                 {
-                    client.Close();
+                    clientLogin.Close();
                     stream.Close();
                     
                     Console.WriteLine("연결이 종료되었습니다.");
-                    server.Close();
+                    serverLogin.Close();
                 }
             }
+        }
+        public static void SendPacketFromServerToMain()
+        {
+            DataPacket packet = new DataPacket();
+
+            if (nowPacket != null && nowPacket.IsLogin == true)  // 이미 로그인 되어있는 경우
+            {
+                packet = nowPacket;
+            }
+            setbyte = ObjectToByteArray(packet);
+            clientMain.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
+        }
+
+
+        public static void ServerOpenLogin(object port)
+        {
+            IPAddress serverIP = IPAddress.Parse("127.0.0.1");
+            IPEndPoint serverEndPoint = new IPEndPoint(serverIP, (int)port);
+
+            serverLogin = new Socket(
+              AddressFamily.InterNetwork,
+              SocketType.Stream, ProtocolType.Tcp);
+
+            serverLogin.Bind(serverEndPoint);
+            serverLogin.Listen(10);
+            Console.WriteLine("****서버대기중*****");
+        }
+
+        public static void ServerOpenMain(object port)
+        {
+            IPAddress serverIP = IPAddress.Parse("127.0.0.1");
+            IPEndPoint serverEndPoint = new IPEndPoint(serverIP, (int)port);
+
+            serverMain = new Socket(
+              AddressFamily.InterNetwork,
+              SocketType.Stream, ProtocolType.Tcp);
+
+            serverMain.Bind(serverEndPoint);
+            serverMain.Listen(10);
+            Console.WriteLine("****서버대기중*****");
+            clientMain = serverMain.Accept();
+            Console.WriteLine("Complete!");
+        }
+
+
+        public static void PrintHookOpen()
+        {
+            // Waiting Printer Ruest ....
+            Console.WriteLine("☆★☆ PrintLogger가 시작되었습니다. ☆★☆\n");
+            PrintLogger PL = new PrintLogger();
+            Console.ReadLine();
         }
 
         public static void SendPakcetToClient()
@@ -119,7 +178,7 @@ namespace ServerSideSocket
                 packet = nowPacket;
             }
             setbyte = ObjectToByteArray(packet);
-            client.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
+            clientLogin.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
 
         }
         public static void ReceivePacketFromClient() // Packet에 ID, PW만 온다.
@@ -128,7 +187,7 @@ namespace ServerSideSocket
             string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
             MySqlConnection conn = new MySqlConnection(strConn);
 
-            client.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
+            clientLogin.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
             packet = (DataPacket)ByteArrayToObject(getbyte);
 
             //DB에 ID와 PW로 접근.
@@ -141,13 +200,7 @@ namespace ServerSideSocket
                 Console.WriteLine("ID/PW가 잘못되었습니다.\n\n");
 
         }
-        public static void printChk()
-        {
-            // Waiting Printer Ruest ....
-            Console.WriteLine("☆★☆ PrintLogger가 시작되었습니다. ☆★☆");
-            PrintLogger PL = new PrintLogger();
-            Console.ReadLine();
-        }
+
         public static byte[] ObjectToByteArray(Object obj)
         {
             if (obj == null)
@@ -182,7 +235,6 @@ namespace ServerSideSocket
             MySqlDataReader rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
-                //Console.WriteLine("{0}: {1}, {2}", rdr["NAME"], rdr["GROUP"], rdr["MAJOR"]);
                 p.IsLogin = true;
                 p.Id = (string)rdr["ID"];
                 p.Pw = (string)rdr["PW"];
@@ -200,7 +252,7 @@ namespace ServerSideSocket
         public static void OpenMainView()
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\Typress.exe\\MemberMainView\\MemberMainView\\bin\\x64\\Release\\MemberMainView.exe";
+            startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\Typress.exe\\MemberMainView\\MemberMainView\\bin\\x64\\Debug\\MemberMainView.exe";
             Process.Start(startInfo);
         }
     }

@@ -9,7 +9,7 @@ namespace TypressPacket
     [Serializable]
     public class DataPacket
     {
-        public bool IsLogin { get; set; } 
+        public bool IsLogin { get; set; }
         public string Id { get; set; }
         public string Pw { get; set; }
         public string Name { get; set; }
@@ -18,6 +18,10 @@ namespace TypressPacket
         public Int32 Money { get; set; }
         public string Memo { get; set; }
         public DateTime JoinDate { get; set; }
+        public Int32 ThreeWeekUsage {get;set;}
+        public Int32 TwoweekUsage { get; set; }
+        public Int32 OneweekUsage { get; set; }
+        public Int32 TotalUsage { get; set; }
 
         public DataPacket() {}
         public DataPacket(string n, string g)

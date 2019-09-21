@@ -71,18 +71,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO.cs" />
     <Compile Include="PrintLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SocketHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\TypressPacket\TypressPacket\TypressPacket.csproj">
-      <Project>{e0139b1f-ccd4-4c16-9738-7923795089c5}</Project>
-      <Name>TypressPacket</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Deviare2">
@@ -103,6 +99,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\github\Typress\Model\TypressPacket\TypressPacket.csproj">
+      <Project>{e0139b1f-ccd4-4c16-9738-7923795089c5}</Project>
+      <Name>TypressPacket</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

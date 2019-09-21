@@ -41,6 +41,7 @@ namespace InterruptLoginView
                 return typeToDeserialize;
             }
         }
+
         public static Socket socket;
         public static DataPacket packet;
         public static byte[] getbyte = new byte[1024];
@@ -88,7 +89,7 @@ namespace InterruptLoginView
             }
             catch ( Exception ea)
             {
-                MessageBox.Show("Server가 현재 동작하지 않습니다.");
+                MessageBox.Show("Server Stopped!");
             }
             finally
             {
@@ -102,12 +103,20 @@ namespace InterruptLoginView
 
         public static void TypressServerConnect()
         {
-            IPAddress serverIP = IPAddress.Parse("127.0.0.1");
-            IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
+            try
+            {
+                IPAddress serverIP = IPAddress.Parse("127.0.0.1");
+                IPEndPoint serverEndPoint = new IPEndPoint(serverIP, sPort);
 
-            socket = new Socket(
-                AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket.Connect(serverEndPoint);
+                socket = new Socket(
+                    AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                socket.Connect(serverEndPoint);
+            }
+            catch(SocketException e)
+            {
+                MessageBox.Show("Server Stopped!");
+
+            }
         }
 
         public static void ReceivePacketFromServer()

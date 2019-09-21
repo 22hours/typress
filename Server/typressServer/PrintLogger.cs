@@ -106,21 +106,20 @@ namespace ServerSideSocket
             // }
 
             cnt++;
-            // if (cnt == 3) MessageBox.Show("Printer 출력전 Interrupt!!");
             if (cnt == 3)
             {
-                OpenView();
-                //MessageBox.Show(strOutput + "\n" + "LoginInterrupt View Excuting...");
-                MessageBox.Show("인쇄 장수 : "+ pManager.PrinterSettings.Copies);
-
+                MessageBox.Show("Printer 출력전 Interrupt!!");
+                OpenView(); // IsLogin == false;
+                            // IsLogin == true
+                            //      ControlBlock();
+                            //      MainView();
             }
             if (cnt == 4) cnt = 0;
-            // textOutput.AppendText(strOutput);
         }
         private void OpenView()
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\Release\\InterruptLoginView.exe";
+            startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe";
             Process.Start(startInfo);
         }
     }

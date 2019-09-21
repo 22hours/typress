@@ -90,7 +90,7 @@
                         <Border Height="119">
                             <StackPanel>
                                 <TextBlock Text="Typress" Height="62" TextAlignment="Center" FontSize="36" FontFamily="Segoe UI Black" Foreground="White" FontWeight="Bold" Margin="0,30,0,0"></TextBlock>
-                                <TextBlock Text="{Binding id}" TextAlignment="Center" Foreground="White"></TextBlock>
+                                <TextBlock Text="Client Only" TextAlignment="Center" Foreground="White"></TextBlock>
                             </StackPanel>
                         </Border>
                         <Border Height="571">
