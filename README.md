@@ -1,8 +1,7 @@
 # Typress
 Typress(활자인쇄소를 영어로 번역함.)
 
-# Server Side
-To-do(19.09.18)
+# To-do(19.09.21)
 
 **Server**<br>
 - 인쇄 요청매수를 반환해온다.
