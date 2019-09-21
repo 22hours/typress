@@ -7,8 +7,8 @@ To-do(19.09.18)
 **Server**<br>
 - 인쇄 요청매수를 반환해온다.
 - Packet.IsLogin에 따라 LoginView or MainView
+- (마일리지) DB 업데이트.
 - Service App
-- 마일리지 차감 후 DB 업데이트.
 
 **Client**<br>
 - Server로부터 받아온 DB값 띄우기
