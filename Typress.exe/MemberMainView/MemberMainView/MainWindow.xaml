@@ -17,6 +17,7 @@
 
         Background="{x:Null}"
         >
+
     <Window.Resources>
         <Style TargetType="{x:Type RadioButton}" x:Key="buttonstripe1">
             <Setter Property="Template">
@@ -70,9 +71,6 @@
         </Style>
     </Window.Resources>
 
-    <Window.DataContext>
-        <vm:MainWindowViewModel/>
-    </Window.DataContext>
 
     <Border BorderBrush="Gray"
             BorderThickness="0"
@@ -90,7 +88,7 @@
                         <Border Height="119">
                             <StackPanel>
                                 <TextBlock Text="Typress" Height="62" TextAlignment="Center" FontSize="36" FontFamily="Segoe UI Black" Foreground="White" FontWeight="Bold" Margin="0,30,0,0"></TextBlock>
-                                <TextBlock Text="Client Only" TextAlignment="Center" Foreground="White"></TextBlock>
+                                <TextBlock Text="{Binding id}" TextAlignment="Center" Foreground="White"></TextBlock>
                             </StackPanel>
                         </Border>
                         <Border Height="571">
@@ -103,7 +101,7 @@
                                         <TextBlock><Hyperlink Command="{Binding LoginPageOn}"
                                         
                                 TextDecorations="{x:Null}" Foreground="White"><InlineUIContainer>
-                                    <TextBlock TextDecorations="{x:Null}"  Text="Login Now" HorizontalAlignment="Center" VerticalAlignment="Center" Width="167" TextAlignment="Center" Height="26" Margin="0,8,0,0" FontFamily="Impact" FontSize="20" Foreground="#FF4285F4" />
+                                    <TextBlock TextDecorations="{x:Null}"  Text="{Binding money}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="167" TextAlignment="Center" Height="26" Margin="0,8,0,0" FontFamily="Impact" FontSize="20" Foreground="#FF4285F4" />
                                 </InlineUIContainer></Hyperlink></TextBlock>
                                     </Border>
                                 </StackPanel>

@@ -5,11 +5,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using TypressPacket;
 
 namespace MemberMainView.VM
 {
     class UsageViewModel : INotifyPropertyChanged
     {
+        DataPacket dp = new DataPacket();
+
         #region property
         private int _week1;
         private int _week2;
@@ -97,124 +101,65 @@ namespace MemberMainView.VM
             return conn;
         }
 
+        #region getCountNow
+        private void getCountNow(string id)
+        {
+            totalCount = dp.TotalUsage;
+        }
+        #endregion
+
         #region getCount7
         private void getCount7(string id)
         {
-            string strConn = strConns;
-            MySqlConnection conn = new MySqlConnection(strConn);
-            try
-            {
-                conn.Open();
-                string sql7 = "select sum(count) from print where date_ts >= date_add(now(), interval-7 day)  AND id = '" + id + "'";
-                MySqlCommand cmd7 = new MySqlCommand(sql7, conn);
-                MySqlDataReader read7 = cmd7.ExecuteReader();
-                while (read7.Read())
-                {
-                    week1 = Int32.Parse(read7.GetString(0));
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
+            week1 = dp.OneweekUsage;
         }
         #endregion
+
 
         #region getCount14
         private void getCount14(string id)
         {
-            string strConn = strConns;
-            MySqlConnection conn = new MySqlConnection(strConn);
-            try
-            {
-                conn.Open();
-                string sql7 = "select sum(count) from print where date_ts >= date_add(now(), interval-14 day)  AND id = '" + id + "'";
-                MySqlCommand cmd7 = new MySqlCommand(sql7, conn);
-                MySqlDataReader read7 = cmd7.ExecuteReader();
-                while (read7.Read())
-                {
-                    week2 = Int32.Parse(read7.GetString(0));
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
+            week2 = dp.TwoweekUsage;
+            week2 += week1;
         }
         #endregion
 
         #region getCount21
         private void getCount21(string id)
         {
-            string strConn = strConns;
-            MySqlConnection conn = new MySqlConnection(strConn);
-            try
-            {
-                conn.Open();
-                string sql7 = "select sum(count) from print where date_ts <= date_add(now(), interval-21 day)  AND id = '" + id + "'";
-                MySqlCommand cmd7 = new MySqlCommand(sql7, conn);
-                MySqlDataReader read7 = cmd7.ExecuteReader();
-                while (read7.Read())
-                {
-                    week3 = Int32.Parse(read7.GetString(0));
-                
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
+            week3 = dp.ThreeWeekUsage;
+            week3 += week2;
         }
         #endregion
 
-   
+
 
         #region getCountAll
         private void getCountAll(string id)
         {
-            string strConn = "Server=localhost; Port=3306; Database=Typress; Uid=root;Pwd=123";
-            MySqlConnection conn = new MySqlConnection(strConn);
-            try
-            {
-                conn.Open();
-                string sql7 = "select sum(count) from print where id = '" + id + "'";
-                MySqlCommand cmd7 = new MySqlCommand(sql7, conn);
-                MySqlDataReader read7 = cmd7.ExecuteReader();
-                while (read7.Read())
-                {
-                    totalCount = Int32.Parse(read7.GetString(0));
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
+            totalCount = dp.TotalUsage;
         }
         #endregion
 
 
         public UsageViewModel()
         {
-            getCount7("1");
-            getCount14("1");
-            getCount21("1");
-            getCountAll("1");
+            // app.xaml.cs is singleton 
+            // so we use dp in app.xaml.cs 
+            dp = ((App)Application.Current).getNowDataPacket();
+            string id = dp.Id;
+
+            // 이번주 사용량
+            getCount7(id);
+
+            // 지난 2주 사용량
+            getCount14(id);
+
+            // 지난 3주 사용량 
+            getCount21(id);
+
+            // total 사용량.
+            getCountAll(id);
         }
     }
 }

@@ -5,12 +5,16 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MemberMainView.M;
+using TypressPacket;
+using System.Windows;
 
 namespace MemberMainView.VM
 {
     class MyPageViewModel: INotifyPropertyChanged
     {
-        public string id = "1";
+        DataPacket dp = new DataPacket();
+        public string id;
         #region property
         private int _weeknow;
         private int _week1;
@@ -99,57 +103,12 @@ namespace MemberMainView.VM
 
         //select sum(count) from typress.print WHERE date_ts >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND date_ts < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY
 
-        #region getCountNow
-        private void getCountNow(string id)
-        {
-            string strConn = strConns;
-            MySqlConnection conn = new MySqlConnection(strConn);
-            try
-            {
-                conn.Open();
-                string sql7 = "select sum(count) from print WHERE date(date_ts) BETWEEN subdate(curdate(), date_format(curdate(),'%w')-1)  AND subdate(curdate(), date_format(curdate(),'%w')-7) AND id = '" + id + "'";
-                MySqlCommand cmd7 = new MySqlCommand(sql7, conn);
-                MySqlDataReader read7 = cmd7.ExecuteReader();
-                while (read7.Read())
-                {
-                    weeknow = Int32.Parse(read7.GetString(0));
-                }
-            }
-            catch (Exception e)
-            {
 
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-        #endregion
 
-        #region getCountNow
+        #region getCount7
         private void getCount7(string id)
         {
-            string strConn = strConns;
-            MySqlConnection conn = new MySqlConnection(strConn);
-            try
-            {
-                conn.Open();
-                string sql7 = "select sum(count) from typress.print WHERE date_ts >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND date_ts < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY AND id = '" + id + "'";
-                MySqlCommand cmd7 = new MySqlCommand(sql7, conn);
-                MySqlDataReader read7 = cmd7.ExecuteReader();
-                while (read7.Read())
-                {
-                    week1 = Int32.Parse(read7.GetString(0));
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
+            week1 = dp.OneweekUsage;
         }
         #endregion
 
@@ -157,95 +116,22 @@ namespace MemberMainView.VM
         #region getCount14
         private void getCount14(string id)
         {
-            string strConn = strConns;
-            MySqlConnection conn = new MySqlConnection(strConn);
-            try
-            {
-                conn.Open();
-                string sql7 = "select sum(count) from print where date_ts <= date_add(now(), interval-14 day)  AND id = '" + id + "'";
-                MySqlCommand cmd7 = new MySqlCommand(sql7, conn);
-                MySqlDataReader read7 = cmd7.ExecuteReader();
-                while (read7.Read())
-                {
-                    week2 = Int32.Parse(read7.GetString(0));
-                }
-            }
-            catch (Exception e)
-            {
+            week2 = dp.TwoweekUsage;
 
-            }
-            finally
-            {
-                conn.Close();
-            }
         }
         #endregion
 
         #region getCount21
         private void getCount21(string id)
         {
-            string strConn = strConns;
-            MySqlConnection conn = new MySqlConnection(strConn);
-            try
-            {
-                conn.Open();
-                string sql7 = "select sum(count) from print where date_ts <= date_add(now(), interval-21 day)  AND id = '" + id + "'";
-                MySqlCommand cmd7 = new MySqlCommand(sql7, conn);
-                MySqlDataReader read7 = cmd7.ExecuteReader();
-                while (read7.Read())
-                {
-                    week3 = Int32.Parse(read7.GetString(0));
-                    week3 -= (week1 + week2);
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
+            week3 = dp.ThreeWeekUsage;
         }
         #endregion
 
         #region getRank
         private void getRank()
         {
-            string strConn = strConns;
-            MySqlConnection conn = new MySqlConnection(strConn);
-            try
-            {
-                conn.Open();
-                string sql7 = "select sum(count),id from typress.print group by id order by sum(count) desc";
-                MySqlCommand cmd7 = new MySqlCommand(sql7, conn);
-                MySqlDataReader read7 = cmd7.ExecuteReader();
-                string[] rankIDlist = new string[3];
-                int[] rankPlist = new int[3];
-                int idx = 0;
-                while (read7.Read())
-                {
-                    if (idx == 3) break;
-                    rankIDlist[idx] = read7[1] as string;
-                    int tmp = read7.GetInt32(0);
-                    rankPlist[idx] = tmp;
-                    idx += 1;
-                }
-                Rank1 = rankIDlist[0];
-                Rank2 = rankIDlist[1];
-                Rank3 = rankIDlist[2];
-                RankP1 = rankPlist[0];
-                RankP2 = rankPlist[1];
-                RankP3 = rankPlist[2];
-            }
-            catch (Exception e)
-            {
-
-            }
-            finally
-            {
-                conn.Close();
-            }
+            //다른방식 필요해보임.
         }
         #endregion
 
@@ -262,35 +148,29 @@ namespace MemberMainView.VM
         #region getCountAll
         private void getCountAll(string id)
         {
-            string strConn = "Server=localhost; Port=3306; Database=Typress; Uid=root;Pwd=123";
-            MySqlConnection conn = new MySqlConnection(strConn);
-            try
-            {
-                conn.Open();
-                string sql7 = "select sum(count) from print where id = '" + id + "'";
-                MySqlCommand cmd7 = new MySqlCommand(sql7, conn);
-                MySqlDataReader read7 = cmd7.ExecuteReader();
-                while (read7.Read())
-                {
-                    totalCount = Int32.Parse(read7.GetString(0));
-                }
-            }
-            catch (Exception e)
-            {
+            totalCount = dp.TotalUsage;
 
-            }
-            finally
-            {
-                conn.Close();
-            }
         }
         #endregion
         public MyPageViewModel()
         {
-            getCountNow(id);
+
+            // app.xaml.cs is singleton 
+            // so we use dp in app.xaml.cs 
+            dp = ((App)Application.Current).getNowDataPacket();
+            string id = dp.Id;
+
+            // this weeks count
             getCount7(id);
+
+            //2 weeks count
             getCount14(id);
+
+            //3weeks count
             getCount21(id);
+
+
+            // total Count
             getCountAll(id);
             getRank();
         }

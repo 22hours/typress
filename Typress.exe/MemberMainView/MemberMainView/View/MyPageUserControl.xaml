@@ -256,7 +256,7 @@
                                                 <TextBlock Height="28" TextAlignment="Center" Margin="0" FontWeight="Bold" FontFamily="Yu Gothic UI Semibold" Foreground="#FF756F6F"><Run Text="이번주"/><LineBreak/><Run/></TextBlock>
                                             </StackPanel>
                                             <StackPanel Width="137" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <TextBlock x:Name="week1" Text="{Binding weeknow}" TextAlignment="Center" FontWeight="Bold" Height="58" FontSize="40"/>
+                                                <TextBlock x:Name="week1" Text="{Binding week1}" TextAlignment="Center" FontWeight="Bold" Height="58" FontSize="40"/>
                                             </StackPanel>
 
                                         </StackPanel>
@@ -273,7 +273,7 @@
                                                 <TextBlock Height="28" Text="저번주" TextAlignment="Center" Margin="0" FontWeight="Bold" FontFamily="Yu Gothic UI Semibold" Foreground="#FF756F6F"/>
                                             </StackPanel>
                                             <StackPanel Width="137" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <TextBlock x:Name="week2" Text="{Binding week1}" TextAlignment="Center" FontWeight="Bold" Height="58" FontSize="40"/>
+                                                <TextBlock x:Name="week2" Text="{Binding week2}" TextAlignment="Center" FontWeight="Bold" Height="58" FontSize="40"/>
                                             </StackPanel>
 
                                         </StackPanel>
