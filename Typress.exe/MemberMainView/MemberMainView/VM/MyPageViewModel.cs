@@ -10,7 +10,7 @@ namespace MemberMainView.VM
 {
     class MyPageViewModel: INotifyPropertyChanged
     {
-        public string id = "1";
+        public string id;
         #region property
         private int _weeknow;
         private int _week1;

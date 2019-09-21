@@ -13,12 +13,23 @@ namespace MemberMainView.VM
 {
     class MainWindowViewModel: INotifyPropertyChanged
     {
+        private string _id;
         private MyPageViewModel _mypage;
         private UsageViewModel _usage;
         private ChargeViewModel _charge;
         private LicenseViewModel _licesnse;
         private EditViewModel _edit;
         private LoginViewModel _login;
+
+        public string id
+        {
+            get { return this._id; }
+            set
+            {
+                this._id = value;
+                OnPropertyChanged("id");
+            }
+        }
 
         public ICommand myPageOn { get; set; }
         public ICommand editPageOn { get; set; }
@@ -31,6 +42,7 @@ namespace MemberMainView.VM
 
         public MainWindowViewModel()
         {
+            id = ((App)Application.Current).getId();
             this._mypage = new MyPageViewModel();
             this._usage = new UsageViewModel();
             this._charge = new ChargeViewModel();
@@ -48,33 +60,51 @@ namespace MemberMainView.VM
         }
         private bool CE(object obj)
         {
+            string nowId = ((App)Application.Current).getId();
+            if (nowId == null)
+                return false;
+            else
             return true;
         }
         private object _contentView;
 
         private void LoadLoginPage(object obj)
         {
-            this.ContentView = this._login;
+            string nowId = ((App)Application.Current).getId();
+            if (nowId == null)
+                this.ContentView = this._login;
+            else
+                this.ContentView = this._login;
         }
         private void LoadMyPage(object obj)
         {
-            this.ContentView = this._mypage;
+            string nowId = ((App)Application.Current).getId();
+
+                this.ContentView = this._mypage;
         }
         private void LoadEditPage(object obj)
         {
-            this.ContentView = this._edit;
+            string nowId = ((App)Application.Current).getId();
+
+                this.ContentView = this._edit;
         }
         private void LoadCharge(object obj)
         {
-            this.ContentView = this._charge;
+            string nowId = ((App)Application.Current).getId();
+
+                this.ContentView = this._charge;
         }
         private void LoadUsage(object obj)
         {
-            this.ContentView = this._usage;
+            string nowId = ((App)Application.Current).getId();
+
+                this.ContentView = this._usage;
         }
         private void LoadLicense(object obj)
         {
-            this.ContentView = this._licesnse;
+            string nowId = ((App)Application.Current).getId();
+
+                this.ContentView = this._licesnse;
         }
         public object ContentView
         {
