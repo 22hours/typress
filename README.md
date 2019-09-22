@@ -4,15 +4,21 @@ Typress(활자인쇄소를 영어로 번역함.)
 # To-do(19.09.21)
 
 **Server**<br>
-- 인쇄 요청매수를 반환해온다. (NumberOfCopies)
+===
+
+- **인쇄 요청매수를 반환해온다. (NumberOfCopies)**
 - Packet.IsLogin에 따라 LoginView or MainView
 - (마일리지) DB 업데이트.
 - Service App
+- 인쇄 후 로그아웃에 대한 usecase(3가지의 갈래, 이어서 인쇄할 경우, 바로 종료하는 경우)
+- 로그인 성공 후 MainView가 아닌 ControlBlock(마일리지차감)
+  - 로그인폼이 꺼지는 시기는 일단 '로그인 성공' 및 '사용자가 창닫기.'
+  - 인쇄가 되는 시점은 ControlBlock에서 마일리지 차감에 성공했을 때.
 
 **Client**<br>
 - Client 기능수정(Login 성공->창 닫기)
 - license page 
-
+- ControlBlock UI
 
 **---> 기본적인 버그찾아내기**<br>
 **---> 배포**
