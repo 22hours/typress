@@ -261,7 +261,7 @@
 
                                         </StackPanel>
                                         <StackPanel Height="38">
-                                            <Slider x:Name="one"  Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center" TickFrequency="37.5" Minimum="0" Maximum="250"  Value="{Binding weeknow}" Margin="0" Height="37" FontFamily="Microsoft Sans Serif" IsEnabled="False"/>
+                                            <Slider x:Name="one"  Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center" TickFrequency="37.5" Minimum="0" Maximum="250"  Value="{Binding week1}" Margin="0" Height="37" FontFamily="Microsoft Sans Serif" IsEnabled="False"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>
@@ -278,7 +278,7 @@
 
                                         </StackPanel>
                                         <StackPanel Height="38">
-                                            <Slider x:Name="two"  Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center" TickFrequency="37.5" Minimum="0" Maximum="250"  Value="{Binding week1}" Margin="0" Height="37" FontFamily="Microsoft Sans Serif" SmallChange="0" LargeChange="0" Cursor="None" IsEnabled="False"/>
+                                            <Slider x:Name="two"  Style="{StaticResource Horizontal_Slider}" VerticalAlignment="Center" TickFrequency="37.5" Minimum="0" Maximum="250"  Value="{Binding week2}" Margin="0" Height="37" FontFamily="Microsoft Sans Serif" SmallChange="0" LargeChange="0" Cursor="None" IsEnabled="False"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>

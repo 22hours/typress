@@ -82,10 +82,11 @@ namespace ServerSideSocket
                             Thread MainViewController = new Thread(new ParameterizedThreadStart(ServerOpenMain));
                             MainViewController.Start((int)5001);
 
+                            Thread.Sleep(1000);
                             OpenMainView();
+                            
                             SendPacketFromServerToMain();
                             //Client : TypressUI
-                            Console.ReadLine();
                         }
                         else 
                         {
@@ -155,9 +156,10 @@ namespace ServerSideSocket
 
             serverMain.Bind(serverEndPoint);
             serverMain.Listen(10);
-            Console.WriteLine("****서버대기중*****");
             clientMain = serverMain.Accept();
+            Console.WriteLine("****서버대기중*****");
             Console.WriteLine("Complete!");
+            SendPacketFromServerToMain();
         }
 
 
@@ -229,31 +231,53 @@ namespace ServerSideSocket
         {
             DataPacket p = new DataPacket();
             cn.Open();
-            string sql = "SELECT * FROM typress.members WHERE ID='" + pk.Id + "' AND PW='" + pk.Pw + "';";
+            string sql1 = "SELECT * FROM typress.members WHERE ID='" + pk.Id + "' AND PW='" + pk.Pw + "';";
+            string sql2 = "SELECT * FROM typress.rank ORDER BY 'USAGE' DESC;";
             //string sql = "SELECT * FROM members";
-            MySqlCommand cmd = new MySqlCommand(sql, cn);
-            MySqlDataReader rdr = cmd.ExecuteReader();
-            while (rdr.Read())
+            MySqlCommand cmd1 = new MySqlCommand(sql1, cn);
+            MySqlCommand cmd2 = new MySqlCommand(sql2, cn);
+            MySqlDataReader rdr1 = cmd1.ExecuteReader();
+
+            bool flag = false;
+            while (rdr1.Read())
             {
+                flag = true;
                 p.IsLogin = true;
-                p.Id = (string)rdr["ID"];
-                p.Pw = (string)rdr["PW"];
-                p.Name = (string)rdr["NAME"];
-                p.Group = (string)rdr["GROUP"];
-                p.Major = (string)rdr["MAJOR"];
-                p.Money = (int)rdr["MONEY"];
-                p.Memo = (string)rdr["MEMO"];
-                p.JoinDate = (DateTime)rdr["JOINDATE"];
+                p.Id = (string)rdr1["ID"];
+                p.Pw = (string)rdr1["PW"];
+                p.Name = (string)rdr1["NAME"];
+                p.Group = (string)rdr1["GROUP"];
+                p.Major = (string)rdr1["MAJOR"];
+                p.Money = (int)rdr1["MONEY"];
+                p.Memo = (string)rdr1["MEMO"];
+                p.JoinDate = (DateTime)rdr1["JOINDATE"];
+                p.ThreeWeekUsage = (int)rdr1["THREEUSAGE"];
+                p.TwoWeekUsage = (int)rdr1["TWOUSAGE"];
+                p.OneWeekUsage = (int)rdr1["ONEUSAGE"];
+                p.TotalUsage = (int)rdr1["TOTALUSAGE"];
             }
-            rdr.Close();
+            rdr1.Close();
+            MySqlDataReader rdr2 = cmd2.ExecuteReader();
+            int i = 0;
+
+            while (rdr2.Read())
+            {
+                p.RankUsage[i] = (int)rdr2["USAGE"];
+                p.RankName[i] = (string)rdr2["NAME"];
+                i++;
+            }
+           
+            rdr2.Close();
             return p;
         }
 
-        public static void OpenMainView()
+        public static int OpenMainView()
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\Typress.exe\\MemberMainView\\MemberMainView\\bin\\x64\\Debug\\MemberMainView.exe";
-            Process.Start(startInfo);
+            Process P = Process.Start(startInfo);
+            P.WaitForExit();
+            return P.ExitCode;
         }
     }
 }

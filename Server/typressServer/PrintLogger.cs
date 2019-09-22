@@ -8,6 +8,7 @@ using Nektra.Deviare2;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing.Printing;
+using System.Management;
 
 namespace ServerSideSocket
 {
@@ -94,33 +95,48 @@ namespace ServerSideSocket
             Output(strDocument);
         }
 
-
-
         private void Output(string strOutput)
         {
-            // if (InvokeRequired)
-            //     BeginInvoke(new OutputDelegate(Output), strOutput);
-            // else
-            // {
-            //     textOutput.AppendText(strOutput);
-            // }
 
             cnt++;
             if (cnt == 3)
             {
-                MessageBox.Show("Printer 출력전 Interrupt!!");
-                OpenView(); // IsLogin == false;
-                            // IsLogin == true
-                            //      ControlBlock();
-                            //      MainView();
+                GetPrintPages();
+                int res = OpenLoginView(); 
+                            //  IsLogin == false; -> OpenLoginView()
+                            //  IsLogin == true;; -> OpenMainView()
+                            //      
+                            //      
             }
             if (cnt == 4) cnt = 0;
         }
-        private void OpenView()
+
+        private int OpenLoginView()
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe";
-            Process.Start(startInfo);
+            Process P = Process.Start(startInfo);
+            P.WaitForExit();
+            return P.ExitCode; // 로그인 성공
+        }
+
+        public static void GetPrintPages()
+        {
+            string searchQuery = "SELECT * FROM Win32_PrintJob";
+            ManagementObjectSearcher searchPrintJobs = new ManagementObjectSearcher(searchQuery);
+            ManagementObjectCollection prntJobCollection = searchPrintJobs.Get();
+            foreach (ManagementObject prntJob in prntJobCollection)
+            {
+                try
+                {
+                    int pages = int.Parse(prntJob.Properties["TotalPages"].Value.ToString());
+                    Console.WriteLine("요청된 프린트 page수 : "+ pages);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Exception getting print jobs: " + ex);
+                }
+            }
         }
     }
 }

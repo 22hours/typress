@@ -17,7 +17,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MemberMainView.M;
-using TypressPacket;
 
 namespace MemberMainView.View
 {
@@ -59,7 +58,8 @@ namespace MemberMainView.View
                 formatter = new BinaryFormatter();
                 formatter.Binder = new AllowAllAssemblyVersionsDeserializationBinder();
                 formatter.Serialize(Stream, Packet);
-                 Stream.Close();
+                Stream.Close();
+
             }
             catch (Exception ea)
             {
@@ -67,7 +67,6 @@ namespace MemberMainView.View
             }
             finally
             {
-                Client.Close();
             }
         }
     }

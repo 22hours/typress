@@ -62,6 +62,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -101,7 +102,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\github\Typress\Model\TypressPacket\TypressPacket.csproj">
+    <ProjectReference Include="..\..\Model\TypressPacket\TypressPacket.csproj">
       <Project>{e0139b1f-ccd4-4c16-9738-7923795089c5}</Project>
       <Name>TypressPacket</Name>
     </ProjectReference>
