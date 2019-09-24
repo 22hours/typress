@@ -1,0 +1,140 @@
+﻿<Window x:Class="InterruptLoginView.View.ControlBlock"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InterruptLoginView.View"
+        mc:Ignorable="d"
+                    AllowsTransparency="True"
+
+        WindowStyle="none"
+        Background="{x:Null}"
+        ResizeMode="NoResize"
+        Title="ControlBlock" Height="700" Width="450.5">
+    <Border BorderBrush="Gray" 
+            BorderThickness="0"
+            Background="White" Margin="5">
+        <Border.Effect>
+            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Gray"></DropShadowEffect>
+        </Border.Effect>
+        <Grid>
+            <StackPanel>
+                <StackPanel Height="76" Background="Black">
+                    <TextBlock Height="57" Text="[ Typress ]" FontSize="40" FontFamily="Segoe UI Black" Margin="0" Foreground="White" TextAlignment="Center" Background="#FF26303D"/>
+                    <StackPanel Height="19">
+                        <TextBlock Text="FAN 출력 보안 시스템" TextAlignment="Center" Background="#FF2B3C5A" Foreground="White"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Margin="0,0,142,0"/>
+                <StackPanel Height="610" Margin="0,5,0,0">
+                    <Border Height="153" Background="White">
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Gray"/>
+                        </Border.Effect>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Height="161">
+                                <StackPanel></StackPanel>
+                                <StackPanel Height="86">
+                                    <Border>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock x:Name="idBox" Text="{Binding Id}" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,20,0" Foreground="#FF333232" Width="200" Height="51" FontWeight="Bold" FontFamily="Segoe UI Black"/>
+                                            <TextBlock x:Name="idBox_Copy" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,15,0,0" Foreground="#FF333232" Width="192" Height="26" FontWeight="Bold" FontFamily="Segoe UI Black" Text="님 안녕하세요!"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Name="idBox1" Text="현재 마일리지" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,20,0" Foreground="#FF333232" Width="200" Height="26" FontWeight="Bold" FontFamily="Segoe UI Black"/>
+                                        <TextBlock x:Name="NowMoneyBox" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,23,0" Foreground="#FF333232" Width="195" Height="28" FontWeight="Bold" FontFamily="Segoe UI Black" Text="{Binding NowMoney}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Width="430">
+                                    <StackPanel Orientation="Horizontal" Height="44" Margin="0" HorizontalAlignment="Left" Width="430">
+                                        <Border Background="#FF2968D0"  BorderThickness="1" CornerRadius="1" Width="430"  >
+                                            <TextBlock Background="#FF2B3C5A" Width="430"><Hyperlink  Command="{Binding ViewMyPage}"
+                                        
+                                                    TextDecorations="{x:Null}" Foreground="White"><InlineUIContainer>
+                                                        <TextBlock TextDecorations="{x:Null}"  Text="View Mypage" HorizontalAlignment="Center" VerticalAlignment="Center" Width="430" TextAlignment="Center" Height="29" Margin="0,5,0,0" FontFamily="Impact" FontSize="24" />
+                                                    </InlineUIContainer></Hyperlink></TextBlock>
+                                        </Border>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border Height="356" Background="White" Margin="0,10,0,0">
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="Gray"/>
+                        </Border.Effect>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Height="54" Orientation="Horizontal">
+                                <StackPanel Width="128" Margin="0">
+                                    <TextBlock Text="총 인쇄 매수" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="#FF333232"/>
+                                </StackPanel>
+                                <StackPanel Width="300" Margin="0">
+                                    <TextBlock x:Name="TotalPrintCountBox" Text="{Binding TotalPrintCount}" Width="200" TextAlignment="Center" FontSize="16" Height="31" Margin="90,15,50,0" Padding="0"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Height="54" Orientation="Horizontal">
+                                <StackPanel Width="128" Margin="0">
+                                    <TextBlock Text="현재 마일리지" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="#FF333232"/>
+                                </StackPanel>
+                                <StackPanel Width="300" Margin="0">
+                                    <TextBlock x:Name="NowMoneyBox2" Text="{Binding NowMoney}" Width="200" TextAlignment="Center" FontSize="16" Height="31" Margin="90,15,50,0" Padding="0"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Height="54" Orientation="Horizontal">
+                                <StackPanel Width="128" Margin="0">
+                                    <TextBlock Text="사용 마일리지" FontSize="16" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="#FF333232" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Width="300" Margin="0">
+                                    <TextBlock x:Name="UseMoneyBox1" Text="{Binding UseMoney}" Width="200" TextAlignment="Center" FontSize="16" Height="31" Margin="90,15,50,0" Padding="0"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <Border Height="1" RenderTransformOrigin="0.5,0.5" Background="#FFB5ACAC">
+                                <Border.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleY="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Border.RenderTransform>
+                            </Border>
+                            <StackPanel Height="54" Orientation="Horizontal">
+                                <StackPanel Width="168" Margin="0">
+                                    <TextBlock Text="사용 후 마일리지" FontSize="18" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" Foreground="#FF333232" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Width="259" Margin="0">
+                                    <TextBlock x:Name="RemainMoneyBox" Text="{Binding RemainMoney}" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,20,10,0" Foreground="Red" Width="199" FontWeight="Bold"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="44" Margin="0,20,0,0" HorizontalAlignment="Left" Width="430">
+                                <Border Background="#FF347EF9" Height="40"  BorderThickness="1" CornerRadius="1" Width="430" Margin="10,0"  >
+                                    <TextBlock Width="430"><Hyperlink  Command="{Binding Print}"
+                                        
+                                            TextDecorations="{x:Null}" Foreground="White"><InlineUIContainer>
+                                                <TextBlock TextDecorations="{x:Null}"  Text="Print" HorizontalAlignment="Center" VerticalAlignment="Center" Width="430" TextAlignment="Center" Height="29" Margin="0,5,0,0" FontFamily="Impact" FontSize="24" />
+                                            </InlineUIContainer></Hyperlink></TextBlock>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="44" Margin="0" HorizontalAlignment="Left" Width="430">
+                                <Border Background="#FF347EF9" Height="40"  BorderThickness="1" CornerRadius="1" Width="430" Margin="10,0"  >
+                                    <TextBlock Background="#FFE83C3C" Width="430"><Hyperlink  Command="{Binding Close}"
+                                        
+                                            TextDecorations="{x:Null}" Foreground="White"><InlineUIContainer>
+                                                <TextBlock TextDecorations="{x:Null}"  Text="Close" HorizontalAlignment="Center" VerticalAlignment="Center" Width="430" TextAlignment="Center" Height="29" Margin="0,5,0,0" FontFamily="Impact" FontSize="24" />
+                                            </InlineUIContainer></Hyperlink></TextBlock>
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel Height="132">
+                        <TextBlock TextAlignment="Center" Height="30" Foreground="#FF757070"><Run Text="ID/PW 문의 "/><Run Text="FAN 회장 이정환 : "/><Run Text="010.9011.7518"/></TextBlock>
+                        <StackPanel Height="74" Background="#FF383737">
+                            <TextBlock TextAlignment="Center" Height="19" Foreground="#FFE4E3E3" Text="Copyrighted By @22Hours (이종원,이정환,하정구)" FontSize="8" Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

@@ -20,6 +20,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
 using TypressPacket;
+using InterruptLoginView.View;
 
 namespace InterruptLoginView
 {
@@ -84,7 +85,12 @@ namespace InterruptLoginView
                 // formatter.Serialize(Stream, Packet);
                 // Stream.Close();
 
-                SendPacketToServer(Packet);
+                // SendPacketToServer(Packet);
+
+                Window cb = new ControlBlock();
+                cb.Show();
+                this.Close();
+                
                 // Receive 받아서, 창 닫기
             }
             catch ( Exception ea)
@@ -93,6 +99,10 @@ namespace InterruptLoginView
             }
             finally
             {
+                // 서버 수신 대기하는 메소드 필요.
+
+
+
                 //this.Close();
             }
         }

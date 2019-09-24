@@ -19,10 +19,10 @@
         </Border.Effect>
         <Grid>
             <StackPanel>
-                <StackPanel Height="76">
-                    <TextBlock Height="57" Text="Login Typress" FontSize="40" FontFamily="Segoe UI Black" Margin="0" Foreground="#FF4285F4" TextAlignment="Center"/>
+                <StackPanel Height="76" Background="#FF17315B">
+                    <TextBlock Height="57" Text="Login Typress" FontSize="40" FontFamily="Segoe UI Black" Margin="0" Foreground="White" TextAlignment="Center" Background="#FF26303D"/>
                     <StackPanel Height="19">
-                        <TextBlock Text="FAN 출력 보안 시스템" TextAlignment="Center" Background="#FF4285F4" Foreground="White"/>
+                        <TextBlock Text="FAN 출력 보안 시스템" TextAlignment="Center" Background="#FF17315B" Foreground="White"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="0,0,142,0"/>
