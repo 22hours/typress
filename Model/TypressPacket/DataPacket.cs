@@ -19,9 +19,20 @@ namespace TypressPacket
         public string Memo { get; set; }
         public DateTime JoinDate { get; set; }
         public Int32 ThreeWeekUsage {get;set;}
-        public Int32 TwoweekUsage { get; set; }
-        public Int32 OneweekUsage { get; set; }
+        public Int32 TwoWeekUsage { get; set; }
+        public Int32 OneWeekUsage { get; set; }
         public Int32 TotalUsage { get; set; }
+
+        public string[] RankName = new string[20];
+        public string[] GetRankName()
+        {
+            return RankName;
+        }
+        public Int32[] RankUsage = new Int32[20];
+        public Int32[] GetRankUsage()
+        {
+            return RankUsage;
+        }
 
         public DataPacket() {}
         public DataPacket(string n, string g)

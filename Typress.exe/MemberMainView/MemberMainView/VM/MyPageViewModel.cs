@@ -11,12 +11,11 @@ using System.Windows;
 
 namespace MemberMainView.VM
 {
-    class MyPageViewModel: INotifyPropertyChanged
+    class MyPageViewModel : INotifyPropertyChanged
     {
-        DataPacket dp = new DataPacket();
-        public string id;
+        TypressPacket.DataPacket dp { get; set; }
+
         #region property
-        private int _weeknow;
         private int _week1;
         private int _week2;
         private int _week3;
@@ -37,18 +36,6 @@ namespace MemberMainView.VM
             {
                 this._totalCount = value;
                 OnPropertyChanged("totalCount");
-            }
-        }
-        public int weeknow
-        {
-            get
-            {
-                return this._weeknow;
-            }
-            set
-            {
-                this._weeknow = value;
-                OnPropertyChanged("weeknow");
             }
         }
         public int week1
@@ -98,7 +85,6 @@ namespace MemberMainView.VM
         public int RankP3 { get => rankP3; set { rankP3 = value; OnPropertyChanged("RankP3 "); } }
 
         #endregion property
-        public string strConns = "Server=localhost; Port=3306; Database=Typress; Uid=root;Pwd=123";
         public event PropertyChangedEventHandler PropertyChanged;
 
         //select sum(count) from typress.print WHERE date_ts >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND date_ts < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY
@@ -108,7 +94,7 @@ namespace MemberMainView.VM
         #region getCount7
         private void getCount7(string id)
         {
-            week1 = dp.OneweekUsage;
+            week1 = dp.TotalUsage - dp.OneWeekUsage;
         }
         #endregion
 
@@ -116,7 +102,7 @@ namespace MemberMainView.VM
         #region getCount14
         private void getCount14(string id)
         {
-            week2 = dp.TwoweekUsage;
+            week2 = dp.OneWeekUsage - dp.TwoWeekUsage;
 
         }
         #endregion
@@ -124,7 +110,7 @@ namespace MemberMainView.VM
         #region getCount21
         private void getCount21(string id)
         {
-            week3 = dp.ThreeWeekUsage;
+            week3 = dp.TwoWeekUsage - dp.ThreeWeekUsage;
         }
         #endregion
 
@@ -132,6 +118,18 @@ namespace MemberMainView.VM
         private void getRank()
         {
             //다른방식 필요해보임.
+            string[] RankName = dp.GetRankName();
+            Int32[] RankUsage = dp.GetRankUsage();
+
+            Array.Sort(RankUsage);
+            Array.Reverse(RankUsage);
+
+            rank1 = RankName[0];
+            rankP1 = RankUsage[0];
+            rank2 = RankName[1];
+            rankP2 = RankUsage[1];
+            rank3 = RankName[2];
+            rankP3 = RankUsage[2];
         }
         #endregion
 
@@ -139,12 +137,7 @@ namespace MemberMainView.VM
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        private MySqlConnection getConn()
-        {
-            string strConn = strConns;
-            MySqlConnection conn = new MySqlConnection(strConn);
-            return conn;
-        }
+
         #region getCountAll
         private void getCountAll(string id)
         {
@@ -169,11 +162,9 @@ namespace MemberMainView.VM
             //3weeks count
             getCount21(id);
 
-
             // total Count
             getCountAll(id);
             getRank();
         }
     }
 }
-

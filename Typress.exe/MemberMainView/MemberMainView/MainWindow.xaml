@@ -17,7 +17,6 @@
 
         Background="{x:Null}"
         >
-
     <Window.Resources>
         <Style TargetType="{x:Type RadioButton}" x:Key="buttonstripe1">
             <Setter Property="Template">
@@ -71,6 +70,9 @@
         </Style>
     </Window.Resources>
 
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
 
     <Border BorderBrush="Gray"
             BorderThickness="0"

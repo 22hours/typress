@@ -12,7 +12,7 @@ namespace MemberMainView.VM
 {
     class UsageViewModel : INotifyPropertyChanged
     {
-        DataPacket dp = new DataPacket();
+        TypressPacket.DataPacket dp { get; set; }
 
         #region property
         private int _week1;
@@ -77,41 +77,23 @@ namespace MemberMainView.VM
         }
 
         public string Rank1 { get => rank1; set { rank1 = value; OnPropertyChanged("Rank1 "); } }
-        public string Rank2 { get => rank2; set { rank1 = value; OnPropertyChanged("Rank2 "); } }
-        public string Rank3 { get => rank3; set { rank1 = value; OnPropertyChanged("Rank3 "); } }
+        public string Rank2 { get => rank2; set { rank2 = value; OnPropertyChanged("Rank2 "); } }
+        public string Rank3 { get => rank3; set { rank3 = value; OnPropertyChanged("Rank3 "); } }
         public int RankP1 { get => rankP1; set { rankP1 = value; OnPropertyChanged("RankP1 "); } }
         public int RankP2 { get => rankP2; set { rankP2 = value; OnPropertyChanged("RankP2 "); } }
         public int RankP3 { get => rankP3; set { rankP3 = value; OnPropertyChanged("RankP3 "); } }
 
         #endregion property
-
-
-        public string strConns = "Server=localhost; Port=3306; Database=Typress; Uid=root;Pwd=123";
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
+        //select sum(count) from typress.print WHERE date_ts >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY AND date_ts < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY
 
-        private MySqlConnection getConn()
-        {
-            string strConn = strConns;
-            MySqlConnection conn = new MySqlConnection(strConn);
-            return conn;
-        }
 
-        #region getCountNow
-        private void getCountNow(string id)
-        {
-            totalCount = dp.TotalUsage;
-        }
-        #endregion
 
         #region getCount7
         private void getCount7(string id)
         {
-            week1 = dp.OneweekUsage;
+            week1 = dp.TotalUsage - dp.OneWeekUsage;
         }
         #endregion
 
@@ -119,47 +101,65 @@ namespace MemberMainView.VM
         #region getCount14
         private void getCount14(string id)
         {
-            week2 = dp.TwoweekUsage;
-            week2 += week1;
+            week2 = dp.OneWeekUsage - dp.TwoWeekUsage;
+
         }
         #endregion
 
         #region getCount21
         private void getCount21(string id)
         {
-            week3 = dp.ThreeWeekUsage;
-            week3 += week2;
+            week3 = dp.TwoWeekUsage - dp.ThreeWeekUsage;
         }
         #endregion
 
+        #region getRank
+        private void getRank()
+        {
+            //다른방식 필요해보임.
+            string[] RankName = dp.GetRankName();
+            Int32[] RankUsage = dp.GetRankUsage();
+            rank1 = RankName[0];
+            rankP1 = RankUsage[0];
+            rank2 = RankName[1];
+            rankP2 = RankUsage[1];
+            rank3 = RankName[2];
+            rankP3 = RankUsage[2];
+        }
+        #endregion
 
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
         #region getCountAll
         private void getCountAll(string id)
         {
             totalCount = dp.TotalUsage;
+
         }
         #endregion
-
-
         public UsageViewModel()
         {
+
             // app.xaml.cs is singleton 
             // so we use dp in app.xaml.cs 
             dp = ((App)Application.Current).getNowDataPacket();
             string id = dp.Id;
 
-            // 이번주 사용량
+            // this weeks count
             getCount7(id);
 
-            // 지난 2주 사용량
+            //2 weeks count
             getCount14(id);
 
-            // 지난 3주 사용량 
+            //3weeks count
             getCount21(id);
 
-            // total 사용량.
+            // total Count
             getCountAll(id);
+            getRank();
         }
     }
 }

@@ -35,6 +35,26 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data">
       <HintPath>bin\MySql.Data.dll</HintPath>
@@ -61,6 +81,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="M\Command.cs" />
+    <Compile Include="M\DataPacket.cs" />
     <Compile Include="View\ChargeUserControl.xaml.cs">
       <DependentUpon>ChargeUserControl.xaml</DependentUpon>
     </Compile>
@@ -166,8 +187,8 @@
     <Resource Include="img\logo2.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Documents\GitHub\Typress\Model\TypressPacket\TypressPacket.csproj">
-      <Project>{E0139B1F-CCD4-4C16-9738-7923795089C5}</Project>
+    <ProjectReference Include="..\..\..\Model\TypressPacket\TypressPacket.csproj">
+      <Project>{e0139b1f-ccd4-4c16-9738-7923795089c5}</Project>
       <Name>TypressPacket</Name>
     </ProjectReference>
   </ItemGroup>

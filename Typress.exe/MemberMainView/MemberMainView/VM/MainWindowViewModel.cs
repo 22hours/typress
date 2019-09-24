@@ -12,9 +12,9 @@ using TypressPacket;
 
 namespace MemberMainView.VM
 {
-    class MainWindowViewModel: INotifyPropertyChanged
+    class MainWindowViewModel : INotifyPropertyChanged
     {
-        DataPacket dp = new DataPacket();
+        TypressPacket.DataPacket dp = new TypressPacket.DataPacket();
         private string _id;
         private string _money;
 
@@ -45,6 +45,7 @@ namespace MemberMainView.VM
             }
         }
 
+
         public ICommand myPageOn { get; set; }
         public ICommand editPageOn { get; set; }
         public ICommand usagePageOn { get; set; }
@@ -57,10 +58,11 @@ namespace MemberMainView.VM
         public MainWindowViewModel()
         {
             dp = ((App)Application.Current).getNowDataPacket();
-            id = dp.Id;
+            id = dp.Name;
             id += "님 안녕하세요!";
             money += dp.Money.ToString();
             money += "마일리지";
+
             this._mypage = new MyPageViewModel();
             this._usage = new UsageViewModel();
             this._charge = new ChargeViewModel();
@@ -72,53 +74,53 @@ namespace MemberMainView.VM
             myPageOn = new Command(LoadMyPage, CE);
             usagePageOn = new Command(LoadUsage, CE);
             chargePageOn = new Command(LoadCharge, CE);
-            licensePageOn = new Command(LoadLicense,CE);
-            editPageOn = new Command(LoadEditPage,CE);
+            licensePageOn = new Command(LoadLicense, CE);
+            editPageOn = new Command(LoadEditPage, CE);
             ContentView = null;
         }
         private bool CE(object obj)
         {
-            string nowId = ((App)Application.Current).getId();
+            string nowId = ((App)Application.Current).id;
             if (nowId == null)
                 return false;
             else
-            return true;
+                return true;
         }
         private object _contentView;
 
         private void LoadLoginPage(object obj)
         {
-       
+            this.ContentView = this._login;
         }
         private void LoadMyPage(object obj)
         {
-            string nowId = ((App)Application.Current).getId();
-
-                this.ContentView = this._mypage;
+            string nowId = ((App)Application.Current).id;
+            
+            this.ContentView = this._mypage;
         }
         private void LoadEditPage(object obj)
         {
-            string nowId = ((App)Application.Current).getId();
+            string nowId = ((App)Application.Current).id;
 
-                this.ContentView = this._edit;
+            this.ContentView = this._edit;
         }
         private void LoadCharge(object obj)
         {
-            string nowId = ((App)Application.Current).getId();
+            string nowId = ((App)Application.Current).id;
 
-                this.ContentView = this._charge;
+            this.ContentView = this._charge;
         }
         private void LoadUsage(object obj)
         {
-            string nowId = ((App)Application.Current).getId();
+            string nowId = ((App)Application.Current).id;
 
-                this.ContentView = this._usage;
+            this.ContentView = this._usage;
         }
         private void LoadLicense(object obj)
         {
-            string nowId = ((App)Application.Current).getId();
+            string nowId = ((App)Application.Current).id;
 
-                this.ContentView = this._licesnse;
+            this.ContentView = this._licesnse;
         }
         public object ContentView
         {
