@@ -20,7 +20,6 @@ Typress(활자인쇄소를 영어로 번역함.)
 
 - Client 기능수정(Login 성공->창 닫기)
 - license page 
-- ControlBlock UI
 
 **---> 기본적인 버그찾아내기**<br>
 **---> 배포**<br>
