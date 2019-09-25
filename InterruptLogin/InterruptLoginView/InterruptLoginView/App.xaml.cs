@@ -26,8 +26,8 @@ namespace InterruptLoginView
             dp.Id = "winterlood";
             dp.Money = Int32.Parse("12000");
             dp.TotalUsage = Int32.Parse("12000");
-            dp.OneweekUsage = Int32.Parse("12000");
-            dp.TwoweekUsage = Int32.Parse("12000");
+            dp.OneWeekUsage = Int32.Parse("12000");
+            dp.TwoWeekUsage = Int32.Parse("12000");
             dp.ThreeWeekUsage = Int32.Parse("12000");
         }
 

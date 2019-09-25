@@ -118,18 +118,16 @@ namespace MemberMainView.VM
         private void getRank()
         {
             //다른방식 필요해보임.
-            string[] RankName = dp.GetRankName();
-            Int32[] RankUsage = dp.GetRankUsage();
+            //string[] RankName = dp.GetRankName();
+            //Int32[] RankUsage = dp.GetRankUsage();
+            Ranking[] Rankers = dp.GetRankers();
 
-            Array.Sort(RankUsage);
-            Array.Reverse(RankUsage);
-
-            rank1 = RankName[0];
-            rankP1 = RankUsage[0];
-            rank2 = RankName[1];
-            rankP2 = RankUsage[1];
-            rank3 = RankName[2];
-            rankP3 = RankUsage[2];
+            rank1 = Rankers[0].Name;
+            rankP1 = Rankers[0].Usage;
+            rank2 = Rankers[1].Name;
+            rankP2 = Rankers[1].Usage;
+            rank3 = Rankers[2].Name;
+            rankP3 = Rankers[2].Usage;
         }
         #endregion
 

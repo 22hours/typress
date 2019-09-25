@@ -78,18 +78,11 @@ namespace InterruptLoginView
             try
             {
 
-                // Client = new TcpClient("127.0.0.1", 13000);
-                // Stream = Client.GetStream();
-                // formatter = new BinaryFormatter();
-                // formatter.Binder = new AllowAllAssemblyVersionsDeserializationBinder();
-                // formatter.Serialize(Stream, Packet);
-                // Stream.Close();
+                SendPacketToServer(Packet);
 
-                // SendPacketToServer(Packet);
-
-                Window cb = new ControlBlock();
-                cb.Show();
-                this.Close();
+                //Window cb = new ControlBlock();
+                //cb.Show();
+                //this.Close();
                 
                 // Receive 받아서, 창 닫기
             }

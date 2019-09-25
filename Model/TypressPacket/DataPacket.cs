@@ -3,9 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace TypressPacket
 {
+    [Serializable]
+    public struct Ranking{
+        public Int32 Usage { get; set; }
+        public string Name { get; set; }
+        public Ranking(Int32 _usage, string _name) { Usage = _usage; Name = _name; }
+    }
+
+    [Serializable]
+    public class myReverserClass : IComparer
+    {
+        //Calls CaseInsensitiveComparer.Compare with the parameters reversed.
+        int IComparer.Compare(Object _x, Object _y)
+        {
+             Ranking x = (Ranking)_x;
+             Ranking y = (Ranking)_y;
+            return x.Usage.CompareTo(y.Usage);
+        }
+
+    }
+
     [Serializable]
     public class DataPacket
     {
@@ -22,7 +43,13 @@ namespace TypressPacket
         public Int32 TwoWeekUsage { get; set; }
         public Int32 OneWeekUsage { get; set; }
         public Int32 TotalUsage { get; set; }
+        public Ranking[] rankers = new Ranking[3];
 
+        public Ranking[] GetRankers()
+        {
+            return rankers;
+        }
+        /*
         public string[] RankName = new string[20];
         public string[] GetRankName()
         {
@@ -33,6 +60,8 @@ namespace TypressPacket
         {
             return RankUsage;
         }
+        
+        */
 
         public DataPacket() {}
         public DataPacket(string n, string g)

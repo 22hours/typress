@@ -7,7 +7,6 @@ Typress(활자인쇄소를 영어로 번역함.)
 ===
 
 - **인쇄 요청매수를 반환해온다. (NumberOfCopies)**
-- 구조체 정렬 필요
 - Packet.IsLogin에 따라 LoginView or MainView
 - (마일리지) DB 업데이트.
 - Service App

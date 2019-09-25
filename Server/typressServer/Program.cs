@@ -12,6 +12,7 @@ using MySql.Data.MySqlClient;
 using System.Threading;
 using Nektra.Deviare2;
 using System.Diagnostics;
+using System.Collections;
 
 namespace ServerSideSocket
 {
@@ -238,10 +239,8 @@ namespace ServerSideSocket
             MySqlCommand cmd2 = new MySqlCommand(sql2, cn);
             MySqlDataReader rdr1 = cmd1.ExecuteReader();
 
-            bool flag = false;
             while (rdr1.Read())
             {
-                flag = true;
                 p.IsLogin = true;
                 p.Id = (string)rdr1["ID"];
                 p.Pw = (string)rdr1["PW"];
@@ -258,15 +257,26 @@ namespace ServerSideSocket
             }
             rdr1.Close();
             MySqlDataReader rdr2 = cmd2.ExecuteReader();
-            int i = 0;
 
+            Ranking[] _rankers = new Ranking[100];
+            // Ranking[] rs = new Ranking[3];
+            int i = 0;
             while (rdr2.Read())
             {
-                p.RankUsage[i] = (int)rdr2["USAGE"];
-                p.RankName[i] = (string)rdr2["NAME"];
+                _rankers[i].Usage = (int)rdr2["USAGE"] * (-1);
+                _rankers[i].Name = (string)rdr2["NAME"];
                 i++;
             }
-           
+            IComparer myComparer = new myReverserClass();
+            Array.Sort(_rankers, myComparer);
+
+            for(int k = 0; k<3; k++)
+            {
+                p.rankers[k].Usage = _rankers[k].Usage * (-1);
+                p.rankers[k].Name = _rankers[k].Name;
+            }
+
+            _rankers = null;
             rdr2.Close();
             return p;
         }
