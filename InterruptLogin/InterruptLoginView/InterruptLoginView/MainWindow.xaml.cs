@@ -78,13 +78,20 @@ namespace InterruptLoginView
             try
             {
 
-                SendPacketToServer(Packet);
+                SendPacketToServer(Packet); // 로그인 시도 Packet보내기
+                ReceivePacketFromServer(); // 성공여부 반환!!
 
-                //Window cb = new ControlBlock();
-                //cb.Show();
-                //this.Close();
-                
-                // Receive 받아서, 창 닫기
+                if (packet.IsLogin)
+                {
+                    Window cb = new ControlBlock();
+                    cb.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("ID/PW를 다시 확인하세요 :)");
+                }
+
             }
             catch ( Exception ea)
             {

@@ -22,13 +22,15 @@ namespace InterruptLoginView
         {
             // server 에서 datapacket 수신하여 dp 변수에 넣으면 됩니다.
             // dp = server에서 받아온 Datapacekt;
-
+            //ReceivePacketFromServer();
+            /*
             dp.Id = "winterlood";
             dp.Money = Int32.Parse("12000");
             dp.TotalUsage = Int32.Parse("12000");
             dp.OneWeekUsage = Int32.Parse("12000");
             dp.TwoWeekUsage = Int32.Parse("12000");
             dp.ThreeWeekUsage = Int32.Parse("12000");
+            */
         }
 
         public DataPacket getNowDataPacket()

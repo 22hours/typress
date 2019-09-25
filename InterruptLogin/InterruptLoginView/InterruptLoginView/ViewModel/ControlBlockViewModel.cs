@@ -33,7 +33,7 @@ namespace InterruptLoginView.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-       public ICommand Print { get; set; }
+        public ICommand Print { get; set; }
         public ICommand Close { get; set; }
         public ICommand ViewMyPage { get; set; }
 

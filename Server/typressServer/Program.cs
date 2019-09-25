@@ -96,6 +96,7 @@ namespace ServerSideSocket
                             //Client : LoginUI
 
                             ReceivePacketFromClient(); // <- getbyte
+                            SendPacketFromServerToLogin();
                         }
                         getbyte = new byte[1024];
                         setbyte = new byte[1024];
@@ -130,6 +131,19 @@ namespace ServerSideSocket
             setbyte = ObjectToByteArray(packet);
             clientMain.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
         }
+
+        public static void SendPacketFromServerToLogin()
+        {
+            DataPacket packet = new DataPacket();
+
+            if (nowPacket != null && nowPacket.IsLogin == true)  // 이미 로그인 되어있는 경우
+            {
+                packet = nowPacket;
+            }
+            setbyte = ObjectToByteArray(packet);
+            clientLogin.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
+        }
+
 
 
         public static void ServerOpenLogin(object port)
