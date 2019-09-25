@@ -18,6 +18,7 @@ Typress(활자인쇄소를 영어로 번역함.)
   - 인쇄가 되는 시점은 ControlBlock에서 마일리지 차감에 성공했을 때.
 - MVVM에 맞는 패턴화 유지
 
+# 
 :computer: **Client**<br>
 
 - Client 기능수정(Login 성공->창 닫기)
@@ -30,6 +31,7 @@ Typress(활자인쇄소를 영어로 번역함.)
 
 <br>
 
+# 
 **추후추후 정말나중에 일단 잘되고나서**<br>
 -----> 'AdminPage' 를 만들고 싶어졌다.
 
