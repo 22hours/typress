@@ -20,7 +20,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
 using TypressPacket;
-using InterruptLoginView.View;
+using InterruptLoginView.ViewModel;
 
 namespace InterruptLoginView
 {
@@ -31,6 +31,7 @@ namespace InterruptLoginView
 
     public partial class MainWindow : Window
     {
+        MainWindowViewModel mv = new MainWindowViewModel();
         sealed class AllowAllAssemblyVersionsDeserializationBinder : System.Runtime.Serialization.SerializationBinder
         {
             public override Type BindToType(string assemblyName, string typeName)
@@ -72,39 +73,43 @@ namespace InterruptLoginView
 
         void ClickLogin(object sender, RoutedEventArgs e)
         {
-            DataPacket Packet = new DataPacket();
-            Packet.Id = id.Text as string;
-            Packet.Pw = password.Password as string;
-            try
-            {
-
-                SendPacketToServer(Packet); // 로그인 시도 Packet보내기
-                ReceivePacketFromServer(); // 성공여부 반환!!
-
-                if (packet.IsLogin)
-                {
-                    Window cb = new ControlBlock();
-                    cb.Show();
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("ID/PW를 다시 확인하세요 :)");
-                }
-
-            }
-            catch ( Exception ea)
-            {
-                MessageBox.Show("Server Stopped!");
-            }
-            finally
-            {
-                // 서버 수신 대기하는 메소드 필요.
+             string inputId= id.Text as string;
+            string inputPw = password.Password as string;
 
 
+            mv.ExecuteLogin(inputId, inputPw);
+            // 패스워드랑 아이디를 string으로 넘깁니다 -> mv는 ViewModel 폴더의 MainWindowViewModel.cs 의 인스턴스입니당~
 
-                //this.Close();
-            }
+            //try
+            //{
+
+            //    SendPacketToServer(Packet); // 로그인 시도 Packet보내기
+            //    ReceivePacketFromServer(); // 성공여부 반환!!
+
+            //    if (packet.IsLogin)
+            //    {
+            //        Window cb = new ControlBlock();
+            //        cb.Show();
+            //        this.Close();
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("ID/PW를 다시 확인하세요 :)");
+            //    }
+
+            //}
+            //catch ( Exception ea)
+            //{
+            //    MessageBox.Show("Server Stopped!");
+            //}
+            //finally
+            //{
+            //    // 서버 수신 대기하는 메소드 필요.
+
+
+
+            //    //this.Close();
+            //}
         }
         void ClickQuit(object sender, RoutedEventArgs e)
         {

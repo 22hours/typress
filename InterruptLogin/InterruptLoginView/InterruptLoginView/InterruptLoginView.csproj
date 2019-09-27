@@ -76,10 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="ViewModel\ControlBlockViewModel.cs" />
-    <Compile Include="View\ControlBlock.xaml.cs">
-      <DependentUpon>ControlBlock.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,10 +89,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\ControlBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -124,10 +117,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Model\TypressPacket\TypressPacket.csproj">
-      <Project>{e0139b1f-ccd4-4c16-9738-7923795089c5}</Project>
+    <ProjectReference Include="..\..\Model\TypressPacket\TypressPacket.csproj">
+      <Project>{E0139B1F-CCD4-4C16-9738-7923795089C5}</Project>
       <Name>TypressPacket</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

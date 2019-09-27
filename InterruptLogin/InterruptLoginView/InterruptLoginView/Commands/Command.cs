@@ -12,6 +12,8 @@ namespace InterruptLoginView.Commands
         Action<object> _executeMethod;
         Action<object, object> _executeMethod2;
         Func<object, bool> _canexecuteMethod;
+        private Action<string, string> executeLogin;
+        private Func<bool> canExecute;
 
         public Command(Action<object> executeMethod, Func<object, bool> canexecuteMethod)
         {
@@ -23,6 +25,13 @@ namespace InterruptLoginView.Commands
             this._executeMethod2 = executeMethod;
             this._canexecuteMethod = canexecuteMethod;
         }
+
+        public Command(Action<string, string> executeLogin, Func<bool> canExecute)
+        {
+            this.executeLogin = executeLogin;
+            this.canExecute = canExecute;
+        }
+
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)

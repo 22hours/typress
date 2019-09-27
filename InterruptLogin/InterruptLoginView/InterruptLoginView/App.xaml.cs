@@ -17,6 +17,9 @@ namespace InterruptLoginView
     {
         DataPacket dp = new DataPacket();
 
+        public App()
+        {
+        }
 
         public void getDataPacketFromServer()
         {
