@@ -33,7 +33,7 @@ namespace ServerSideSocket
         public static DataPacket nowPacket = null, packet = null;
         public static IFormatter formatter = null;
         public static NetworkStream stream = null;
-        public static Socket serverLogin, serverMain, clientLogin, clientMain;
+        public static Socket serverLogin, serverMain, serverCB, clientLogin, clientMain, clientCB;
         public static byte[] getbyte = new byte[1024];
         public static byte[] setbyte = new byte[1024];
         //public const int sPort = 5000;
@@ -56,7 +56,7 @@ namespace ServerSideSocket
 
                     //ServerOpener = new Thread(new ThreadStart(ServerOpen));
                     //ServerOpener.Start();
-                    ServerOpenLogin((int)5000);
+                    ServerOpenLogin((int)5000); // Login : 5000
 
                     
                     Console.WriteLine("Controller.exe (Server)\n" +
@@ -81,13 +81,18 @@ namespace ServerSideSocket
                             Console.WriteLine("[ Client\\Login\\Typress... ]");
 
                             Thread MainViewController = new Thread(new ParameterizedThreadStart(ServerOpenMain));
-                            MainViewController.Start((int)5001);
+                            Thread CBViewController = new Thread(new ParameterizedThreadStart(ServerOpenCB));
+
+                            MainViewController.Start((int)5001); // Main : 5001
+                            CBViewController.Start((int)5002);
 
                             Thread.Sleep(1000);
-                            OpenMainView();
+                            OpenControlView();
                             
                             SendPacketFromServerToMain();
-                            //Client : TypressUI
+                            SendPacketFromServerToCB();
+
+                            //Client : ControllBlcok
                         }
                         else 
                         {
@@ -132,6 +137,18 @@ namespace ServerSideSocket
             clientMain.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
         }
 
+        public static void SendPacketFromServerToCB()
+        {
+            DataPacket packet = new DataPacket();
+
+            if (nowPacket != null && nowPacket.IsLogin == true)  // 이미 로그인 되어있는 경우
+            {
+                packet = nowPacket;
+            }
+            setbyte = ObjectToByteArray(packet);
+            clientCB.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
+        }
+
         public static void SendPacketFromServerToLogin()
         {
             DataPacket packet = new DataPacket();
@@ -160,6 +177,22 @@ namespace ServerSideSocket
             Console.WriteLine("****서버대기중*****");
         }
 
+        public static void ServerOpenCB(object port)
+        {
+            IPAddress serverIP = IPAddress.Parse("127.0.0.1");
+            IPEndPoint serverEndPoint = new IPEndPoint(serverIP, (int)port);
+
+            serverCB = new Socket(
+              AddressFamily.InterNetwork,
+              SocketType.Stream, ProtocolType.Tcp);
+
+            serverCB.Bind(serverEndPoint);
+            serverCB.Listen(10);
+
+            clientCB = serverCB.Accept();
+            Console.WriteLine("****서버대기중*****");
+        }
+
         public static void ServerOpenMain(object port)
         {
             IPAddress serverIP = IPAddress.Parse("127.0.0.1");
@@ -171,6 +204,7 @@ namespace ServerSideSocket
 
             serverMain.Bind(serverEndPoint);
             serverMain.Listen(10);
+
             clientMain = serverMain.Accept();
             Console.WriteLine("****서버대기중*****");
             Console.WriteLine("Complete!");
@@ -295,13 +329,12 @@ namespace ServerSideSocket
             return p;
         }
 
-        public static int OpenMainView()
+        public static void OpenControlView()
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\Typress.exe\\MemberMainView\\MemberMainView\\bin\\x64\\Debug\\MemberMainView.exe";
+            startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\ControlBlock\\ControlBlock\\bin\\x64\\Debug\\ControlBlock.exe";
             Process P = Process.Start(startInfo);
             P.WaitForExit();
-            return P.ExitCode;
         }
     }
 }
