@@ -23,10 +23,9 @@ Typress(활자인쇄소를 영어로 번역함.)
 # 
 :computer: **Client**<br>
 
-- Client 기능수정(Login 성공->창 닫기)
-- LoginView, ControlView, MainView
 - license page / Edit page 어떤식으로 활용할지? 지울지?  
-- ClickLogin V와 VM로 패턴화
+- ☆ClickLogin V와 VM로 패턴화
+- 마일리지를 업데이트 하고나서, 창을 다시 띄워야하는????
 
 **---> 기본적인 버그찾아내기**<br>
 **---> 배포**<br>
