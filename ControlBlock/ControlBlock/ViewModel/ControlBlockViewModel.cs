@@ -15,16 +15,16 @@ namespace ControlBlock.ViewModel
         {
             DataPacket dp = new DataPacket();
             private string id;
-            private string totalPrintCount;
-            private string nowMoney;
-            private string useMoney;
-            private string remainMoney;
+            private int totalPrintCount;
+            private int nowMoney;
+            private int useMoney;
+            private int remainMoney;
 
             public string Id { get => id; set { this.id = value; OnPropertyChanged("Id "); } }
-            public string TotalPrintCount { get => totalPrintCount; set { this.totalPrintCount = value; OnPropertyChanged("TotalPrintCount "); } }
-            public string NowMoney { get => nowMoney; set { this.nowMoney = value; OnPropertyChanged("NowMoney "); } }
-            public string UseMoney { get => useMoney; set { this.useMoney = value; OnPropertyChanged("UseMoney "); } }
-            public string RemainMoney { get => remainMoney; set { this.remainMoney = value; OnPropertyChanged("RemainMoney "); } }
+            public int TotalPrintCount { get => totalPrintCount; set { this.totalPrintCount = value; OnPropertyChanged("TotalPrintCount "); } }
+            public int NowMoney { get => nowMoney; set { this.nowMoney = value; OnPropertyChanged("NowMoney "); } }
+            public int UseMoney { get => useMoney; set { this.useMoney = value; OnPropertyChanged("UseMoney "); } }
+            public int RemainMoney { get => remainMoney; set { this.remainMoney = value; OnPropertyChanged("RemainMoney "); } }
 
 
             public event PropertyChangedEventHandler PropertyChanged;
@@ -46,29 +46,18 @@ namespace ControlBlock.ViewModel
 
                 dp = ((App)Application.Current).getNowDataPacket();
 
-                id = "Winterlood";
-                TotalPrintCount = "20";
-                NowMoney = "20000";
-                UseMoney = "-";
-                UseMoney += "1000";
+                id = dp.Name;
+                TotalPrintCount = dp.TotalUsage;
+                NowMoney = dp.Money;
+                //UseMoney = "-";
+                UseMoney += 1000;
 
-                dp.Money = Int32.Parse("4040");
-                dp.Id = "winterlood";
-
-                //idBox.Text = dp.Id;
-                //UseMoneyBox1.Text = "-";
-                //UseMoneyBox1.Text += "3202";
-                //TotalPrintCountBox.Text = "20";
-
-                //NowMoneyBox.Text = dp.Money.ToString();
-                //NowMoneyBox2.Text = NowMoneyBox.Text;
-
-                int nowmoney = Int32.Parse(NowMoney.ToString());
-                int usemoney = Int32.Parse(UseMoney.ToString());
-                RemainMoney = (nowmoney + usemoney).ToString();
+                int nowmoney = NowMoney;
+                int usemoney = UseMoney;
+                RemainMoney = (nowmoney - usemoney);
             }
 
-            private void ExecuteViewMyPage(object obj)
+        private void ExecuteViewMyPage(object obj)
             {
                 // Typress.exe 틀어야함
                 MessageBox.Show("뷰 페이지 온");

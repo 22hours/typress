@@ -86,12 +86,18 @@ namespace ServerSideSocket
                             MainViewController.Start((int)5001); // Main : 5001
                             CBViewController.Start((int)5002);
 
-                            Thread.Sleep(1000);
-                            OpenControlView();
+                            //                            Thread.Sleep(1000);
+
+                            Thread CBViewer = new Thread(new ThreadStart(OpenControlView));
+                            CBViewer.Start();
+
+                            Thread.Sleep(2000);
+
                             
-                            SendPacketFromServerToMain();
+                            //SendPacketFromServerToMain();
                             SendPacketFromServerToCB();
 
+                            Console.ReadLine();
                             //Client : ControllBlcok
                         }
                         else 
@@ -174,7 +180,7 @@ namespace ServerSideSocket
 
             serverLogin.Bind(serverEndPoint);
             serverLogin.Listen(10);
-            Console.WriteLine("****서버대기중*****");
+            Console.WriteLine("****서버(로그인)대기중*****");
         }
 
         public static void ServerOpenCB(object port)
@@ -190,7 +196,7 @@ namespace ServerSideSocket
             serverCB.Listen(10);
 
             clientCB = serverCB.Accept();
-            Console.WriteLine("****서버대기중*****");
+            Console.WriteLine("****서버(CB)대기중*****");
         }
 
         public static void ServerOpenMain(object port)
@@ -206,7 +212,7 @@ namespace ServerSideSocket
             serverMain.Listen(10);
 
             clientMain = serverMain.Accept();
-            Console.WriteLine("****서버대기중*****");
+            Console.WriteLine("****서버(Main)대기중*****");
             Console.WriteLine("Complete!");
             SendPacketFromServerToMain();
         }
