@@ -14,6 +14,7 @@ Typress(활자인쇄소를 영어로 번역함.)
 - **Thread들이 같은 변수를 공유해야함!!!!!**<br>
 - 로그인 되어있는 상태에서 -> 프린트요청 -> MainView 띄움.
 - DB 
+- ViewModel에서 View제어.(this.Close()) **(Client)**
 
   
 :book: **참고사항**<br><br>
