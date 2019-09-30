@@ -11,9 +11,10 @@ Typress(활자인쇄소를 영어로 번역함.)
   - 5002 : ControlBlock **(OK)**
   - 5003 : Printer **(OK)**
   <br><br>
-- **Thread들이 같은 변수를 공유해야함!!!!!**<br>
-- 로그인 되어있는 상태에서 -> 프린트요청 -> MainView 띄움.
-- DB 
+  
+- 로그인 되어있는 상태에서 -> 프린트요청 -> MainView 띄움.<br>
+<br>
+- 팬실에서 점검해보기 <- dll포함 컴파일이 안되고 있음.
 - ViewModel에서 View제어.(this.Close()) **(Client)**
 - MainView에서 Logout구현 필요.(this.Close()) **(Client)**
 
