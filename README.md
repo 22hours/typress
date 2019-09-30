@@ -10,8 +10,9 @@ Typress(활자인쇄소를 영어로 번역함.)
   - 5001 : Main **(OK)**
   - 5002 : ControlBlock **(OK)**
   - 5003 : Printer **(OK)**
-  <br>
-- Main -> Login -> Main이 켜지게끔<br><br>
+  <br><br>
+- **Thread들이 같은 변수를 공유해야함!!!!!**<br>
+- Main -> Login -> Main이 켜지게끔<br>
 - Login -> MemberViewx(로그인이 되어있지 않음) -> Login
 - (현재 로그인packet을 가지고 있지 못하는 듯?)
 - Controlblock 로그인 안되어있어도 그냥 뜸. db못불러옴.<br><br>
