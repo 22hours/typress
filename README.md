@@ -12,10 +12,8 @@ Typress(활자인쇄소를 영어로 번역함.)
   - 5003 : Printer **(OK)**
   <br><br>
 - **Thread들이 같은 변수를 공유해야함!!!!!**<br>
-- Main -> Login -> Main이 켜지게끔<br>
-- Login -> MemberViewx(로그인이 되어있지 않음) -> Login
-- (현재 로그인packet을 가지고 있지 못하는 듯?)
-- Controlblock 로그인 안되어있어도 그냥 뜸. db못불러옴.<br><br>
+- 로그인 되어있는 상태에서 -> 프린트요청 -> MainView 띄움.
+- DB 
 
   
 :book: **참고사항**<br><br>
