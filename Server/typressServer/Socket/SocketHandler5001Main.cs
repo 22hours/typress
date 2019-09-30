@@ -40,6 +40,7 @@ namespace TypressServer
                     Console.WriteLine("****서버(메인뷰)~클라이언트(메인뷰) 연결완료.**");
 
                     ReceivePacketFromMainClient();
+                    Thread.Sleep(1000);
                     SendPacketFromServerToMain();
 
                     //클라이언트 
@@ -84,7 +85,7 @@ namespace TypressServer
             string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
             MySqlConnection conn = new MySqlConnection(strConn);
 
-            clientLogin.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
+            clientMain.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
             packet = (DataPacket)ByteArrayToObject(getbyte);
 
             //DB에 ID와 PW로 접근.
@@ -94,7 +95,7 @@ namespace TypressServer
             packet = SelectUsingReader(conn, packet);
             nowPacket = packet;
             if (nowPacket.IsLogin == false)
-                Console.WriteLine("ID/PW가 잘못되었습니다.\n\n");
+                Console.WriteLine("현재 로그인이 되어있지 않습니다.\n\n");
 
         }
     }

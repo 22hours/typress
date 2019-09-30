@@ -55,7 +55,7 @@ namespace TypressServer
                         Console.WriteLine("수신대기");
                         ReceivePacketFromLoginClient();
                         Thread.Sleep(1000);
-                        Console.WriteLine("송신");
+                        Console.WriteLine("패킷송신");
                         SendPacketFromServerToLogin(); // 송신
                    
                     }

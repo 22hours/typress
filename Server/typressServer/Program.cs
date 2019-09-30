@@ -16,14 +16,15 @@ using System.Collections;
 
 namespace TypressServer
 {
-    class Program
+    public static class Program
     {
-        public static ViewHandler ViewManager = null;
-        public static ThreadHandler ThreadManager = null;
-
+        //public static ViewHandler ViewManager = null;
+        //public static ThreadHandler ThreadManager = null;
         [STAThread]
-        static void Main(string[] args)
+        public static void Main()
         {
+            ViewHandler ViewManager = null;
+            ThreadHandler ThreadManager = null;
             try
             {
                 ViewManager = new ViewHandler();

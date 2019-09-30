@@ -36,7 +36,9 @@ namespace InterruptLoginView
         public static DataPacket packet = new DataPacket();
         public static byte[] getbyte = new byte[1024];
         public static byte[] setbyte = new byte[1024];
+
         public const int sPort = 5000;
+        public static string[] strArg = Environment.GetCommandLineArgs();
 
         sealed class AllowAllAssemblyVersionsDeserializationBinder : System.Runtime.Serialization.SerializationBinder
         {
@@ -95,8 +97,7 @@ namespace InterruptLoginView
 
                 if (packet.IsLogin)
                 {
-                    //Window cb = new ControlBlock();
-                    //cb.Show();
+                    OpenView();
                     this.Close();
                 }
                 else
@@ -111,9 +112,6 @@ namespace InterruptLoginView
             finally
             {
                 // 서버 수신 대기하는 메소드 필요.
-
-
-
                 //this.Close();
 
             }
@@ -137,7 +135,8 @@ namespace InterruptLoginView
                 ReceivePacketFromServer();
                 if (packet.IsLogin)
                 {
-                    MessageBox.Show("이미 로그인되어있습니다. ControlBlock & MainView 호출");
+                    //MessageBox.Show("이미 로그인되어있습니다. ControlBlock & MainView 호출");
+                    OpenView();
                     this.Close();
                 }
             }
@@ -145,6 +144,18 @@ namespace InterruptLoginView
             {
                 MessageBox.Show("Server Stopped!");
 
+            }
+        }
+
+        public static void OpenView()
+        {
+            if (strArg.Length <= 1) // window에서 실행.
+            {
+                ViewHandler.OpenMainViewFromWindow();
+            }
+            else // 
+            {
+                ViewHandler.OpenControlViewFromPrint();
             }
         }
 

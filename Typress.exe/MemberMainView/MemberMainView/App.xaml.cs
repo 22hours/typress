@@ -29,17 +29,25 @@ namespace MemberMainView
         public const int sPort = 5001;
 
         public string id { get; set; }
-       
+        public static bool exitcode = false;
 
 
         public App()
         {
-            this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
+            try
+            {
+                this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
 
-            TypressServerConnect();
-            Thread.Sleep(2000);
-            getDataPacketFromServer();
-            Thread.Sleep(1000);
+                TypressServerConnect();
+                Thread.Sleep(2000);
+                if (exitcode) {
+                    MessageBox.Show("로그인이 되어있지 않으므로 MainView Interrupt");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("error : {0}", ex.Message);
+            }
         }
 
 
@@ -67,16 +75,30 @@ namespace MemberMainView
 
                 socket.Connect(serverEndPoint);
 
+                Thread.Sleep(1000);
+                SendPacketToServer(dp); // 로그인 여부. 
+                getDataPacketFromServer();
+
+                if (!dp.IsLogin)
+                {
+                    ViewHandler.OpenLoginViewFromMain();
+                    exitcode = true;
+                }
             }
             catch (SocketException e)
             {
                 MessageBox.Show("Server Stopped!");
 
             }
+            catch (Exception e)
+            {
+                MessageBox.Show("Don't Work");
+
+            }
         }
 
 
-        public void getDataPacketFromServer()
+        public static void getDataPacketFromServer()
         {
             socket.Receive(getbyte, 0,
                 getbyte.Length, SocketFlags.None);

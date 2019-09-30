@@ -55,20 +55,16 @@ namespace TypressServer
             }
         }
 
-        public static void OpenControlView()
+        public static void OpenControlViewFromPrint()
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\ControlBlock\\ControlBlock\\bin\\x64\\Debug\\ControlBlock.exe";
-            Process P = Process.Start(startInfo);
-            P.WaitForExit();
+            Process P = Process.Start("C:\\Users\\jklh0\\source\\github\\Typress\\ControlBlock\\ControlBlock\\bin\\x64\\Debug\\ControlBlock.exe", "PC");
+            //P.WaitForExit();
         }
 
-        public static void OpenMainView()
+        public static void OpenMainViewFromWindow()
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\ControlBlock\\ControlBlock\\bin\\x64\\Debug\\ControlBlock.exe";
-            Process P = Process.Start(startInfo);
-            P.WaitForExit();
+            Process P = Process.Start("C:\\Users\\jklh0\\source\\github\\Typress\\Typress.exe\\MemberMainView\\MemberMainView\\bin\\x64\\Debug\\MemberMainView.exe", "WM");
+            //P.WaitForExit();
         }
     }
 }
