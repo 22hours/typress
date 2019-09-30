@@ -5,18 +5,11 @@ Typress(활자인쇄소를 영어로 번역함.)
 
 :computer: **Server**<br>
 
-- 항시대기할 수 있는 4개의 포트활용.
-  - 5000 : Login **(OK)**
-  - 5001 : Main **(OK)**
-  - 5002 : ControlBlock **(OK)**
-  - 5003 : Printer **(OK)**
-  <br><br>
-  
 - 로그인 되어있는 상태에서 -> 프린트요청 -> MainView 띄움.
-- 팬실에서 점검해보기 <- dll포함 컴파일이 안되고 있음.<br>
+- 팬실에서 점검해보기 <- dll포함 컴파일이 안되고 있음.
 - ViewModel에서 View제어.(this.Close()) **(Client)**
-- MainView에서 Logout구현 필요.(this.Close()) **(Client)**<br>
-
+- MainView에서 Logout구현 필요.(this.Close()) **(Client)**
+<br>
   
 :book: **참고사항**<br><br>
 **프로세스 검색 :** `` tasklist | find /i "string" ``<br>
