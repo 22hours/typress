@@ -79,6 +79,20 @@ namespace TypressServer
 
         public static void ReceivePacketFromClientCBClient()
         {
+            string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
+            MySqlConnection conn = new MySqlConnection(strConn);
+
+            clientCB.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
+            packet = (DataPacket)ByteArrayToObject(getbyte);
+
+            //DB에 ID와 PW로 접근.
+            //if () Access Fail -> Loop.
+            //if () Access Success
+
+            packet = SelectUsingReader(conn, packet);
+            nowPacket = packet;
+            if (nowPacket.IsLogin == false)
+                Console.WriteLine("현재 로그인이 되어있지 않습니다.\n\n");
 
         }
     }

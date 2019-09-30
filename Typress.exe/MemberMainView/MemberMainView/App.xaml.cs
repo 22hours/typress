@@ -30,7 +30,7 @@ namespace MemberMainView
 
         public string id { get; set; }
         public static bool exitcode = false;
-
+        public static string[] strArg = Environment.GetCommandLineArgs();
 
         public App()
         {
@@ -41,7 +41,7 @@ namespace MemberMainView
                 TypressServerConnect();
                 Thread.Sleep(2000);
                 if (exitcode) {
-                    MessageBox.Show("로그인이 되어있지 않으므로 MainView Interrupt");
+                    MessageBox.Show("로그인이 필요합니다!");
                 }
             }
             catch(Exception ex)
@@ -81,7 +81,8 @@ namespace MemberMainView
 
                 if (!dp.IsLogin)
                 {
-                    ViewHandler.OpenLoginViewFromMain();
+                    //ViewHandler.OpenLoginViewFromMain();
+                    OpenView();
                     exitcode = true;
                 }
             }
@@ -150,5 +151,9 @@ namespace MemberMainView
             return obj;
         }
 
+        public static void OpenView()
+        {
+            ViewHandler.OpenLoginViewFromMain(); // 얘는 로그인에서 Main을 키겠지.
+        }
     }
 }

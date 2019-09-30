@@ -23,14 +23,12 @@ namespace TypressServer
         [STAThread]
         public static void Main()
         {
-            ViewHandler ViewManager = null;
             ThreadHandler ThreadManager = null;
             try
             {
-                ViewManager = new ViewHandler();
-                ThreadManager = new ThreadHandler();
-
                 ViewHandler.TypressOpen();
+
+                ThreadManager = new ThreadHandler();
 
             }
             catch (SocketException socketEx)
@@ -44,7 +42,6 @@ namespace TypressServer
             finally
             {
                 ViewHandler.TypressClose();
-                ViewManager = null;
             }
         }
     }

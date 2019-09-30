@@ -153,7 +153,11 @@ namespace InterruptLoginView
             {
                 ViewHandler.OpenMainViewFromWindow();
             }
-            else // 
+            else if(strArg[1][0] == 'W')// 
+            {
+                ViewHandler.OpenMainViewFromWindow();
+            }
+            else if(strArg[1][0] == 'P')
             {
                 ViewHandler.OpenControlViewFromPrint();
             }

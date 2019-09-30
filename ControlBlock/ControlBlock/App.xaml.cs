@@ -20,13 +20,15 @@ namespace ControlBlock
     /// </summary>
     public partial class App : Application
     {
-        DataPacket dp = new DataPacket();
+        public static DataPacket dp = new DataPacket();
 
         public static Socket socket;
         public static DataPacket packet = new DataPacket();
         public static byte[] getbyte = new byte[1024];
         public static byte[] setbyte = new byte[1024];
         public const int sPort = 5002;
+        public static bool exitcode = false;
+        public static string[] strArg = Environment.GetCommandLineArgs();
 
         sealed class AllowAllAssemblyVersionsDeserializationBinder : System.Runtime.Serialization.SerializationBinder
         {
@@ -41,29 +43,24 @@ namespace ControlBlock
         }
         public App()
         {
-
-            TypressServerConnect();
-            Thread.Sleep(2000);
-            getDataPacketFromServer();
-            Thread.Sleep(1000);
+            try
+            {
+                TypressServerConnect();
+                Thread.Sleep(2000);
+                if (exitcode)
+                {
+                    MessageBox.Show("로그인이 필요합니다!");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("error : {0}", ex.Message);
+            }
         }
 
 
-        public void getDataPacketFromServer()
+        public static void getDataPacketFromServer()
         {
-            // server 에서 datapacket 수신하여 dp 변수에 넣으면 됩니다.
-            // dp = server에서 받아온 Datapacekt;
-
-
-            /*
-            dp.Id = "winterlood";
-            dp.Money = Int32.Parse("12000");
-            dp.TotalUsage = Int32.Parse("12000");
-            dp.OneWeekUsage = Int32.Parse("12000");
-            dp.TwoWeekUsage = Int32.Parse("12000");
-            dp.ThreeWeekUsage = Int32.Parse("12000");
-            */
-
             socket.Receive(getbyte, 0,
                 getbyte.Length, SocketFlags.None);
 
@@ -86,6 +83,17 @@ namespace ControlBlock
                 socket = new Socket(
                     AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 socket.Connect(serverEndPoint);
+
+                Thread.Sleep(1000);
+                SendPacketToServer(dp);
+                getDataPacketFromServer();
+
+                if (!dp.IsLogin)
+                {
+                    OpenView();
+                    exitcode = true;
+                }
+
             }
             catch (SocketException e)
             {
@@ -130,6 +138,14 @@ namespace ControlBlock
             Object obj = (Object)binForm.Deserialize(memStream);
 
             return obj;
+        }
+
+        public static void OpenView()
+        {
+            if (strArg.Length <= 1) // window에서 실행.
+            {
+                ViewHandler.OpenLoginViewFromMain();
+            }
         }
     }
 }
