@@ -19,16 +19,15 @@ Typress(활자인쇄소를 영어로 번역함.)
   - 로그인폼이 꺼지는 시기는 일단 '로그인 성공' 및 '사용자가 창닫기.'
   - 인쇄가 되는 시점은 ControlBlock에서 마일리지 차감에 성공했을 때.
 - MVVM에 맞는 패턴화 유지.
-  - Moduling 진행중.
+  - ObjectModuling Branch 진행 중
   - 5000(로그인), 5001(메인), 5002(인쇄안내창), 5003(프린트) 수신대기
 
 # 
 :computer: **Client**<br>
 
-- license page / Edit page 어떤식으로 활용할지? 지울지?  
-- ☆ClickLogin V와 VM로 패턴화
 - 마일리지를 업데이트 하고나서, 창을 다시 띄워야하는????
-
+- (Delay) ☆ClickLogin V와 VM로 패턴화<br>
+<br>
 **---> 기본적인 버그찾아내기**<br>
 **---> 배포**<br>
 
