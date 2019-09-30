@@ -5,7 +5,8 @@ Typress(활자인쇄소를 영어로 번역함.)
 
 :computer: **Server**<br>
 
-- 로그인 되어있는 상태에서 -> 프린트요청(5003번포트 미사용했기 떄문.) -> MainView 띄움.
+- 로그인 되어있는 상태에서 -> 프린트요청(5003번포트 미사용했기 떄문.) -> X
+- 로그인 되어있는 상태에서 -> serverstop.
 - 팬실에서 점검해보기 <- dll포함 컴파일이 안되고 있음.
 - ViewModel에서 View제어.(this.Close()) **(Client)**
 - MainView에서 Logout구현 필요.(this.Close()) **(Client)**
