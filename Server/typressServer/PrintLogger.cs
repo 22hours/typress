@@ -103,6 +103,7 @@ namespace ServerSideSocket
             {
                 GetPrintPages();
                 int res = OpenLoginView(); 
+                            //
                             //  IsLogin == false; -> OpenLoginView()
                             //  IsLogin == true;; -> OpenMainView()
                             //      

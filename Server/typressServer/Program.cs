@@ -33,7 +33,9 @@ namespace ServerSideSocket
         public static DataPacket nowPacket = null, packet = null;
         public static IFormatter formatter = null;
         public static NetworkStream stream = null;
-        public static Socket serverLogin, serverMain, serverCB, clientLogin, clientMain, clientCB;
+        public static Socket serverLogin, serverMain, serverCB, serverPrint
+            , clientLogin, clientMain, clientCB, clientPrint;
+  
         public static byte[] getbyte = new byte[1024];
         public static byte[] setbyte = new byte[1024];
         //public const int sPort = 5000;
@@ -99,6 +101,8 @@ namespace ServerSideSocket
 
                             Console.ReadLine();
                             //Client : ControllBlcok
+
+                            MainViewController.Abort();
                         }
                         else 
                         {
@@ -215,6 +219,24 @@ namespace ServerSideSocket
             Console.WriteLine("****서버(Main)대기중*****");
             Console.WriteLine("Complete!");
             SendPacketFromServerToMain();
+        }
+
+        public static void ServerOpenPrint(object port)
+        {
+            IPAddress serverIP = IPAddress.Parse("127.0.0.1");
+            IPEndPoint serverEndPoint = new IPEndPoint(serverIP, (int)port);
+
+            serverMain = new Socket(
+              AddressFamily.InterNetwork,
+              SocketType.Stream, ProtocolType.Tcp);
+
+            serverMain.Bind(serverEndPoint);
+            serverMain.Listen(10);
+
+            clientPrint = serverPrint.Accept();
+            Console.WriteLine("****서버(Print)대기중*****");
+            Console.WriteLine("Complete!");
+            //SendPacketFromServerToPrint();
         }
 
 
@@ -336,6 +358,14 @@ namespace ServerSideSocket
         }
 
         public static void OpenControlView()
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\ControlBlock\\ControlBlock\\bin\\x64\\Debug\\ControlBlock.exe";
+            Process P = Process.Start(startInfo);
+            P.WaitForExit();
+        }
+
+        public static void OpenMainView()
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = "C:\\Users\\jklh0\\source\\github\\Typress\\ControlBlock\\ControlBlock\\bin\\x64\\Debug\\ControlBlock.exe";
