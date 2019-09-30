@@ -10,16 +10,17 @@ using System.Windows.Forms;
 using System.Drawing.Printing;
 using System.Management;
 
-namespace ServerSideSocket
+namespace TypressServer
 {
-    public partial class PrintLogger
+
+    public partial class PrintHandler
     {
         private PrintDocument pManager = null; 
         private NktSpyMgr _spyMgr;
         private NktProcess _process;
         private int cnt = 0;
 
-        public PrintLogger()
+        public PrintHandler()
         {
             // InitializeComponent();
 

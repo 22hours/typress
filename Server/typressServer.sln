@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typressServer", "typressServer\typressServer.csproj", "{2B391144-1046-424A-90C4-BCE89597B0DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypressServer", "typressServer\TypressServer.csproj", "{2B391144-1046-424A-90C4-BCE89597B0DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypressPacket", "..\Model\TypressPacket\TypressPacket.csproj", "{E0139B1F-CCD4-4C16-9738-7923795089C5}"
 EndProject
