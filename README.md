@@ -11,7 +11,3 @@ Typress(활자인쇄소를 영어로 번역함.)
   - 5002 : ControlBlock
   - 5003 : Printer
   <br>
-- Main을 띄워야할지, Block을 띄워야할지, 어떻게 프로그램이 실행됬는지를 알아야 할 듯하다.
-  - 내가 Window에서 직접실행 시켰을 경우 : MainView
-  - PrintInterrupt 가 됬을 경우 : ControlBlock
-  - Args 변수활용 Idea? 
