@@ -36,7 +36,6 @@ namespace TypressServer
 
                     Console.WriteLine("****서버(Print)대기중*****");
                     clientPrint = serverPrint.Accept();
-                    Console.ReadLine();
                     Console.WriteLine("Complete!");
                     //SendPacketFromServerToPrint();
 

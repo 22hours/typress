@@ -50,6 +50,7 @@ namespace ControlBlock
                 if (exitcode)
                 {
                     MessageBox.Show("로그인이 필요합니다!");
+                    OpenView();
                 }
             }
             catch(Exception ex)

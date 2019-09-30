@@ -103,12 +103,7 @@ namespace TypressServer
             if (cnt == 3)
             {
                 GetPrintPages();
-                int res = OpenLoginView(); 
-                            //
-                            //  IsLogin == false; -> OpenLoginView()
-                            //  IsLogin == true;; -> OpenMainView()
-                            //      
-                            //      
+                ViewHandler.OpenControlViewFromPrint();
             }
             if (cnt == 4) cnt = 0;
         }
