@@ -72,11 +72,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Socket\SocketHandler5002CB.cs" />
+    <Compile Include="Socket\SocketHandler5000Login.cs" />
+    <Compile Include="Socket\SocketHandler5001Main.cs" />
+    <Compile Include="Socket\SocketHandler5003Print.cs" />
     <Compile Include="ViewHandler.cs" />
     <Compile Include="PrintHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SocketHandler.cs" />
+    <Compile Include="Socket\SocketHandler.cs" />
     <Compile Include="ThreadHandler.cs" />
   </ItemGroup>
   <ItemGroup>

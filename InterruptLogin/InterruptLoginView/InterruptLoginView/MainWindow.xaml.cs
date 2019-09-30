@@ -52,13 +52,17 @@ namespace InterruptLoginView
 
         public MainWindow()
         {
+            //Server
+            TypressServerConnect();
+            //Thread td = new Thread(new ThreadStart(TypressServerConnect));
+            //td.Start(this);
+
+
             //UI
             InitializeComponent();
             this.MouseLeftButtonDown += MoveWindow;
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
 
-            Thread td = new Thread(new ThreadStart(TypressServerConnect));
-            td.Start();
 
         }
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -84,8 +88,9 @@ namespace InterruptLoginView
 
             try
             {
-
+                Thread.Sleep(1000);
                 SendPacketToServer(packet); // 로그인 시도 Packet보내기
+               
                 ReceivePacketFromServer(); // 성공여부 반환!!
 
                 if (packet.IsLogin)
@@ -118,7 +123,7 @@ namespace InterruptLoginView
             this.Close();
         }
 
-        public static void TypressServerConnect()
+        public void TypressServerConnect()
         {
             try
             {
@@ -128,6 +133,13 @@ namespace InterruptLoginView
                 socket = new Socket(
                     AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 socket.Connect(serverEndPoint);
+
+                ReceivePacketFromServer();
+                if (packet.IsLogin)
+                {
+                    MessageBox.Show("이미 로그인되어있습니다. ControlBlock & MainView 호출");
+                    this.Close();
+                }
             }
             catch(SocketException e)
             {

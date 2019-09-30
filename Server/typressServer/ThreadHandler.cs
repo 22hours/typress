@@ -33,13 +33,13 @@ namespace TypressServer
             LoginListener.Start((int)5000);
             MainListener.Start((int)5001);
             CBListener.Start((int)5002);
-            //PrintListener.Start((int)5003);
+            PrintListener.Start((int)5003);
             PrintHooker.Start();
 
             LoginListener.Join();
             MainListener.Join();
             CBListener.Join();
-            //PrintListener.Join();
+            PrintListener.Join();
             PrintHooker.Join();
         }
 
