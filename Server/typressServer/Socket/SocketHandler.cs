@@ -20,7 +20,7 @@ namespace TypressServer
     public partial class SocketHandler
     {
 
-        public static DataPacket nowPacket = null, packet = new DataPacket();
+        //public static DataPacket nowPacket = null, packet = new DataPacket();
         public static IFormatter formatter = null;
         public static NetworkStream stream = null;
         public static Socket serverLogin, serverMain, serverCB, serverPrint

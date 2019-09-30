@@ -46,10 +46,13 @@ namespace TypressServer
                     SendPacketFromServerToLogin();
                     Console.WriteLine("로그인폼으로 Packet전달완료.");
 
-                    if (packet.IsLogin) { throw new Exception("이미 로그인 되어있습니다."); }
+                    if (ThreadHandler.MainPacket.IsLogin)
+                    {
+                        throw new Exception("이미 로그인 되어있습니다.");
+                    }
 
                     //Client 창 로그인창.
-                    while (!packet.IsLogin)
+                    while (!ThreadHandler.MainPacket.IsLogin)
                     {
                         // 수신대기
                         Console.WriteLine("수신대기");
@@ -92,33 +95,49 @@ namespace TypressServer
 
         public static void SendPacketFromServerToLogin()
         {
-            DataPacket packet = new DataPacket();
-
-            if (nowPacket != null && nowPacket.IsLogin == true)  // 이미 로그인 되어있는 경우
+            Monitor.Enter(ThreadHandler.lockObject);
+            try
             {
-                packet = nowPacket;
+                DataPacket packet = new DataPacket();
+                //DataPacket packet = ThreadHandler.MainPacket;
+
+                //if (nowPacket != null && nowPacket.IsLogin == true)  // 이미 로그인 되어있는 경우
+                if(ThreadHandler.MainPacket != null && ThreadHandler.MainPacket.IsLogin == true)
+                {
+                    packet = ThreadHandler.MainPacket;
+                }
+                setbyte = ObjectToByteArray(packet);
+                clientLogin.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
             }
-            setbyte = ObjectToByteArray(packet);
-            clientLogin.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
+            finally
+            {
+                Monitor.Exit(ThreadHandler.lockObject);
+            }
         }
 
         public static void ReceivePacketFromLoginClient() // Packet에 ID, PW만 온다.
         {
+            Monitor.Enter(ThreadHandler.lockObject);
+            try
+            {
+                DataPacket packet = new DataPacket();
+                string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
+                MySqlConnection conn = new MySqlConnection(strConn);
 
-            string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
-            MySqlConnection conn = new MySqlConnection(strConn);
+                clientLogin.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
+                packet = (DataPacket)ByteArrayToObject(getbyte);
 
-            clientLogin.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
-            packet = (DataPacket)ByteArrayToObject(getbyte);
+                packet = SelectUsingReader(conn, packet);
 
-            //DB에 ID와 PW로 접근.
-            //if () Access Fail -> Loop.
-            //if () Access Success
-
-            packet = SelectUsingReader(conn, packet);
-            nowPacket = packet;
-            if (nowPacket.IsLogin == false) 
-                Console.WriteLine("ID/PW가 잘못되었습니다.\n\n");
+                //nowPacket = packet;
+                ThreadHandler.MainPacket = packet;
+                if (ThreadHandler.MainPacket.IsLogin == false)
+                    Console.WriteLine("ID/PW가 잘못되었습니다.\n\n");
+            }
+            finally
+            {
+                Monitor.Exit(ThreadHandler.lockObject);
+            }
         }
 
     }

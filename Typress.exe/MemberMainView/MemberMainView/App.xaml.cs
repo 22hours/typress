@@ -76,7 +76,8 @@ namespace MemberMainView
                 socket.Connect(serverEndPoint);
 
                 Thread.Sleep(1000);
-                SendPacketToServer(dp); // 로그인 여부. 
+                
+                //SendPacketToServer(dp); // 로그인 여부. 
                 getDataPacketFromServer();
 
                 if (!dp.IsLogin)

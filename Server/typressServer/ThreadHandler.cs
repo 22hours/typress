@@ -16,7 +16,8 @@ namespace TypressServer
         private const int CB = 5002;
         private const int PRINTER = 5003;
 
-        public static DataPacket packet = new DataPacket();
+        public static object lockObject = new object();
+        public static DataPacket MainPacket = new DataPacket();
 
         public SocketHandler LoginSocketHandler = new SocketHandler();
         public SocketHandler MainSocketHandler = new SocketHandler();

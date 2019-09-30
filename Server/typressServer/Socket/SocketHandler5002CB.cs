@@ -38,7 +38,7 @@ namespace TypressServer
                     clientCB = serverCB.Accept();
                     Console.WriteLine("****서버(CB)~클라이언트(CB) 연결완료.**");
 
-                    ReceivePacketFromClientCBClient(); // 수신대기
+                    //ReceivePacketFromClientCBClient(); // 수신대기
                     SendPacketFromServerToCB(); // 송신
 
                     //클라이언트(메인)의 종료시점은 알아야한다.
@@ -67,33 +67,50 @@ namespace TypressServer
 
         public static void SendPacketFromServerToCB()
         {
-            DataPacket packet = new DataPacket();
-
-            if (nowPacket != null && nowPacket.IsLogin == true)  // 이미 로그인 되어있는 경우
+            Monitor.Enter(ThreadHandler.lockObject);
+            try
             {
-                packet = nowPacket;
+                DataPacket packet = new DataPacket();
+
+                if (ThreadHandler.MainPacket != null && ThreadHandler.MainPacket.IsLogin == true)  // 이미 로그인 되어있는 경우
+                {
+                    packet = ThreadHandler.MainPacket;
+                }
+                setbyte = ObjectToByteArray(packet);
+                clientCB.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
             }
-            setbyte = ObjectToByteArray(packet);
-            clientCB.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
+            finally
+            {
+                Monitor.Exit(ThreadHandler.lockObject);
+            }
         }
 
         public static void ReceivePacketFromClientCBClient()
         {
-            string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
-            MySqlConnection conn = new MySqlConnection(strConn);
+            Monitor.Enter(ThreadHandler.lockObject);
+            try
+            {
+                DataPacket packet = new DataPacket();
 
-            clientCB.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
-            packet = (DataPacket)ByteArrayToObject(getbyte);
+                string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
+                MySqlConnection conn = new MySqlConnection(strConn);
 
-            //DB에 ID와 PW로 접근.
-            //if () Access Fail -> Loop.
-            //if () Access Success
+                clientCB.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
+                packet = (DataPacket)ByteArrayToObject(getbyte);
 
-            packet = SelectUsingReader(conn, packet);
-            nowPacket = packet;
-            if (nowPacket.IsLogin == false)
-                Console.WriteLine("현재 로그인이 되어있지 않습니다.\n\n");
+                //DB에 ID와 PW로 접근.
+                //if () Access Fail -> Loop.
+                //if () Access Success
 
+                packet = SelectUsingReader(conn, packet);
+                ThreadHandler.MainPacket = packet;
+                if (ThreadHandler.MainPacket.IsLogin == false)
+                    Console.WriteLine("현재 로그인이 되어있지 않습니다.\n\n");
+            }
+            finally
+            {
+                Monitor.Exit(ThreadHandler.lockObject);
+            }
         }
     }
 }

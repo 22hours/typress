@@ -85,7 +85,8 @@ namespace ControlBlock
                 socket.Connect(serverEndPoint);
 
                 Thread.Sleep(1000);
-                SendPacketToServer(dp);
+
+                //SendPacketToServer(dp);
                 getDataPacketFromServer();
 
                 if (!dp.IsLogin)
