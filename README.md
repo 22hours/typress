@@ -20,4 +20,7 @@ Typress(활자인쇄소를 영어로 번역함.)
   
 :book: **참고사항**<br><br>
 **프로세스 검색 :** `` tasklist | find /i "string" ``<br>
-**프로세스 종료 :** `` taskkill /pid num /f ``<br>
+**프로세스 종료 :** `` taskkill /pid num /f ``<br><br><br>
+
+:book: **개선사항**
+- ViewHandler 프로젝트 단위로로 참조하자
