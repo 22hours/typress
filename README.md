@@ -5,11 +5,7 @@ Typress(활자인쇄소를 영어로 번역함.)
 
 :computer: **Server**<br>
 
-
-- **인쇄 요청매수를 반환해온다.**
-  - PrintTicket : 
-  - https://docs.microsoft.com/ko-kr/dotnet/api/system.printing.printticket?view=netframework-4.8
-
+- 반환매수 * 1000원 = useMoney 까지 DB에 업데이트
 - Service App
 
 
