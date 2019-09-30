@@ -118,6 +118,13 @@ namespace TypressServer
             rdr2.Close();
             return p;
         }
+
+        public static void UpdateUsingReader(MySqlConnection cn, DataPacket pk)
+        {
+            cn.Open();
+            MySqlCommand cmd = new MySqlCommand("UPDATE members set MONEY = '"+pk.Money+"' where ID = '"+pk.Id+"';", cn);
+            cmd.ExecuteNonQuery();
+        }
     }
 
     sealed class AllowAllAssemblyVersionsDeserializationBinder : System.Runtime.Serialization.SerializationBinder

@@ -41,7 +41,21 @@ namespace TypressServer
                     //ReceivePacketFromClientCBClient(); // 수신대기
                     SendPacketFromServerToCB(); // 송신
 
-                    //클라이언트(메인)의 종료시점은 알아야한다.
+
+                    while (ThreadHandler.MainPacket.IsLogin)
+                    {
+                        ReceivePacketFromClientCBClientDBUpdate();
+                        if (ThreadHandler.MainPacket.IsLogin == false)
+                        {
+                            //로그아웃 요청
+
+                            break;
+                        }
+                        else
+                        {
+                            // DB업데이트
+                        }
+                    }
                 }
                 catch (SocketException socketEx)
                 {
@@ -106,6 +120,55 @@ namespace TypressServer
                 ThreadHandler.MainPacket = packet;
                 if (ThreadHandler.MainPacket.IsLogin == false)
                     Console.WriteLine("현재 로그인이 되어있지 않습니다.\n\n");
+            }
+            finally
+            {
+                Monitor.Exit(ThreadHandler.lockObject);
+            }
+        }
+
+        public static void ReceivePacketFromClientCBClientLogout()
+        {
+            Monitor.Enter(ThreadHandler.lockObject);
+            try
+            {
+                DataPacket packet = new DataPacket();
+
+                clientCB.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
+                packet = (DataPacket)ByteArrayToObject(getbyte);
+
+                ThreadHandler.MainPacket = packet;
+                //Console.WriteLine("로그아웃 완료");
+            }
+            finally
+            {
+                Monitor.Exit(ThreadHandler.lockObject);
+            }
+        }
+
+        public static void ReceivePacketFromClientCBClientDBUpdate()
+        {
+            Monitor.Enter(ThreadHandler.lockObject);
+            try
+            {
+                DataPacket packet = new DataPacket();
+
+                string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
+                MySqlConnection conn = new MySqlConnection(strConn);
+
+                clientCB.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
+                packet = (DataPacket)ByteArrayToObject(getbyte);
+
+                //DB에 ID와 PW로 접근.
+                //if () Access Fail -> Loop.
+                //if () Access Success
+
+                UpdateUsingReader(conn, packet);
+                ThreadHandler.MainPacket = packet;
+                if (ThreadHandler.MainPacket.IsLogin == false)
+                    Console.WriteLine("현재 로그인이 되어있지 않습니다.\n\n");
+                else
+                    Console.WriteLine("DB에 업데이트되었습니다.");
             }
             finally
             {
