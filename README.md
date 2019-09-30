@@ -9,9 +9,13 @@ Typress(활자인쇄소를 영어로 번역함.)
   - 5000 : Login **(OK)**
   - 5001 : Main **(OK)**
   - 5002 : ControlBlock **(OK)**
-  - 5003 : Printer
+  - 5003 : Printer **(OK)**
   <br>
 - Main -> Login -> Main이 켜지게끔<br><br>
+- Login -> MemberViewx(로그인이 되어있지 않음) -> Login
+- (현재 로그인packet을 가지고 있지 못하는 듯?)
+- Controlblock 로그인 안되어있어도 그냥 뜸. db못불러옴.<br><br>
+
   
 :book: **참고사항**<br><br>
 **프로세스 검색 :** `` tasklist | find /i "string" ``<br>
