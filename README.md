@@ -5,7 +5,9 @@ Typress(활자인쇄소를 영어로 번역함.)
 
 :computer: **Server**<br>
 
-- 반환매수 * 1000원 = useMoney 까지 DB에 업데이트
+- DB Update
+  - 반환매수 * 1000원 = useMoney 까지 DB에 업데이트
+  - 사용량 등 다른 변수에도 다 update를 해줘
 - Service App
 
 
