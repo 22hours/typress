@@ -1,5 +1,5 @@
 # Typress
-Typress(활자인쇄소를 영어로 번역함)
+Typress(활자인쇄소를 영어로 번역함).
 
 # To-do(19.09.26)
 
