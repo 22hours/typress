@@ -118,7 +118,7 @@ namespace InterruptLoginView
         }
         void ClickQuit(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            System.Environment.Exit(1);
         }
 
         public void TypressServerConnect()

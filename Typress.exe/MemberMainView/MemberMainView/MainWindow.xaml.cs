@@ -33,7 +33,7 @@ namespace MemberMainView
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                Close();
+                System.Environment.Exit(1);
         }
         void MoveWindow(object sender, MouseEventArgs e)
         {

@@ -61,6 +61,7 @@ namespace ControlBlock.ViewModel
         {
             // Typress.exe 틀어야함
             ViewHandler.OpenMainViewFromWindow();
+            System.Environment.Exit(1);
         }
 
         private void ExecuteCloseWindow(object obj)
@@ -69,6 +70,7 @@ namespace ControlBlock.ViewModel
             // Close 버튼
             App.SendPacketToServer(new DataPacket());
             MessageBox.Show("인쇄 안함 로그아웃 후 창닫기");
+            System.Environment.Exit(1);
         }
 
         private void ExecutePrint(object obj)
@@ -81,7 +83,9 @@ namespace ControlBlock.ViewModel
                 UpdateDB();
 
                 // close exit status code : 0
+                ViewHandler.OpenControlViewFromPrint();
                 System.Environment.Exit(0);
+
             }
             else
             {
@@ -89,6 +93,7 @@ namespace ControlBlock.ViewModel
                 MessageBox.Show("로그아웃");
 
                 // close exit status code : 1
+                ViewHandler.OpenLoginViewFromMain();
                 System.Environment.Exit(1);
             }
         }
