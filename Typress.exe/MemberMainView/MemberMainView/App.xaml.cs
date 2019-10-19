@@ -39,7 +39,7 @@ namespace MemberMainView
                 this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
 
                 TypressServerConnect();
-                Thread.Sleep(2000);
+                //Thread.Sleep(2000);
                 if (exitcode) {
                     MessageBox.Show("로그인이 필요합니다!");
                 }
@@ -74,9 +74,9 @@ namespace MemberMainView
                     AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
                 socket.Connect(serverEndPoint);
-
-                Thread.Sleep(1000);
-                
+                //MessageBox.Show("ok11");
+                //Thread.Sleep(1000);
+                //MessageBox.Show("ok22");
                 //SendPacketToServer(dp); // 로그인 여부. 
                 getDataPacketFromServer();
 

@@ -46,11 +46,10 @@ namespace ControlBlock
             try
             {
                 TypressServerConnect();
-                Thread.Sleep(2000);
                 if (exitcode)
                 {
                     MessageBox.Show("로그인이 필요합니다!");
-                    OpenView();
+                    //OpenView();
                 }
             }
             catch(Exception ex)
@@ -85,7 +84,7 @@ namespace ControlBlock
                     AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 socket.Connect(serverEndPoint);
 
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
 
                 //SendPacketToServer(dp);
                 getDataPacketFromServer();
@@ -144,10 +143,14 @@ namespace ControlBlock
 
         public static void OpenView()
         {
-            if (strArg.Length <= 1) // window에서 실행.
-            {
+            //if (strArg.Length <= 1) // window에서 실행.
+            //{
                 ViewHandler.OpenLoginViewFromMain();
-            }
+            //}
+            //else
+            //{
+
+            //}
         }
     }
 }
