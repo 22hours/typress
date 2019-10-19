@@ -79,12 +79,17 @@ namespace ControlBlock.ViewModel
                 MessageBox.Show("출력을 진행합니다.");
                 //DB
                 UpdateDB();
+
+                // close exit status code : 0
+                System.Environment.Exit(0);
             }
             else
             {
                 App.SendPacketToServer(new DataPacket());
                 MessageBox.Show("로그아웃");
 
+                // close exit status code : 1
+                System.Environment.Exit(1);
             }
         }
 
