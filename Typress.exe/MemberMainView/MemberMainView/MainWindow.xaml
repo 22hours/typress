@@ -70,9 +70,6 @@
         </Style>
     </Window.Resources>
 
-    <Window.DataContext>
-        <vm:MainWindowViewModel/>
-    </Window.DataContext>
 
     <Border BorderBrush="Gray"
             BorderThickness="0"
@@ -157,7 +154,7 @@
                                     <Border Height="38" BorderThickness="1,1,1,1">
                                         <StackPanel Orientation="Horizontal" Height="38" Width="195">
                                             <RadioButton 
-                                                Command="{Binding Page2}"
+                                                Command="{Binding logOut}"
                                                 GroupName="menu" Content="LogOut"  Style="{StaticResource buttonstripe1}"  Background="{x:Null}" BorderBrush="{x:Null}" Width="193" FontSize="20" Foreground="White"/>
                                         </StackPanel>
                                     </Border>
