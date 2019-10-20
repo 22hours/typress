@@ -80,6 +80,9 @@ namespace ControlBlock.ViewModel
             {
                 MessageBox.Show("출력을 진행합니다.");
                 //DB
+
+
+                //server로부터 몇장인지 받아온다.
                 UpdateDB();
 
                 // close exit status code : 0
@@ -114,6 +117,7 @@ namespace ControlBlock.ViewModel
         private void UpdateDB()
         {
             dp.Money -= 1000;
+            dp.TotalUsage += 1;
             App.SendPacketToServer(dp);
         }
     }
