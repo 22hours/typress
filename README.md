@@ -5,21 +5,6 @@ Typress(활자인쇄소를 영어로 번역함).
 
 :computer: **Server**<br>
 
-- DB Update
-  - 반환매수 * 1000원 = useMoney 까지 DB에 업데이트
-  - 사용량 등 다른 변수에도 다 update를 해줘
-- Service App
-
-
-# 
-:computer: **Client**<br>
-
-- 마일리지를 업데이트 하고나서, 창을 다시 띄워야하는????
-- (Delay) ☆ClickLogin V와 VM로 패턴화<br>
-<br>
-**---> 기본적인 버그찾아내기**<br>
-**---> 배포**<br>
-
 <br>
 
 # 

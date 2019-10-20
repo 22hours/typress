@@ -72,27 +72,6 @@ namespace ControlBlock.ViewModel
 
             }
 
-            private void ExecutePrint(object obj)
-            {
-                // 프린트 하기
-                if (ShowSelectBox())
-                {
-                    MessageBox.Show("논 로그아웃");
-
-                // 프로그램 종료 exit code is 1 
-                // 1은 출력할 인쇄물이 남았고 세션이 죽으면 안된다는 뜻
-                    System.Environment.Exit(1);
-                }
-                else
-                {
-                    MessageBox.Show("로그아웃");
-
-                // 프로그램 종료 exit code is 0
-                // 0 은 출력할 인쇄물이 없고, 세션은 죽어야 한다는 뜻
-                System.Environment.Exit(0);
-            }
-        }
-
             private Boolean ShowSelectBox()
             {
                 if (MessageBox.Show("출력할 인쇄물이 남았습니까? ", "Yes-No", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
