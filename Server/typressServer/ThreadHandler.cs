@@ -53,7 +53,7 @@ namespace TypressServer
                 // Waiting Printer Ruest ....
                 Console.WriteLine("☆★☆ PrintLogger가 시작되었습니다. ☆★☆\n");
                 PrintHandler PL = new PrintHandler();
-                Console.ReadLine(); // 이벤트 감지
+                Console.ReadLine(); // 종료 이벤트 감지.
                 Console.WriteLine("☆★☆ PrintLogger가 종료되었습니다. ☆★☆\n");
             }
         }
