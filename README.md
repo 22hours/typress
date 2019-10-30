@@ -1,17 +1,20 @@
 # Typress
 Typress(활자인쇄소를 영어로 번역함).
 
-# To-do(19.09.26)
+# To-do ObjectModuling (19.09.30)
 
 :computer: **Server**<br>
 
+- 로그인 되어있는 상태에서 -> 프린트요청(5003번포트 미사용했기 떄문.) -> X
+- 로그인 되어있는 상태에서 -> serverstop.
+- 팬실에서 점검해보기 <- dll포함 컴파일이 안되고 있음.
+- ViewModel에서 View제어.(this.Close()) **(Client)**
+- MainView에서 Logout구현 필요.(this.Close()) **(Client)**
 <br>
+  
+:book: **참고사항**<br><br>
+**프로세스 검색 :** `` tasklist | find /i "string" ``<br>
+**프로세스 종료 :** `` taskkill /pid num /f ``<br><br><br>
 
-# 
-**추후추후 정말나중에 일단 잘되고나서**<br>
------> 'AdminPage' 를 만들고 싶어졌다.<br>
------> '역공학'을 추가하고 싶어졌다.(모듈화가 잘 안지켜진 프로젝트)<br>
-
-- '각 동아리회장용' <- Java 웹페이지로 투닥투닥할 수 있는. DB서버만 건드리면 되는.
-- 지금 정환이가 만들어 놓은 것은 '22Hours'(Typress회사꺼)가 각 동아리 회장들을 관리하는 것. 'C#'
-- 우리 DB에 접속하기 위함 
+:book: **개선사항**
+- ViewHandler 프로젝트 단위로로 참조하자

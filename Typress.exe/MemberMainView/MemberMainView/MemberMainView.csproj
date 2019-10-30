@@ -82,6 +82,7 @@
     </ApplicationDefinition>
     <Compile Include="M\Command.cs" />
     <Compile Include="M\DataPacket.cs" />
+    <Compile Include="ViewHandler.cs" />
     <Compile Include="View\ChargeUserControl.xaml.cs">
       <DependentUpon>ChargeUserControl.xaml</DependentUpon>
     </Compile>

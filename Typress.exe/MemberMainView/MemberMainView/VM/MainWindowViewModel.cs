@@ -53,6 +53,7 @@ namespace MemberMainView.VM
         public ICommand licensePageOn { get; set; }
         public ICommand LoginPageOn { get; set; }
 
+        public ICommand logOut { get; set; }
 
 
         public MainWindowViewModel()
@@ -76,6 +77,7 @@ namespace MemberMainView.VM
             chargePageOn = new Command(LoadCharge, CE);
             licensePageOn = new Command(LoadLicense, CE);
             editPageOn = new Command(LoadEditPage, CE);
+            logOut = new Command(ExecuteLogOut,CE);
             ContentView = null;
         }
         private bool CE(object obj)
@@ -130,6 +132,10 @@ namespace MemberMainView.VM
                 this._contentView = value;
                 this.OnPropertyChanged("ContentView");
             }
+        }
+        public void ExecuteLogOut(object obj)
+        {
+            System.Environment.Exit(1);
         }
         protected void OnPropertyChanged(string name)
         {

@@ -36,7 +36,9 @@ namespace InterruptLoginView
         public static DataPacket packet = new DataPacket();
         public static byte[] getbyte = new byte[1024];
         public static byte[] setbyte = new byte[1024];
+
         public const int sPort = 5000;
+        public static string[] strArg = Environment.GetCommandLineArgs();
 
         sealed class AllowAllAssemblyVersionsDeserializationBinder : System.Runtime.Serialization.SerializationBinder
         {
@@ -52,13 +54,17 @@ namespace InterruptLoginView
 
         public MainWindow()
         {
+            //Server
+            TypressServerConnect();
+            //Thread td = new Thread(new ThreadStart(TypressServerConnect));
+            //td.Start(this);
+
+
             //UI
             InitializeComponent();
             this.MouseLeftButtonDown += MoveWindow;
             this.PreviewKeyDown += new KeyEventHandler(HandleEsc);
 
-            Thread td = new Thread(new ThreadStart(TypressServerConnect));
-            td.Start();
 
         }
         private void HandleEsc(object sender, KeyEventArgs e)
@@ -84,14 +90,14 @@ namespace InterruptLoginView
 
             try
             {
-
+                Thread.Sleep(1000);
                 SendPacketToServer(packet); // 로그인 시도 Packet보내기
+               
                 ReceivePacketFromServer(); // 성공여부 반환!!
 
                 if (packet.IsLogin)
                 {
-                    //Window cb = new ControlBlock();
-                    //cb.Show();
+                    OpenView();
                     this.Close();
                 }
                 else
@@ -106,19 +112,16 @@ namespace InterruptLoginView
             finally
             {
                 // 서버 수신 대기하는 메소드 필요.
-
-
-
                 //this.Close();
 
             }
         }
         void ClickQuit(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            System.Environment.Exit(1);
         }
 
-        public static void TypressServerConnect()
+        public void TypressServerConnect()
         {
             try
             {
@@ -128,11 +131,31 @@ namespace InterruptLoginView
                 socket = new Socket(
                     AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 socket.Connect(serverEndPoint);
+
+                ReceivePacketFromServer();
+                if (packet.IsLogin)
+                {
+                    //MessageBox.Show("이미 로그인되어있습니다. ControlBlock & MainView 호출");
+                    OpenView();
+                    this.Close();
+                }
             }
             catch(SocketException e)
             {
                 MessageBox.Show("Server Stopped!");
 
+            }
+        }
+
+        public static void OpenView()
+        {
+            if (strArg.Length <= 1) // window에서 실행.
+            {
+                ViewHandler.OpenMainViewFromWindow();
+            }
+            else
+            {
+                ViewHandler.OpenControlViewFromPrint();
             }
         }
 

@@ -10,16 +10,17 @@ using System.Windows.Forms;
 using System.Drawing.Printing;
 using System.Management;
 
-namespace ServerSideSocket
+namespace TypressServer
 {
-    public partial class PrintLogger
+
+    public partial class PrintHandler
     {
         private PrintDocument pManager = null; 
         private NktSpyMgr _spyMgr;
         private NktProcess _process;
         private int cnt = 0;
 
-        public PrintLogger()
+        public PrintHandler()
         {
             // InitializeComponent();
 
@@ -102,11 +103,7 @@ namespace ServerSideSocket
             if (cnt == 3)
             {
                 GetPrintPages();
-                int res = OpenLoginView(); 
-                            //  IsLogin == false; -> OpenLoginView()
-                            //  IsLogin == true;; -> OpenMainView()
-                            //      
-                            //      
+                ViewHandler.OpenControlViewFromPrint();
             }
             if (cnt == 4) cnt = 0;
         }

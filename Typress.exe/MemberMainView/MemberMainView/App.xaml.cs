@@ -29,17 +29,25 @@ namespace MemberMainView
         public const int sPort = 5001;
 
         public string id { get; set; }
-       
-
+        public static bool exitcode = false;
+        public static string[] strArg = Environment.GetCommandLineArgs();
 
         public App()
         {
-            this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
+            try
+            {
+                this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
 
-            TypressServerConnect();
-            Thread.Sleep(2000);
-            getDataPacketFromServer();
-            Thread.Sleep(1000);
+                TypressServerConnect();
+                //Thread.Sleep(2000);
+                if (exitcode) {
+                    MessageBox.Show("로그인이 필요합니다!");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("error : {0}", ex.Message);
+            }
         }
 
 
@@ -66,17 +74,33 @@ namespace MemberMainView
                     AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
                 socket.Connect(serverEndPoint);
+                //MessageBox.Show("ok11");
+                //Thread.Sleep(1000);
+                //MessageBox.Show("ok22");
+                //SendPacketToServer(dp); // 로그인 여부. 
+                getDataPacketFromServer();
 
+                if (!dp.IsLogin)
+                {
+                    //ViewHandler.OpenLoginViewFromMain();
+                    OpenView();
+                    exitcode = true;
+                }
             }
             catch (SocketException e)
             {
                 MessageBox.Show("Server Stopped!");
 
             }
+            catch (Exception e)
+            {
+                MessageBox.Show("Don't Work");
+
+            }
         }
 
 
-        public void getDataPacketFromServer()
+        public static void getDataPacketFromServer()
         {
             socket.Receive(getbyte, 0,
                 getbyte.Length, SocketFlags.None);
@@ -128,5 +152,9 @@ namespace MemberMainView
             return obj;
         }
 
+        public static void OpenView()
+        {
+            ViewHandler.OpenLoginViewFromMain(); // 얘는 로그인에서 Main을 키겠지.
+        }
     }
 }
