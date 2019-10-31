@@ -1,6 +1,9 @@
 # Typress
-- **Typress**(**활자인쇄소**를 영어로 번역함).
-- 동아리방 프린터멤버십제도 프로젝트인 활자인쇄소(Typress)는 가톨릭대학교내 학회 및 동아리실을 이용하는 학생들을 대상으로 서비스를 런칭하는 프로젝트이다.
+![image](https://user-images.githubusercontent.com/16419202/67943984-b0fb7a00-fc1e-11e9-8ffb-6be86ff058f9.png)
+- Typress(활자인쇄소를 영어로 번역함).
+- 동아리방 프린터멤버십제도 프로젝트인 **활자인쇄소(Typress)** 는 가톨릭대학교내 학회 및 동아리실을 이용하는 학생들을 대상으로 서비스를 런칭한 프로젝트이다.
+
+
 
 # To-do API-remodeling & merge
 ○ '칸반보드' 참고.
@@ -25,3 +28,7 @@
 
 :book: **개선사항**
 - ViewHandler 프로젝트 단위로로 참조하자
+
+# service-app test
+- Tutorial Ref. 
+https://docs.microsoft.com/ko-kr/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer
