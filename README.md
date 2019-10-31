@@ -12,13 +12,20 @@ Typress(활자인쇄소를 영어로 번역함).
 - MainView에서 Logout구현 필요.(this.Close()) **(Client)**
 <br>
   
+
 :book: **참고사항**<br><br>
 **프로세스 검색 :** `` tasklist | find /i "string" ``<br>
 **프로세스 종료 :** `` taskkill /pid num /f ``<br><br><br>
 
 :book: **개선사항**
-- ViewHandler 프로젝트 단위로로 참조하자
+
+
+<br><br>
 
 # service-app test
-- Tutorial Ref. 
-https://docs.microsoft.com/ko-kr/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer
+- Tutorial 
+  https://docs.microsoft.com/ko-kr/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer
+
+- Service Delete (PowerShell)
+
+  https://docs.microsoft.com/ko-kr/dotnet/framework/windows-services/how-to-install-and-uninstall-services
