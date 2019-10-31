@@ -18,3 +18,7 @@ Typress(활자인쇄소를 영어로 번역함).
 
 :book: **개선사항**
 - ViewHandler 프로젝트 단위로로 참조하자
+
+# service-app test
+- Tutorial Ref. 
+https://docs.microsoft.com/ko-kr/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer
