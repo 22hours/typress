@@ -5,15 +5,21 @@
 
 
 
-# To-do ObjectModuling (19.09.30)
+# To-do API-remodeling & merge
+○ '칸반보드' 참고.
+* 설계 완료 
+-> 22Hours's API 모듈화, (+ServiceApp Test 병행)
+* 프린터 후킹 간단한 버그 수정중
+
+-> 기존 TypressServer에 Merge
+-> Service App test
+
+○ 아카이브 동시에 진행.
+-> 비번찾거나, 새로만들거나
 
 :computer: **Server**<br>
 
-- 로그인 되어있는 상태에서 -> 프린트요청(5003번포트 미사용했기 떄문.) -> X
-- 로그인 되어있는 상태에서 -> serverstop.
-- 팬실에서 점검해보기 <- dll포함 컴파일이 안되고 있음.
-- ViewModel에서 View제어.(this.Close()) **(Client)**
-- MainView에서 Logout구현 필요.(this.Close()) **(Client)**
+
 <br>
   
 :book: **참고사항**<br><br>
