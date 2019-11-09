@@ -14,7 +14,6 @@ namespace MyService
         /// </summary>
         static void Main()
         {
-            System.Diagnostics.Debugger.Launch();
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
