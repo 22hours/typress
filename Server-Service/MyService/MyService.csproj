@@ -93,6 +93,7 @@
     <Compile Include="Handler\Handler_Socket\SocketHandler5001Main.cs" />
     <Compile Include="Handler\Handler_Socket\SocketHandler5002CB.cs" />
     <Compile Include="Handler\Handler_Socket\SocketHandler5003Print.cs" />
+    <Compile Include="Handler\Handler_View\ViewHandler.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>

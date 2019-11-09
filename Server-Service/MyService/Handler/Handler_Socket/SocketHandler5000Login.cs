@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TypressPacket;
 using MyService.Handler.Handler_Thread;
+using System.Diagnostics;
 
 namespace MyService.Handler.Handler_Socket
 {
@@ -22,7 +23,6 @@ namespace MyService.Handler.Handler_Socket
 
         public void ServerOpenLogin(object port)
         {
-
 
             while (true)
             {
@@ -37,36 +37,41 @@ namespace MyService.Handler.Handler_Socket
 
                     serverLogin.Bind(serverEndPoint);
                     serverLogin.Listen(10);
-                    TypressService.eventLog1.WriteEntry("서버(로그인) 대기중.");
+                    TypressService.eventLog1.WriteEntry("서버(로그인) 대기중.", EventLogEntryType.Information, TypressService.eventId++);
                     // 항시 연결대기중.
 
                     clientLogin = serverLogin.Accept();
-                    TypressService.eventLog1.WriteEntry("서버(로그인) 성공.");
+                    TypressService.eventLog1.WriteEntry("서버(로그인) 성공.", EventLogEntryType.SuccessAudit, TypressService.eventId++);
 
                     Thread.Sleep(2000);
                     //Receive : 연결 햇군!(굳이 Client에서 Send안해도된다.)
                     //SendPacket : 로그인 여부를 Client로 보낸다. 
                     SendPacketFromServerToLogin();
-                    TypressService.eventLog1.WriteEntry("로그인폼으로 Packet전달완료");
+                    TypressService.eventLog1.WriteEntry("로그인폼으로 Packet전달완료", EventLogEntryType.SuccessAudit, TypressService.eventId++);
 
 
                     if (ThreadHandler.MainPacket.IsLogin)
                     {
-                        TypressService.eventLog1.WriteEntry("이미 로그인되어있음.");
+                        TypressService.eventLog1.WriteEntry("이미 로그인되어있음.", EventLogEntryType.Information, TypressService.eventId++);
                     }
 
                     //Client 창 로그인창.
                     while (!ThreadHandler.MainPacket.IsLogin)
                     {
                         // 수신대기
-                        TypressService.eventLog1.WriteEntry("수신대기");
+                        TypressService.eventLog1.WriteEntry("수신대기", EventLogEntryType.Information, TypressService.eventId++);
                         ReceivePacketFromLoginClient();
                         Thread.Sleep(1000);
-                        TypressService.eventLog1.WriteEntry("패킷송신");
+                        TypressService.eventLog1.WriteEntry("패킷송신", EventLogEntryType.Information, TypressService.eventId++);
                         SendPacketFromServerToLogin(); // 송신
 
                     }
-                    // CB를 틀 수 있도록 해야함.
+
+                    TypressService.eventLog1.WriteEntry("로그인을 성공했습니다!", EventLogEntryType.SuccessAudit, TypressService.eventId++);
+                    // Printer에서 로그인안된채 Interrupt
+                    //    -> Open CB
+                    // Window에서 실행
+                    //    -> Open MainView
 
 
                     // 클라이언트(로그인)의 "종료" : 
@@ -77,10 +82,13 @@ namespace MyService.Handler.Handler_Socket
                 catch (SocketException socketEx)
                 {
                     //ViewHandler.SocketExMessage(socketEx);
+                    TypressService.eventLog1.WriteEntry("[로그인소켓]에러", EventLogEntryType.Error, TypressService.eventId++);
+                    
                 }
                 catch (Exception commonEx)
                 {
                     //ViewHandler.ExMessage(commonEx);
+                    TypressService.eventLog1.WriteEntry("[로그인]예외에러", EventLogEntryType.Error, TypressService.eventId++);
                 }
                 finally
                 {

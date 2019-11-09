@@ -53,17 +53,5 @@ namespace MyService.Handler.Handler_Thread
             // PrintListener.Join();
             // PrintHooker.Join();
         }
-
-        public static void OpenControlViewFromPrint()
-        {
-            //Process P = Process.Start("경로", "PC");
-            //P.WaitForExit();
-        }
-
-        public static void OpenMainViewFromWindow()
-        {
-            //Process P = Process.Start("경로", "WM");
-            //P.WaitForExit();
-        }
     }
 }

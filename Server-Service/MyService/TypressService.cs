@@ -14,19 +14,23 @@ using System.Timers;
 using System.Threading;
 using MyService.Handler.Handler_Socket;
 using MyService.Handler.Handler_Thread;
+using TypressPacket;
 
 namespace MyService
 {
     public partial class TypressService : ServiceBase
     {
         public static EventLog eventLog1;
-        private bool isLogin;
-        private int eventId = 0;
+        //private bool isLogin;
+        public static DataPacket packet;
+        static public int eventId = 0;
         private DvPrinter dv;
 
         public TypressService()
         {
             InitializeComponent();
+
+            packet = new DataPacket();
             eventLog1 = new System.Diagnostics.EventLog();
             if (!System.Diagnostics.EventLog.SourceExists("MySource"))
             {
@@ -39,7 +43,6 @@ namespace MyService
 
         protected override void OnStart(string[] args)
         {
-            isLogin = false;
             eventLog1.WriteEntry("Typress Start!");
 
             #region MainThread Timer
