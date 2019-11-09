@@ -66,6 +66,7 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=8.0.17.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="Nektra.Deviare2, Version=2.0.0.0, Culture=neutral, PublicKeyToken=ca654cbae704bad4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -76,23 +77,29 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DvPrinter.cs" />
+    <Compile Include="Handler\Handler_Socket\SocketHandler.cs" />
+    <Compile Include="Handler\Handler_Socket\SocketHandler5000Login.cs" />
+    <Compile Include="Handler\Handler_Socket\SocketHandler5001Main.cs" />
+    <Compile Include="Handler\Handler_Socket\SocketHandler5002CB.cs" />
+    <Compile Include="Handler\Handler_Socket\SocketHandler5003Print.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="Handler\Handler_Thread\ThreadHandler.cs" />
     <Compile Include="TypressService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -125,5 +132,12 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Model\TypressPacket\TypressPacket.csproj">
+      <Project>{e0139b1f-ccd4-4c16-9738-7923795089c5}</Project>
+      <Name>TypressPacket</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

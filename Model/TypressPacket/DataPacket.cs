@@ -49,19 +49,6 @@ namespace TypressPacket
         {
             return rankers;
         }
-        /*
-        public string[] RankName = new string[20];
-        public string[] GetRankName()
-        {
-            return RankName;
-        }
-        public Int32[] RankUsage = new Int32[20];
-        public Int32[] GetRankUsage()
-        {
-            return RankUsage;
-        }
-        
-        */
 
         public DataPacket() {}
         public DataPacket(string n, string g)

@@ -12,7 +12,8 @@ using System.IO;
 using System.Net;
 using System.Timers;
 using System.Threading;
-
+using MyService.Handler.Handler_Socket;
+using MyService.Handler.Handler_Thread;
 
 namespace MyService
 {
@@ -41,17 +42,17 @@ namespace MyService
             isLogin = false;
             eventLog1.WriteEntry("Typress Start!");
 
+            #region MainThread Timer
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Interval = 60000; // 60 seconds
             timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
             timer.Start();
             //System.Diagnostics.Debugger.Launch();
+            #endregion
 
-            dv = new DvPrinter();
-            ThreadStart th = new ThreadStart(dv.DvStart);
-            Thread thread1 = new Thread(th);
-            thread1.Start();
-
+            #region ThreadHandler Start
+            ThreadHandler th = new ThreadHandler();
+            #endregion
         }
 
         protected override void OnStop()

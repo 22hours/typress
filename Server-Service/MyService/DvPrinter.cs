@@ -58,7 +58,7 @@ namespace MyService
 
         private void OnFunctionCalledPrinter(INktHook hhook, INktProcess proc, INktHookCallInfo callInfo)
         {
-            TypressService.eventLog1.WriteEntry("Event.");
+            TypressService.eventLog1.WriteEntry("Printer Request Event!");
             if (num == "100")
             {
                 TypressService.eventLog1.WriteEntry("출력됩니당.");

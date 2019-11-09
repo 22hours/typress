@@ -39,7 +39,7 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.Description = "실험중";
+            this.serviceInstaller1.Description = "Service app에다가 이것저것 올려보는 중.";
             this.serviceInstaller1.DisplayName = "22hours Service";
             this.serviceInstaller1.ServiceName = "22HoursService";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
