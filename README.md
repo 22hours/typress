@@ -38,3 +38,7 @@ Typress(활자인쇄소를 영어로 번역함).
 
 - Service Delete (PowerShell)
   - https://docs.microsoft.com/ko-kr/dotnet/framework/windows-services/how-to-install-and-uninstall-services
+  
+- Application Loader
+  - https://darbyy.tistory.com/20
+  - https://www.codeproject.com/Articles/35773/Subverting-Vista-UAC-in-Both-32-and-64-bit-Archite
