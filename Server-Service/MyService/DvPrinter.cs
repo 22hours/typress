@@ -64,8 +64,13 @@ namespace MyService
             {
                 TypressService.eventLog1.WriteEntry("LoginForm 띄움");
                 System.Diagnostics.Debugger.Launch();
-                Process P = Process.Start("C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe");
-                P.WaitForExit(); // IsLogin 변수 바꼈는지?
+
+                string applicationName = "C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe";
+                ApplicationLoader.PROCESS_INFORMATION procInfo;
+                ApplicationLoader.StartProcessAndBypassUAC(applicationName, out procInfo);
+
+                //Process P = Process.Start("C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe");
+                //P.WaitForExit(); // IsLogin 변수 바꼈는지?
                 return;
             }
         }

@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationLoader.cs" />
     <Compile Include="DvPrinter.cs" />
     <Compile Include="Handler\Handler_Socket\SocketHandler.cs" />
     <Compile Include="Handler\Handler_Socket\SocketHandler5000Login.cs" />
