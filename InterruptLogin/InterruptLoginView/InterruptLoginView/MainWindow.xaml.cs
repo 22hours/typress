@@ -70,7 +70,10 @@ namespace InterruptLoginView
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
+            {
                 Close();
+                System.Environment.Exit(0);
+            }
         }
         void MoveWindow(object sender, MouseEventArgs e)
         {
@@ -98,16 +101,19 @@ namespace InterruptLoginView
                 if (packet.IsLogin)
                 {
                     OpenView();
+                    Thread.Sleep(1500);
                     this.Close();
+                    System.Environment.Exit(1);
                 }
                 else
                 {
                     MessageBox.Show("ID/PW를 다시 확인하세요 :)");
                 }
-            }               //}
+            }            
             catch (Exception ea)
             {
-                MessageBox.Show("Server Stopped!");
+                MessageBox.Show("Server Stopped! [Login]");
+                System.Environment.Exit(-1);
             }
             finally
             {
@@ -118,7 +124,7 @@ namespace InterruptLoginView
         }
         void ClickQuit(object sender, RoutedEventArgs e)
         {
-            System.Environment.Exit(1);
+            System.Environment.Exit(0);
         }
 
         public void TypressServerConnect()
@@ -137,13 +143,15 @@ namespace InterruptLoginView
                 {
                     //MessageBox.Show("이미 로그인되어있습니다. ControlBlock & MainView 호출");
                     OpenView();
-                    this.Close();
+                    Thread.Sleep(1500);
+                    Close();
+                    System.Environment.Exit(2);
                 }
             }
             catch(SocketException e)
             {
-                MessageBox.Show("Server Stopped!");
-
+                MessageBox.Show("Server Stopped! [Login]");
+                System.Environment.Exit(-1);
             }
         }
 

@@ -181,6 +181,7 @@ namespace MyService
             int dwCreationFlags = NORMAL_PRIORITY_CLASS | CREATE_NEW_CONSOLE;
 
             // create a new process in the current user's logon session
+            applicationName += " /PS";
             bool result = CreateProcessAsUser(hUserTokenDup,        // client's access token
                                             null,                   // file to execute
                                             applicationName,        // command line

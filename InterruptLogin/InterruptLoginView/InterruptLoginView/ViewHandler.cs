@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace InterruptLoginView
 {
@@ -11,15 +12,16 @@ namespace InterruptLoginView
     {
         public static void OpenControlViewFromPrint()
         {
-            Process P = Process.Start("..\\..\\..\\..\\..\\..\\ControlBlock\\ControlBlock\\bin\\x64\\Debug\\ControlBlock.exe", "PC");
-            //P.WaitForExit();
+            MessageBox.Show("프린터 -> LoginForm -> CB");
+            Process P = Process.Start("ControlBlock.exe");
         }
 
 
         public static void OpenMainViewFromWindow()
         {
-            Process P = Process.Start("..\\..\\..\\..\\..\\..\\MemberMainView\\MemberMainView\\bin\\x64\\Debug\\MemberMainView.exe", "WM");
-            //P.WaitForExit();
+            MessageBox.Show("OS -> LoginForm -> Main");
+            Process P = Process.Start("MemberMainView.exe");
+
         }
     }
 }
