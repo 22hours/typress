@@ -13,12 +13,19 @@ namespace MyService
 
     class DvPrinter
     {
+        int procId;
         int PageCnt;
         string num;
         NktSpyMgr _spyMgr;
         NktProcess _process;
         NktHook hookPrinterStart, hookPage, hookPrinterEnd;
         bool IsWorkedPrintStart = false, IsWorkedPrintEnd = false;
+
+        [DllImport("kernel32.dll")]
+        static extern bool GetExitCodeProcess(IntPtr hProcess, ref int lpExitCode);
+
+        [DllImport("kernel32.dll")]
+        static extern bool WaitForSingleObject(IntPtr hProcess, int waitforsecond);
 
         public DvPrinter()
         {
@@ -81,22 +88,28 @@ namespace MyService
                 IsWorkedPrintStart = false;
                 return;
             }
+
+            int exitcode = 0;
+
             TypressService.eventLog1.WriteEntry("Printer Request Event!");
             PageCnt = 0;
             if (TypressService.packet.IsLogin == false)
             {
                 TypressService.eventLog1.WriteEntry("LoginForm 띄움");
                 //System.Diagnostics.Debugger.Launch();
-
-                string applicationName = "C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe";
-                ApplicationLoader.PROCESS_INFORMATION procInfo;
-                ApplicationLoader.StartProcessAndBypassUAC(applicationName, out procInfo);
-
-                //Process P = Process.Start("C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe");
-                //P.WaitForExit(); // IsLogin 변수 바꼈는지?
-                IsWorkedPrintStart = true;
-                return;
             }
+            string applicationName = "C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe";
+            ApplicationLoader.PROCESS_INFORMATION procInfo;
+            ApplicationLoader.StartProcessAndBypassUAC(applicationName, out procInfo);
+
+            WaitForSingleObject(procInfo.hProcess, 100000);
+
+            GetExitCodeProcess(procInfo.hProcess, ref exitcode);
+            //Process P = Process.Start("C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe");
+            //P.WaitForExit(); // IsLogin 변수 바꼈는지?
+            IsWorkedPrintStart = true;
+            return;
+            
         }
 
         private void OnFunctionCalledPrintPage(INktHook hhook, INktProcess proc, INktHookCallInfo callInfo)
