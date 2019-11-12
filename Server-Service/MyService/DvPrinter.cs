@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Nektra.Deviare2;
 
 namespace MyService
 {
+    delegate bool StartPrintPageEvent(IntPtr hPrinter);
+
     class DvPrinter
     {
         int PageCnt;
         string num;
         NktSpyMgr _spyMgr;
         NktProcess _process;
-        NktHook hookPrinter, hookPage;
+        NktHook hookPrinterStart, hookPage, hookPrinterEnd;
+        bool IsWorkedPrintStart = false, IsWorkedPrintEnd = false;
+
         public DvPrinter()
         {
             _spyMgr = new NktSpyMgr();
@@ -35,20 +40,23 @@ namespace MyService
             //hookPrinter = _spyMgr.CreateHook("spoolsv.exe!StartDocPrinterW", (int)eNktHookFlags.flgOnlyPreCall);
             //hookPrinter = _spyMgr.CreateHook("winspool.drv!StartDocPrinterW", (int)eNktHookFlags.flgOnlyPreCall);
 
-            hookPrinter = _spyMgr.CreateHook("spoolsv.exe!PrvStartDocPrinterW", (int)eNktHookFlags.flgOnlyPreCall);
-            hookPrinter.OnFunctionCalled += OnFunctionCalledPrinter;
 
-            hookPage = _spyMgr.CreateHook("winspool.drv!StartPagePrinter", (int)eNktHookFlags.flgOnlyPreCall);
+            //System.Diagnostics.Debugger.Launch();
+
+            hookPrinterStart = _spyMgr.CreateHook("spoolsv.exe!PrvStartDocPrinterW", (int)eNktHookFlags.flgOnlyPreCall);
+            hookPrinterStart.OnFunctionCalled += OnFunctionCalledPrinterStart;
+            hookPage = _spyMgr.CreateHook("spoolsv.exe!PrvStartPagePrinter", (int)eNktHookFlags.flgOnlyPreCall);
             hookPage.OnFunctionCalled += OnFunctionCalledPrintPage;
+            hookPrinterEnd = _spyMgr.CreateHook("spoolsv.exe!PrvEndDocPrinter", (int)eNktHookFlags.flgOnlyPreCall);
+            hookPrinterEnd.OnFunctionCalled += OnFunctionCalledPrinterEnd;
 
-            hookPrinter.Hook(true);
-            hookPrinter.Attach(_process, true);
+
+            hookPrinterStart.Hook(true);
+            hookPrinterStart.Attach(_process, true);
             hookPage.Hook(true);
             hookPage.Attach(_process, true);
-
-        }
-        public void DvPageCount()
-        {
+            hookPrinterEnd.Hook(true);
+            hookPrinterEnd.Attach(_process, true);
 
         }
         private NktProcess GetProcess(string proccessName)
@@ -66,8 +74,13 @@ namespace MyService
             return null;
         }
 
-        private void OnFunctionCalledPrinter(INktHook hhook, INktProcess proc, INktHookCallInfo callInfo)
+        private void OnFunctionCalledPrinterStart(INktHook hhook, INktProcess proc, INktHookCallInfo callInfo)
         {
+            if (IsWorkedPrintStart)
+            {
+                IsWorkedPrintStart = false;
+                return;
+            }
             TypressService.eventLog1.WriteEntry("Printer Request Event!");
             PageCnt = 0;
             if (TypressService.packet.IsLogin == false)
@@ -81,6 +94,7 @@ namespace MyService
 
                 //Process P = Process.Start("C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe");
                 //P.WaitForExit(); // IsLogin 변수 바꼈는지?
+                IsWorkedPrintStart = true;
                 return;
             }
         }
@@ -88,8 +102,21 @@ namespace MyService
         private void OnFunctionCalledPrintPage(INktHook hhook, INktProcess proc, INktHookCallInfo callInfo)
         {
             PageCnt++;
-            TypressService.eventLog1.WriteEntry("Printer Count Increase Event Page");
+            TypressService.eventLog1.WriteEntry("Printer Count Increase Event Page.");
             TypressService.eventLog1.WriteEntry(PageCnt.ToString());
+        }
+
+        private void OnFunctionCalledPrinterEnd(INktHook hhook, INktProcess proc, INktHookCallInfo callInfo)
+        {
+            if (IsWorkedPrintEnd)
+            {
+                IsWorkedPrintEnd = false;
+                return;
+            }
+            TypressService.eventLog1.WriteEntry("최종출력물 갯수 : ");
+            TypressService.eventLog1.WriteEntry(PageCnt.ToString());
+            TypressService.eventLog1.WriteEntry("인쇄작업 종료!");
+            IsWorkedPrintEnd = true;
         }
     }
 }
