@@ -1,5 +1,12 @@
 # Typress
-Typress(활자인쇄소를 영어로 번역함).
+![image](https://user-images.githubusercontent.com/16419202/67943984-b0fb7a00-fc1e-11e9-8ffb-6be86ff058f9.png)
+![image](https://user-images.githubusercontent.com/16419202/68527833-d11dee00-032e-11ea-9f00-80ea3b8a8815.png)
+
+- **Typress**(활자인쇄소를 영어로 번역함).
+- 동아리방 프린터멤버십제도 프로젝트인 **활자인쇄소(Typress)** 는 가톨릭대학교내 학회 및 동아리실을 이용하는 학생들을 대상으로 서비스를 런칭한 프로젝트이다.
+- 현재 90% 진행되었음.(19-11-09 20:24)
+- `typress-service` branch로 본격 진행중.
+
 
 # Typress 1.0.0 (19.11.12)
 - 서비스로 세팅가능
@@ -9,15 +16,11 @@ Typress(활자인쇄소를 영어로 번역함).
 
 - `Project`와 `Issues`를 참조
 - 버전 명시
-
-<br>
   
 
 :book: **참고사항**<br><br>
 **프로세스 검색 :** `` tasklist | find /i "string" ``<br>
 **프로세스 종료 :** `` taskkill /pid num /f ``<br><br><br>
-
-:book: **개선사항**
 
 
 <br><br>
@@ -42,3 +45,8 @@ Typress(활자인쇄소를 영어로 번역함).
 - Application Loader
   - https://darbyy.tistory.com/20
   - https://www.codeproject.com/Articles/35773/Subverting-Vista-UAC-in-Both-32-and-64-bit-Archite
+- ViewHandler 프로젝트 단위로로 참조하자
+
+# service-app test
+- Tutorial Ref. 
+https://docs.microsoft.com/ko-kr/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer
