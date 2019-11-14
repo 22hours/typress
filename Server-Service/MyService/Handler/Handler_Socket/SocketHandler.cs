@@ -13,9 +13,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TypressPacket;
+using MyService.Handler.Handler_Thread;
 
-
-namespace TypressServer
+namespace MyService.Handler.Handler_Socket
 {
     public partial class SocketHandler
     {
@@ -32,8 +32,6 @@ namespace TypressServer
         public static Thread PrintHooker = null;
         public static Thread ServerOpener = null;
 
-
-        public static ViewHandler ViewManager = null;
         public static SocketHandler SocketManager = null;
         //public static ThreadHandler ThreadManager = null;
 
@@ -122,7 +120,7 @@ namespace TypressServer
         public static void UpdateUsingReader(MySqlConnection cn, DataPacket pk)
         {
             cn.Open();
-            MySqlCommand cmd = new MySqlCommand("UPDATE members set MONEY = '"+pk.Money+"' where ID = '"+pk.Id+"';", cn);
+            MySqlCommand cmd = new MySqlCommand("UPDATE members set MONEY = '" + pk.Money + "' where ID = '" + pk.Id + "';", cn);
             cmd.ExecuteNonQuery();
         }
     }

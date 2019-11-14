@@ -40,13 +40,13 @@ namespace MemberMainView
 
                 TypressServerConnect();
                 //Thread.Sleep(2000);
-                if (exitcode) {
-                    MessageBox.Show("로그인이 필요합니다!");
+                if (!dp.IsLogin) {
+                    MessageBox.Show("로그인이 필요합니다! [Main]");
                 }
             }
             catch(Exception ex)
             {
-                Console.WriteLine("error : {0}", ex.Message);
+                Console.WriteLine("error : {0} [Main]", ex.Message);
             }
         }
 
@@ -89,12 +89,12 @@ namespace MemberMainView
             }
             catch (SocketException e)
             {
-                MessageBox.Show("Server Stopped!");
+                MessageBox.Show("Server Stopped! [Main]");
 
             }
             catch (Exception e)
             {
-                MessageBox.Show("Don't Work");
+                MessageBox.Show("Don't Work [Main]");
 
             }
         }
@@ -124,7 +124,7 @@ namespace MemberMainView
         void OnDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             string errorMessage = string.Format("An unhandled exception occurred: {0}", e.Exception.Message);
-            MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(errorMessage, "Error [Main]", MessageBoxButton.OK, MessageBoxImage.Error);
             e.Handled = true;
         }
 

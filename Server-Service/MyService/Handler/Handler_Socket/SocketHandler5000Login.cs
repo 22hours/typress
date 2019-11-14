@@ -13,14 +13,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TypressPacket;
+using MyService.Handler.Handler_Thread;
+using System.Diagnostics;
 
-namespace TypressServer
+namespace MyService.Handler.Handler_Socket
 {
     public partial class SocketHandler
     {
 
         public void ServerOpenLogin(object port)
         {
+
             while (true)
             {
                 try
@@ -34,36 +37,42 @@ namespace TypressServer
 
                     serverLogin.Bind(serverEndPoint);
                     serverLogin.Listen(10);
-                    Console.WriteLine("****서버(로그인)대기중*****");
+                    TypressService.eventLog1.WriteEntry("서버(로그인) 대기중.", EventLogEntryType.Information, TypressService.eventId++);
                     // 항시 연결대기중.
 
                     clientLogin = serverLogin.Accept();
-                    Console.WriteLine("****서버(로그인)~클라이언트(로그인) 연결완료.**");
+                    TypressService.eventLog1.WriteEntry("서버(로그인) 성공.", EventLogEntryType.SuccessAudit, TypressService.eventId++);
 
                     Thread.Sleep(2000);
                     //Receive : 연결 햇군!(굳이 Client에서 Send안해도된다.)
                     //SendPacket : 로그인 여부를 Client로 보낸다. 
                     SendPacketFromServerToLogin();
-                    Console.WriteLine("로그인폼으로 Packet전달완료.");
+                    TypressService.eventLog1.WriteEntry("로그인폼으로 Packet전달완료", EventLogEntryType.SuccessAudit, TypressService.eventId++);
+
 
                     if (ThreadHandler.MainPacket.IsLogin)
                     {
-                        throw new Exception("이미 로그인 되어있습니다.");
+                        TypressService.eventLog1.WriteEntry("이미 로그인되어있음.", EventLogEntryType.Information, TypressService.eventId++);
                     }
 
                     //Client 창 로그인창.
                     while (!ThreadHandler.MainPacket.IsLogin)
                     {
                         // 수신대기
-                        Console.WriteLine("수신대기");
+                        TypressService.eventLog1.WriteEntry("수신대기", EventLogEntryType.Information, TypressService.eventId++);
                         ReceivePacketFromLoginClient();
                         Thread.Sleep(1000);
-                        Console.WriteLine("패킷송신");
+                        TypressService.eventLog1.WriteEntry("패킷송신", EventLogEntryType.Information, TypressService.eventId++);
                         SendPacketFromServerToLogin(); // 송신
-                   
+
                     }
-                    // CB를 틀 수 있도록 해야함.
-                   
+
+                    TypressService.eventLog1.WriteEntry("로그인을 성공했습니다!", EventLogEntryType.SuccessAudit, TypressService.eventId++);
+                    // Printer에서 로그인안된채 Interrupt
+                    //    -> Open CB
+                    // Window에서 실행
+                    //    -> Open MainView
+
 
                     // 클라이언트(로그인)의 "종료" : 
                     //     1) 로그인 창을 껐을 때 : 서버에서 예외처리
@@ -72,11 +81,14 @@ namespace TypressServer
                 }
                 catch (SocketException socketEx)
                 {
-                    ViewHandler.SocketExMessage(socketEx);
+                    //ViewHandler.SocketExMessage(socketEx);
+                    TypressService.eventLog1.WriteEntry("[로그인소켓]에러", EventLogEntryType.Error, TypressService.eventId++);
+                    
                 }
                 catch (Exception commonEx)
                 {
-                    ViewHandler.ExMessage(commonEx);
+                    //ViewHandler.ExMessage(commonEx);
+                    TypressService.eventLog1.WriteEntry("[로그인]예외에러", EventLogEntryType.Error, TypressService.eventId++);
                 }
                 finally
                 {
@@ -102,7 +114,7 @@ namespace TypressServer
                 //DataPacket packet = ThreadHandler.MainPacket;
 
                 //if (nowPacket != null && nowPacket.IsLogin == true)  // 이미 로그인 되어있는 경우
-                if(ThreadHandler.MainPacket != null && ThreadHandler.MainPacket.IsLogin == true)
+                if (ThreadHandler.MainPacket != null && ThreadHandler.MainPacket.IsLogin == true)
                 {
                     packet = ThreadHandler.MainPacket;
                 }

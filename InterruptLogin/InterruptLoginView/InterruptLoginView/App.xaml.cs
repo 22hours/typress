@@ -16,6 +16,7 @@ namespace InterruptLoginView
     public partial class App : Application
     {
         DataPacket dp = new DataPacket();
+        public static string[] strArg = Environment.GetCommandLineArgs();
 
         public App()
         {

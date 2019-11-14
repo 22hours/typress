@@ -10,9 +10,9 @@ using System.Reflection;
 using TypressPacket;
 using MySql.Data.MySqlClient;
 using System.Threading;
-using Nektra.Deviare2;
 using System.Diagnostics;
 using System.Collections;
+using Nektra.Deviare2;
 
 namespace TypressServer
 {

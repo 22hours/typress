@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TypressPacket;
+using MyService.Handler.Handler_Socket;
 
-namespace TypressServer
+namespace MyService.Handler.Handler_Thread
 {
     class ThreadHandler
     {
@@ -19,6 +20,7 @@ namespace TypressServer
         public static object lockObject = new object();
         public static DataPacket MainPacket = new DataPacket();
 
+        public DvPrinter dv = new DvPrinter();
         public SocketHandler LoginSocketHandler = new SocketHandler();
         public SocketHandler MainSocketHandler = new SocketHandler();
         public SocketHandler CBSocketHandler = new SocketHandler();
@@ -27,47 +29,29 @@ namespace TypressServer
         public ThreadHandler()
         {
 
+            #region Make Listener 
             Thread LoginListener = new Thread(new ParameterizedThreadStart(LoginSocketHandler.ServerOpenLogin));
             Thread MainListener = new Thread(new ParameterizedThreadStart(MainSocketHandler.ServerOpenMain));
             Thread CBListener = new Thread(new ParameterizedThreadStart(CBSocketHandler.ServerOpenCB));
             Thread PrintListener = new Thread(new ParameterizedThreadStart(PrintSocketHandler.ServerOpenPrint));
-            Thread PrintHooker = new Thread(new ThreadStart(PrintHookOpen));
+            Thread PrintHooker = new Thread(new ThreadStart(dv.DvStart));
+            #endregion
 
+            #region Thread Start
             LoginListener.Start((int)5000);
             MainListener.Start((int)5001);
             CBListener.Start((int)5002);
             PrintListener.Start((int)5003);
             PrintHooker.Start();
+            #endregion
 
-            LoginListener.Join();
-            MainListener.Join();
-            CBListener.Join();
-            PrintListener.Join();
-            PrintHooker.Join();
-        }
-
-        public static void PrintHookOpen()
-        {
-            while (true)
-            {
-                // Waiting Printer Ruest ....
-                Console.WriteLine("☆★☆ PrintLogger가 시작되었습니다. ☆★☆\n");
-                PrintHandler PL = new PrintHandler();
-                Console.ReadLine(); // 이벤트 감지
-                Console.WriteLine("☆★☆ PrintLogger가 종료되었습니다. ☆★☆\n");
-            }
-        }
-
-        public static void OpenControlViewFromPrint()
-        {
-            Process P = Process.Start("C:\\Users\\jklh0\\source\\github\\Typress\\ControlBlock\\ControlBlock\\bin\\x64\\Debug\\ControlBlock.exe", "PC");
-            //P.WaitForExit();
-        }
-
-        public static void OpenMainViewFromWindow()
-        {
-            Process P = Process.Start("C:\\Users\\jklh0\\source\\github\\Typress\\Typress.exe\\MemberMainView\\MemberMainView\\bin\\x64\\Debug\\MemberMainView.exe", "WM");
-            //P.WaitForExit();
+           
+            //여기 이렇게 처리하는게 맞나???
+            // LoginListener.Join();
+            // MainListener.Join();
+            // CBListener.Join();
+            // PrintListener.Join();
+            // PrintHooker.Join();
         }
     }
 }

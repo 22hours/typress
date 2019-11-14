@@ -13,12 +13,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TypressPacket;
+using MyService.Handler.Handler_Thread;
 
-namespace TypressServer
+namespace MyService.Handler.Handler_Socket
 {
     public partial class SocketHandler
     {
-        public void ServerOpenPrint(object port)
+
+        public void ServerOpenMain(object port)
         {
             while (true)
             {
@@ -27,44 +29,46 @@ namespace TypressServer
                     IPAddress serverIP = IPAddress.Parse("127.0.0.1");
                     IPEndPoint serverEndPoint = new IPEndPoint(serverIP, (int)port);
 
-                    serverPrint = new Socket(
+                    serverMain = new Socket(
                       AddressFamily.InterNetwork,
                       SocketType.Stream, ProtocolType.Tcp);
 
-                    serverPrint.Bind(serverEndPoint);
-                    serverPrint.Listen(10);
+                    serverMain.Bind(serverEndPoint);
+                    serverMain.Listen(10);
+                    
+                    TypressService.eventLog1.WriteEntry("서버(Main)대기중");
+                    clientMain = serverMain.Accept();
+                    TypressService.eventLog1.WriteEntry("서버(Main)~클라이언트(Main) 연결완료");
 
-                    Console.WriteLine("****서버(Print)대기중*****");
-                    clientPrint = serverPrint.Accept();
-                    Console.WriteLine("Complete!");
-                    //SendPacketFromServerToPrint();
+                    //ReceivePacketFromMainClient();
+                    Thread.Sleep(1000);
+                    SendPacketFromServerToMain();
 
-                    //ReceivePacketFromClient();
-
+                    //클라이언트 
                 }
                 catch (SocketException socketEx)
                 {
-                    ViewHandler.SocketExMessage(socketEx);
+                    //ViewHandler.SocketExMessage(socketEx);
                 }
                 catch (Exception commonEx)
                 {
-                    ViewHandler.ExMessage(commonEx);
+                    //ViewHandler.ExMessage(commonEx);
                 }
                 finally
                 {
-                    serverPrint.Close();
-                    clientPrint.Close();
+                    serverMain.Close();
+                    clientMain.Close();
 
                     getbyte = setbyte = null;
                     getbyte = new byte[1024];
                     setbyte = new byte[1024];
-                    serverPrint = null;
-                    clientPrint = null;
+                    serverMain = null;
+                    clientMain = null;
                 }
             }
         }
 
-        public static void SendPacketFromServerToPrint()
+        public static void SendPacketFromServerToMain()
         {
             Monitor.Enter(ThreadHandler.lockObject);
             try
@@ -76,7 +80,7 @@ namespace TypressServer
                     packet = ThreadHandler.MainPacket;
                 }
                 setbyte = ObjectToByteArray(packet);
-                clientPrint.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
+                clientMain.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
             }
             finally
             {
@@ -84,7 +88,7 @@ namespace TypressServer
             }
         }
 
-        public static void ReceivePacketFromClientPrintClient()
+        public static void ReceivePacketFromMainClient() // Packet에 ID, PW만 온다.
         {
             Monitor.Enter(ThreadHandler.lockObject);
             try
@@ -94,7 +98,7 @@ namespace TypressServer
                 string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
                 MySqlConnection conn = new MySqlConnection(strConn);
 
-                clientPrint.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
+                clientMain.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
                 packet = (DataPacket)ByteArrayToObject(getbyte);
 
                 //DB에 ID와 PW로 접근.
@@ -104,7 +108,7 @@ namespace TypressServer
                 packet = SelectUsingReader(conn, packet);
                 ThreadHandler.MainPacket = packet;
                 if (ThreadHandler.MainPacket.IsLogin == false)
-                    Console.WriteLine("현재 로그인이 되어있지 않습니다.\n\n");
+                    TypressService.eventLog1.WriteEntry("로그인되어있지 않습니다.");
             }
             finally
             {

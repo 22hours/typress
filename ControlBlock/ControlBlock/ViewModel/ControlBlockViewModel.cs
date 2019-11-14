@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using TypressPacket;
 
@@ -44,7 +45,7 @@ namespace ControlBlock.ViewModel
             ViewMyPage = new Command(ExecuteViewMyPage, CanExecute);
 
 
-            dp = ((App)Application.Current).getNowDataPacket();
+            dp = ((App)System.Windows.Application.Current).getNowDataPacket();
 
             id = dp.Name;
             TotalPrintCount = dp.TotalUsage;
@@ -69,16 +70,19 @@ namespace ControlBlock.ViewModel
             // Window 닫기
             // Close 버튼
             App.SendPacketToServer(new DataPacket());
-            MessageBox.Show("인쇄 안함 로그아웃 후 창닫기");
-            System.Environment.Exit(1);
+
+            if (System.Windows.Forms.MessageBox.Show("로그아웃 하시겠습니까?", "TYPRESS Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                System.Windows.Forms.MessageBox.Show("로그아웃을 하였습니다 :)");
+                System.Environment.Exit(1);
+            }
         }
 
         private void ExecutePrint(object obj)
         {
-            // 프린트 하기
-            if (ShowSelectBox())
+            if (System.Windows.Forms.MessageBox.Show("출력할 인쇄물이 남았습니까?", "TYPRESS Print", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                MessageBox.Show("출력을 진행합니다.");
+                System.Windows.Forms.MessageBox.Show("출력을 진행합니다.");
                 //DB
                 //server로부터 몇장인지 받아온다.
                 UpdateDB();
@@ -86,12 +90,11 @@ namespace ControlBlock.ViewModel
                 // close exit status code : 0
                 ViewHandler.OpenControlViewFromPrint();
                 System.Environment.Exit(0);
-
             }
             else
             {
                 App.SendPacketToServer(new DataPacket());
-                MessageBox.Show("로그아웃");
+                System.Windows.Forms.MessageBox.Show("로그아웃");
 
                 // close exit status code : 1
                 ViewHandler.OpenLoginViewFromMain();
@@ -99,14 +102,6 @@ namespace ControlBlock.ViewModel
             }
         }
 
-        private Boolean ShowSelectBox()
-        {
-            if (MessageBox.Show("출력할 인쇄물이 남았습니까? ", "Yes-No", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                return true;
-            }
-            else return false;
-        }
 
         private bool CanExecute(object arg)
         {

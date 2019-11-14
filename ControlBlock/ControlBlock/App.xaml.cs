@@ -27,7 +27,6 @@ namespace ControlBlock
         public static byte[] getbyte = new byte[1024];
         public static byte[] setbyte = new byte[1024];
         public const int sPort = 5002;
-        public static bool exitcode = false;
         public static string[] strArg = Environment.GetCommandLineArgs();
 
         sealed class AllowAllAssemblyVersionsDeserializationBinder : System.Runtime.Serialization.SerializationBinder
@@ -46,15 +45,16 @@ namespace ControlBlock
             try
             {
                 TypressServerConnect();
-                if (exitcode)
+                if (!dp.IsLogin)
                 {
-                    MessageBox.Show("로그인이 필요합니다!");
-                    //OpenView();
+                    MessageBox.Show("로그인이 필요합니다! [CB]");
+                    Environment.Exit(0);
                 }
             }
             catch(Exception ex)
             {
-                Console.WriteLine("error : {0}", ex.Message);
+                //Console.WriteLine("error : {0} [CB]", ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -84,21 +84,15 @@ namespace ControlBlock
                     AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 socket.Connect(serverEndPoint);
 
-                Thread.Sleep(2000);
+                //Thread.Sleep(2000);
 
                 //SendPacketToServer(dp);
                 getDataPacketFromServer();
 
-                if (!dp.IsLogin)
-                {
-                    OpenView();
-                    exitcode = true;
-                }
-
             }
             catch (SocketException e)
             {
-                MessageBox.Show("Server Stopped!");
+                MessageBox.Show("Server Stopped! [CB]");
 
             }
         }
@@ -143,14 +137,7 @@ namespace ControlBlock
 
         public static void OpenView()
         {
-            //if (strArg.Length <= 1) // window에서 실행.
-            //{
                 ViewHandler.OpenLoginViewFromMain();
-            //}
-            //else
-            //{
-
-            //}
         }
     }
 }

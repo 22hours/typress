@@ -13,8 +13,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TypressPacket;
+using MyService.Handler.Handler_Thread;
 
-namespace TypressServer
+namespace MyService.Handler.Handler_Socket
 {
     public partial class SocketHandler
     {
@@ -33,10 +34,10 @@ namespace TypressServer
 
                     serverCB.Bind(serverEndPoint);
                     serverCB.Listen(10);
-
-                    Console.WriteLine("****서버(CB)대기중*****");
+                    
+                    TypressService.eventLog1.WriteEntry("서버(CB)대기중");
                     clientCB = serverCB.Accept();
-                    Console.WriteLine("****서버(CB)~클라이언트(CB) 연결완료.**");
+                    TypressService.eventLog1.WriteEntry("서버(CB) ~ 클라이언트(CB) 연결완료");
 
                     //ReceivePacketFromClientCBClient(); // 수신대기
                     SendPacketFromServerToCB(); // 송신
@@ -59,11 +60,11 @@ namespace TypressServer
                 }
                 catch (SocketException socketEx)
                 {
-                    ViewHandler.SocketExMessage(socketEx);
+                    //ViewHandler.SocketExMessage(socketEx);
                 }
                 catch (Exception commonEx)
                 {
-                    ViewHandler.ExMessage(commonEx);
+                    //ViewHandler.ExMessage(commonEx);
                 }
                 finally
                 {
