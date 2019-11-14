@@ -1,15 +1,15 @@
 # Typress
 Typress(활자인쇄소를 영어로 번역함).
 
-# To-do ObjectModuling (19.09.30)
+# Typress 1.0.0 (19.11.12)
+- 서비스로 세팅가능
+- 수많은 버그들이 존재하지만 한걸음씩 한걸음씩.
 
 :computer: **Server**<br>
 
-- 로그인 되어있는 상태에서 -> 프린트요청(5003번포트 미사용했기 떄문.) -> X
-- 로그인 되어있는 상태에서 -> serverstop.
-- 팬실에서 점검해보기 <- dll포함 컴파일이 안되고 있음.
-- ViewModel에서 View제어.(this.Close()) **(Client)**
-- MainView에서 Logout구현 필요.(this.Close()) **(Client)**
+- `Project`와 `Issues`를 참조
+- 버전 명시
+
 <br>
   
 
