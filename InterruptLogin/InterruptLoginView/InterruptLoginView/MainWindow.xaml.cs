@@ -113,6 +113,7 @@ namespace InterruptLoginView
             catch (Exception ea)
             {
                 MessageBox.Show("Server Stopped! [Login]");
+                MessageBox.Show(ea.Message);
                 System.Environment.Exit(-1);
             }
             finally

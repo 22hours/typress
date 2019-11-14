@@ -53,7 +53,8 @@ namespace ControlBlock
             }
             catch(Exception ex)
             {
-                Console.WriteLine("error : {0} [CB]", ex.Message);
+                //Console.WriteLine("error : {0} [CB]", ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
