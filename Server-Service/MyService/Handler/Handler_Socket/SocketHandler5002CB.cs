@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TypressPacket;
 using MyService.Handler.Handler_Thread;
+using System.Diagnostics;
 
 namespace MyService.Handler.Handler_Socket
 {
@@ -21,6 +22,7 @@ namespace MyService.Handler.Handler_Socket
     {
         public void ServerOpenCB(object port)
         {
+            System.Diagnostics.Debugger.Launch();
             while (true)
             {
                 try
@@ -43,34 +45,29 @@ namespace MyService.Handler.Handler_Socket
                     SendPacketFromServerToCB(); // 송신
 
 
+                    ProcessStartInfo info = new ProcessStartInfo(@"C:\Users\jklh0\source\github\Typress\InterruptLogin\InterruptLoginView\InterruptLoginView\bin\x64\Debug\ControlBlockView.exe");
+                    Process P;
+
                     while (ThreadHandler.MainPacket.IsLogin)
                     {
                         ReceivePacketFromClientCBClientDBUpdate();
-                        if (ThreadHandler.MainPacket.IsLogin == false)
-                        {
-                            //로그아웃 요청
-
-                            break;
-                        }
-                        else
-                        {
-                            // DB업데이트
-                        }
                     }
                 }
                 catch (SocketException socketEx)
                 {
+                    TypressService.eventLog1.WriteEntry(socketEx.Message);
                     //ViewHandler.SocketExMessage(socketEx);
                 }
                 catch (Exception commonEx)
                 {
+                    TypressService.eventLog1.WriteEntry(commonEx.Message);
                     //ViewHandler.ExMessage(commonEx);
                 }
                 finally
                 {
                     serverCB.Close();
                     clientCB.Close();
-
+                    TypressService.eventLog1.WriteEntry("서버(CB) ~ 클라이언트(CB) 연결종료");
                     getbyte = setbyte = null;
                     getbyte = new byte[1024];
                     setbyte = new byte[1024];

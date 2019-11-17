@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
@@ -80,15 +81,18 @@ namespace ControlBlock.ViewModel
 
         private void ExecutePrint(object obj)
         {
+            //System.Diagnostics.Debugger.Launch();
             if (System.Windows.Forms.MessageBox.Show("출력할 인쇄물이 남았습니까?", "TYPRESS Print", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 System.Windows.Forms.MessageBox.Show("출력을 진행합니다.");
                 //DB
                 //server로부터 몇장인지 받아온다.
                 UpdateDB();
-
                 // close exit status code : 0
+                App.socket = null;
+                Thread.Sleep(5000);
                 ViewHandler.OpenControlViewFromPrint();
+
                 System.Environment.Exit(0);
             }
             else
