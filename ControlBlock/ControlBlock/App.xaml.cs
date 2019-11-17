@@ -48,7 +48,7 @@ namespace ControlBlock
                 if (!dp.IsLogin)
                 {
                     MessageBox.Show("로그인이 필요합니다! [CB]");
-                    Environment.Exit(0);
+                    Environment.Exit(1);
                 }
             }
             catch(Exception ex)
