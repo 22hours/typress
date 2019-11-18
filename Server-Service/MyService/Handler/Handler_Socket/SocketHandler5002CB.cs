@@ -20,11 +20,13 @@ namespace MyService.Handler.Handler_Socket
 {
     public partial class SocketHandler
     {
+        public static bool Exit = false;
         public void ServerOpenCB(object port)
         {
             System.Diagnostics.Debugger.Launch();
             while (true)
             {
+
                 try
                 {
                     IPAddress serverIP = IPAddress.Parse("127.0.0.1");
@@ -44,11 +46,7 @@ namespace MyService.Handler.Handler_Socket
                     //ReceivePacketFromClientCBClient(); // 수신대기
                     SendPacketFromServerToCB(); // 송신
 
-
-                    ProcessStartInfo info = new ProcessStartInfo(@"C:\Users\jklh0\source\github\Typress\InterruptLogin\InterruptLoginView\InterruptLoginView\bin\x64\Debug\ControlBlockView.exe");
-                    Process P;
-
-                    while (ThreadHandler.MainPacket.IsLogin)
+                    while (ThreadHandler.MainPacket.IsLogin && !Exit)
                     {
                         ReceivePacketFromClientCBClientDBUpdate();
                     }
@@ -67,6 +65,9 @@ namespace MyService.Handler.Handler_Socket
                 {
                     serverCB.Close();
                     clientCB.Close();
+                    if(Exit)
+                        TypressService.eventLog1.WriteEntry("출력 지속으로 인한 CB 중단");
+
                     TypressService.eventLog1.WriteEntry("서버(CB) ~ 클라이언트(CB) 연결종료");
                     getbyte = setbyte = null;
                     getbyte = new byte[1024];
@@ -79,7 +80,7 @@ namespace MyService.Handler.Handler_Socket
 
         public static void SendPacketFromServerToCB()
         {
-            Monitor.Enter(ThreadHandler.lockObject);
+            //Monitor.Enter(ThreadHandler.lockObject);
             try
             {
                 DataPacket packet = new DataPacket();
@@ -93,13 +94,13 @@ namespace MyService.Handler.Handler_Socket
             }
             finally
             {
-                Monitor.Exit(ThreadHandler.lockObject);
+                //Monitor.Exit(ThreadHandler.lockObject);
             }
         }
 
         public static void ReceivePacketFromClientCBClient()
         {
-            Monitor.Enter(ThreadHandler.lockObject);
+            //Monitor.Enter(ThreadHandler.lockObject);
             try
             {
                 DataPacket packet = new DataPacket();
@@ -121,13 +122,13 @@ namespace MyService.Handler.Handler_Socket
             }
             finally
             {
-                Monitor.Exit(ThreadHandler.lockObject);
+                //Monitor.Exit(ThreadHandler.lockObject);
             }
         }
 
         public static void ReceivePacketFromClientCBClientLogout()
         {
-            Monitor.Enter(ThreadHandler.lockObject);
+            //Monitor.Enter(ThreadHandler.lockObject);
             try
             {
                 DataPacket packet = new DataPacket();
@@ -140,13 +141,13 @@ namespace MyService.Handler.Handler_Socket
             }
             finally
             {
-                Monitor.Exit(ThreadHandler.lockObject);
+                //Monitor.Exit(ThreadHandler.lockObject);
             }
         }
 
         public static void ReceivePacketFromClientCBClientDBUpdate()
         {
-            Monitor.Enter(ThreadHandler.lockObject);
+            //Monitor.Enter(ThreadHandler.lockObject);
             try
             {
                 DataPacket packet = new DataPacket();
@@ -160,6 +161,12 @@ namespace MyService.Handler.Handler_Socket
                 //DB에 ID와 PW로 접근.
                 //if () Access Fail -> Loop.
                 //if () Access Success
+                if (packet.Opt == 1)
+                { //  : 프린트 계속한다는 얘기.
+                    Exit = true;
+                    packet.Opt = 0;
+                    return;
+                }
 
                 UpdateUsingReader(conn, packet);
                 ThreadHandler.MainPacket = packet;
@@ -170,7 +177,7 @@ namespace MyService.Handler.Handler_Socket
             }
             finally
             {
-                Monitor.Exit(ThreadHandler.lockObject);
+                //Monitor.Exit(ThreadHandler.lockObject);
             }
         }
     }

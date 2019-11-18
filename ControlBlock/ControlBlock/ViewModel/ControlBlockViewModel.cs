@@ -16,18 +16,19 @@ namespace ControlBlock.ViewModel
     class ControlBlockViewModel : INotifyPropertyChanged
     {
         DataPacket dp = new DataPacket();
+
         private string id;
         private int totalPrintCount;
         private int nowMoney;
         private int useMoney;
         private int remainMoney;
+        
 
         public string Id { get => id; set { this.id = value; OnPropertyChanged("Id "); } }
         public int TotalPrintCount { get => totalPrintCount; set { this.totalPrintCount = value; OnPropertyChanged("TotalPrintCount "); } }
         public int NowMoney { get => nowMoney; set { this.nowMoney = value; OnPropertyChanged("NowMoney "); } }
         public int UseMoney { get => useMoney; set { this.useMoney = value; OnPropertyChanged("UseMoney "); } }
         public int RemainMoney { get => remainMoney; set { this.remainMoney = value; OnPropertyChanged("RemainMoney "); } }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
@@ -81,7 +82,6 @@ namespace ControlBlock.ViewModel
 
         private void ExecutePrint(object obj)
         {
-            //System.Diagnostics.Debugger.Launch();
             if (System.Windows.Forms.MessageBox.Show("출력할 인쇄물이 남았습니까?", "TYPRESS Print", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 System.Windows.Forms.MessageBox.Show("출력을 진행합니다.");
@@ -89,8 +89,12 @@ namespace ControlBlock.ViewModel
                 //server로부터 몇장인지 받아온다.
                 UpdateDB();
                 // close exit status code : 0
-                App.socket = null;
-                Thread.Sleep(5000);
+                //App.socket = null;
+                Thread.Sleep(4000);
+
+                dp.Opt = 1; // 소켓 종료 메세지
+                App.SendPacketToServer(dp);
+                dp.Opt = 0;
                 ViewHandler.OpenControlViewFromPrint();
 
                 System.Environment.Exit(0);
