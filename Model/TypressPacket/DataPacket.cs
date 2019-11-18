@@ -44,13 +44,16 @@ namespace TypressPacket
         public Int32 OneWeekUsage { get; set; }
         public Int32 TotalUsage { get; set; }
         public Ranking[] rankers = new Ranking[3];
+        public Int32 Opt { get; set; }
 
         public Ranking[] GetRankers()
         {
             return rankers;
         }
 
-        public DataPacket() {}
+        public DataPacket() {
+            Opt = 0;
+        }
         public DataPacket(string n, string g)
         {
             IsLogin = false;
@@ -62,6 +65,7 @@ namespace TypressPacket
             Money = 10000;
             Memo = "잘 부탁드립니다.";
             JoinDate = new DateTime();
+            Opt = 0;
         }
     }
 }

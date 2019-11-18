@@ -120,7 +120,7 @@ namespace MyService.Handler.Handler_Socket
         public static void UpdateUsingReader(MySqlConnection cn, DataPacket pk)
         {
             cn.Open();
-            MySqlCommand cmd = new MySqlCommand("UPDATE members set MONEY = '" + pk.Money + "' where ID = '" + pk.Id + "';", cn);
+            MySqlCommand cmd = new MySqlCommand("UPDATE typress.members set MONEY = '" + pk.Money + "', TOTALUSAGE = '"+pk.TotalUsage+"' where ID = '" + pk.Id + "';", cn);
             cmd.ExecuteNonQuery();
         }
     }

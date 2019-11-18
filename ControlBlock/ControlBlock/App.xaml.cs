@@ -45,6 +45,7 @@ namespace ControlBlock
             try
             {
                 TypressServerConnect();
+                System.Diagnostics.Debugger.Launch();
                 if (!dp.IsLogin)
                 {
                     MessageBox.Show("로그인이 필요합니다! [CB]");
