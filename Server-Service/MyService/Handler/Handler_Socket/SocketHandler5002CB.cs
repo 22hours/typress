@@ -23,7 +23,7 @@ namespace MyService.Handler.Handler_Socket
         public static bool Exit = false;
         public void ServerOpenCB(object port)
         {
-            System.Diagnostics.Debugger.Launch();
+            //System.Diagnostics.Debugger.Launch();
             while (true)
             {
 
@@ -46,6 +46,7 @@ namespace MyService.Handler.Handler_Socket
                     //ReceivePacketFromClientCBClient(); // 수신대기
                     SendPacketFromServerToCB(); // 송신
 
+                    //System.Diagnostics.Debugger.Launch();
                     while (ThreadHandler.MainPacket.IsLogin && !Exit)
                     {
                         ReceivePacketFromClientCBClientDBUpdate();
@@ -65,9 +66,11 @@ namespace MyService.Handler.Handler_Socket
                 {
                     serverCB.Close();
                     clientCB.Close();
-                    if(Exit)
+                    if (Exit)
+                    {
                         TypressService.eventLog1.WriteEntry("출력 지속으로 인한 CB 중단");
-
+                        Exit = false;
+                    }
                     TypressService.eventLog1.WriteEntry("서버(CB) ~ 클라이언트(CB) 연결종료");
                     getbyte = setbyte = null;
                     getbyte = new byte[1024];
