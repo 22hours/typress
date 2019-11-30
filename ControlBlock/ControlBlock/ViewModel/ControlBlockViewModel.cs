@@ -16,6 +16,7 @@ namespace ControlBlock.ViewModel
     class ControlBlockViewModel : INotifyPropertyChanged
     {
         DataPacket dp = new DataPacket();
+        PrintedPacket pp = new PrintedPacket();
 
         private string id;
         private int totalPrintCount;
@@ -85,6 +86,8 @@ namespace ControlBlock.ViewModel
             if (System.Windows.Forms.MessageBox.Show("출력할 인쇄물이 남았습니까?", "TYPRESS Print", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 System.Windows.Forms.MessageBox.Show("출력을 진행합니다.");
+
+                App.PrintSocketConnect();
                 //DB
                 //server로부터 몇장인지 받아온다.
                 UpdateDB();
@@ -95,7 +98,10 @@ namespace ControlBlock.ViewModel
                 dp.Opt = 1; // 소켓 종료 메세지
                 App.SendPacketToServer(dp);
                 dp.Opt = 0;
-                //ViewHandler.OpenControlViewFromPrint();
+
+                pp.IsPrinted = true;
+                App.SendPrintPacketToServer(pp);
+                pp.IsPrinted = false;
 
                 System.Environment.Exit(0);
             }

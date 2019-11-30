@@ -21,6 +21,7 @@ namespace MyService.Handler.Handler_Socket
     {
         public void ServerOpenPrint(object port)
         {
+            //System.Diagnostics.Debugger.Launch();
             while (true)
             {
                 try
@@ -38,9 +39,9 @@ namespace MyService.Handler.Handler_Socket
                     TypressService.eventLog1.WriteEntry("서버(Print)대기중");
                     clientPrint = serverPrint.Accept();
                     TypressService.eventLog1.WriteEntry("서버(Print) ~ 클라이언트(Print) 연결완료");
-                    //SendPacketFromServerToPrint();
 
-                    //ReceivePacketFromClient();
+                    ReceivePacketFromClientPrintClient();
+                    PrintBit.Set();
 
                 }
                 catch (SocketException socketEx)
@@ -56,9 +57,9 @@ namespace MyService.Handler.Handler_Socket
                     serverPrint.Close();
                     clientPrint.Close();
 
-                    getbyte = setbyte = null;
-                    getbyte = new byte[1024];
-                    setbyte = new byte[1024];
+                    pGetbyte = pSetbyte = null;
+                    pGetbyte = new byte[1024];
+                    pSetbyte = new byte[1024];
                     serverPrint = null;
                     clientPrint = null;
                 }
@@ -87,29 +88,29 @@ namespace MyService.Handler.Handler_Socket
 
         public static void ReceivePacketFromClientPrintClient()
         {
-            Monitor.Enter(ThreadHandler.lockObject);
+            //Monitor.Enter(ThreadHandler.lockObject);
             try
             {
-                DataPacket packet = new DataPacket();
+                PrintedPacket pp = new PrintedPacket();
 
-                string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
-                MySqlConnection conn = new MySqlConnection(strConn);
+                //string strConn = "Server=localhost;Database=typress;UId=typressAdmin;Pwd=typress22hours;Charset=utf8";
+                //MySqlConnection conn = new MySqlConnection(strConn);
 
-                clientPrint.Receive(getbyte, 0, getbyte.Length, SocketFlags.None);
-                packet = (DataPacket)ByteArrayToObject(getbyte);
+                clientPrint.Receive(pGetbyte, 0, pGetbyte.Length, SocketFlags.None);
+                pp = (PrintedPacket)ByteArrayToObject(pGetbyte);
 
                 //DB에 ID와 PW로 접근.
                 //if () Access Fail -> Loop.
                 //if () Access Success
 
-                packet = SelectUsingReader(conn, packet);
-                ThreadHandler.MainPacket = packet;
-                if (ThreadHandler.MainPacket.IsLogin == false)
-                    TypressService.eventLog1.WriteEntry("현재 로그인이 되어있지 않습니다.");
+                //packet = SelectUsingReader(conn, packet);
+                ThreadHandler.PrintPacket = pp;
+                //if (ThreadHandler.MainPacket.IsLogin == false)
+                //    TypressService.eventLog1.WriteEntry("현재 로그인이 되어있지 않습니다.");
             }
             finally
             {
-                Monitor.Exit(ThreadHandler.lockObject);
+                //Monitor.Exit(ThreadHandler.lockObject);
             }
         }
     }

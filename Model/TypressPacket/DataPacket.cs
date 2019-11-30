@@ -68,4 +68,14 @@ namespace TypressPacket
             Opt = 0;
         }
     }
+
+    [Serializable]
+    public class PrintedPacket
+    {
+        public bool IsPrinted { get; set; }
+        public PrintedPacket()
+        {
+            IsPrinted = false;
+        }
+    }
 }

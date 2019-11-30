@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using MyService.Handler.Handler_Socket;
+using MyService.Handler.Handler_Thread;
 using Nektra.Deviare2;
 
 namespace MyService
@@ -107,7 +109,11 @@ namespace MyService
             GetExitCodeProcess(procInfo.hProcess, ref exitcode);
             //Process P = Process.Start("C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe");
             //P.WaitForExit(); // IsLogin 변수 바꼈는지?
+            SocketHandler.PrintBit.WaitOne();
+
             IsWorkedPrintStart = true;
+
+            SocketHandler.PrintBit.Reset();
             return;
             
         }

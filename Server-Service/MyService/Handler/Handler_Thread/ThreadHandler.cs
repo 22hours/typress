@@ -19,6 +19,7 @@ namespace MyService.Handler.Handler_Thread
 
         public static object lockObject = new object();
         public static DataPacket MainPacket = new DataPacket();
+        public static PrintedPacket PrintPacket = new PrintedPacket();
 
         public DvPrinter dv = new DvPrinter();
         public SocketHandler LoginSocketHandler = new SocketHandler();

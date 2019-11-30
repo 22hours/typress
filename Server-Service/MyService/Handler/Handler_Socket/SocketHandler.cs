@@ -28,9 +28,13 @@ namespace MyService.Handler.Handler_Socket
 
         public static byte[] getbyte = new byte[1024];
         public static byte[] setbyte = new byte[1024];
+        public static byte[] pGetbyte = new byte[1024];
+        public static byte[] pSetbyte = new byte[1024];
         //public const int sPort = 5000;
         public static Thread PrintHooker = null;
         public static Thread ServerOpener = null;
+
+        public static ManualResetEvent PrintBit = new ManualResetEvent(false);
 
         public static SocketHandler SocketManager = null;
         //public static ThreadHandler ThreadManager = null;

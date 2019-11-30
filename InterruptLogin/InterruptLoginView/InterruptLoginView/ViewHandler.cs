@@ -13,7 +13,7 @@ namespace InterruptLoginView
         public static void OpenControlViewFromPrint()
         {
             MessageBox.Show("프린터 -> LoginForm -> CB");
-            ProcessStartInfo info = new ProcessStartInfo(@"C:\Users\jklh0\source\github\Typress\InterruptLogin\InterruptLoginView\InterruptLoginView\bin\x64\Debug\ControlBlockView.exe");
+            ProcessStartInfo info = new ProcessStartInfo(@"C:\Users\jklh0\source\github\Typress\InterruptLogin\InterruptLoginView\InterruptLoginView\bin\x64\Debug\CBView.exe");
             Process P = Process.Start(info);
         }
 

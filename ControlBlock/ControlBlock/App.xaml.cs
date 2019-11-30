@@ -21,12 +21,16 @@ namespace ControlBlock
     public partial class App : Application
     {
         public static DataPacket dp = new DataPacket();
+        public static PrintedPacket pp = new PrintedPacket();
 
-        public static Socket socket;
+        public static Socket socket, PrintSocket;
         public static DataPacket packet = new DataPacket();
         public static byte[] getbyte = new byte[1024];
+        public static byte[] pGetbyte = new byte[1024];
         public static byte[] setbyte = new byte[1024];
-        public const int sPort = 5002;
+        public static byte[] pSetbyte = new byte[1024];
+
+        public const int sPort = 5002, printPort = 5003;
         public static string[] strArg = Environment.GetCommandLineArgs();
 
         sealed class AllowAllAssemblyVersionsDeserializationBinder : System.Runtime.Serialization.SerializationBinder
@@ -68,6 +72,14 @@ namespace ControlBlock
             dp = (DataPacket)ByteArrayToObject(getbyte);
         }
 
+        public static void getPrintPacketFromServer()
+        {
+            PrintSocket.Receive(pGetbyte, 0,
+                pGetbyte.Length, SocketFlags.None);
+
+            pp = (PrintedPacket)ByteArrayToObject(pGetbyte);
+        }
+
         public DataPacket getNowDataPacket()
         {
             // 각 window instance에서 해당 함수를 호출하여 DataPacket을 불러와 사용함
@@ -98,6 +110,30 @@ namespace ControlBlock
             }
         }
 
+        public static void PrintSocketConnect()
+        {
+            try
+            {
+                IPAddress serverIP = IPAddress.Parse("127.0.0.1");
+                IPEndPoint serverPrintEndPoint = new IPEndPoint(serverIP, printPort);
+
+                PrintSocket = new Socket(
+                    AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                PrintSocket.Connect(serverPrintEndPoint);
+
+                //Thread.Sleep(2000);
+
+                //SendPacketToServer(dp);
+                //getPrintPacketFromServer();
+
+            }
+            catch (SocketException e)
+            {
+                MessageBox.Show("Server Stopped! [CB]");
+
+            }
+        }
+
         public static void ReceivePacketFromServer()
         {
             socket.Receive(getbyte, 0,
@@ -110,6 +146,12 @@ namespace ControlBlock
         {
             setbyte = ObjectToByteArray(tp);
             socket.Send(setbyte, 0, setbyte.Length, SocketFlags.None);
+        }
+
+        public static void SendPrintPacketToServer(PrintedPacket pp)
+        {
+            pSetbyte = ObjectToByteArray(pp);
+            PrintSocket.Send(pSetbyte, 0, pSetbyte.Length, SocketFlags.None);
         }
 
         public static byte[] ObjectToByteArray(Object obj)
