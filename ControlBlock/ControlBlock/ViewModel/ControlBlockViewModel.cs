@@ -95,7 +95,7 @@ namespace ControlBlock.ViewModel
                 dp.Opt = 1; // 소켓 종료 메세지
                 App.SendPacketToServer(dp);
                 dp.Opt = 0;
-                ViewHandler.OpenControlViewFromPrint();
+                //ViewHandler.OpenControlViewFromPrint();
 
                 System.Environment.Exit(0);
             }
