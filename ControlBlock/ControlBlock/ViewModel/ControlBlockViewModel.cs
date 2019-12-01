@@ -54,7 +54,7 @@ namespace ControlBlock.ViewModel
             TotalPrintCount = dp.TotalUsage;
             NowMoney = dp.Money;
             //UseMoney = "-";
-            UseMoney += 1000;
+            UseMoney += 1000; // 1000 * dp.ThisPrintJobCnt;
 
             int nowmoney = NowMoney;
             int usemoney = UseMoney;
@@ -90,6 +90,10 @@ namespace ControlBlock.ViewModel
                 App.PrintSocketConnect();
                 //DB
                 //server로부터 몇장인지 받아온다.
+                
+                //
+                //UpdateDB(dp.ThisPrintJobCnt);
+
                 UpdateDB();
                 // close exit status code : 0
                 //App.socket = null;
@@ -121,10 +125,10 @@ namespace ControlBlock.ViewModel
         {
             return true;
         }
-        private void UpdateDB()
+        private void UpdateDB(int cnt = 1)
         {
-            dp.Money -= 1000;
-            dp.TotalUsage += 1;
+            dp.Money -= (1000 * cnt);
+            dp.TotalUsage += (cnt);
             App.SendPacketToServer(dp);
         }
     }

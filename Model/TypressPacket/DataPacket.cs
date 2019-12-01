@@ -45,6 +45,7 @@ namespace TypressPacket
         public Int32 TotalUsage { get; set; }
         public Ranking[] rankers = new Ranking[3];
         public Int32 Opt { get; set; }
+        public Int32 ThisPrintJobCnt { get; set; }
 
         public Ranking[] GetRankers()
         {

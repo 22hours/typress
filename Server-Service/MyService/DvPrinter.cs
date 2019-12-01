@@ -107,9 +107,16 @@ namespace MyService
             WaitForSingleObject(procInfo.hProcess, 100000);
 
             GetExitCodeProcess(procInfo.hProcess, ref exitcode);
-            //Process P = Process.Start("C:\\Users\\jklh0\\source\\github\\Typress\\InterruptLogin\\InterruptLoginView\\InterruptLoginView\\bin\\x64\\Debug\\InterruptLoginView.exe");
-            //P.WaitForExit(); // IsLogin 변수 바꼈는지?
+
+            // 그냥 로그인창이 종료되버렸을때?
+
             SocketHandler.PrintBit.WaitOne();
+
+            //if(ThreadHandler.PrintPacket.IsPrinted == false)
+            //{
+                //ThisPrintJob.Cancle();
+                //return;
+            //}
 
             IsWorkedPrintStart = true;
 
