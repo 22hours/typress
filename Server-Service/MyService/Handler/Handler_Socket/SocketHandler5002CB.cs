@@ -23,7 +23,7 @@ namespace MyService.Handler.Handler_Socket
         public static bool Exit = false;
         public void ServerOpenCB(object port)
         {
-            //System.Diagnostics.Debugger.Launch();
+            System.Diagnostics.Debugger.Launch();
             while (true)
             {
 
@@ -47,10 +47,10 @@ namespace MyService.Handler.Handler_Socket
                     SendPacketFromServerToCB(); // 송신
 
                     //System.Diagnostics.Debugger.Launch();
-                    while (ThreadHandler.MainPacket.IsLogin && !Exit)
-                    {
+                    //while (ThreadHandler.MainPacket.IsLogin && !Exit)
+                    //{
                         ReceivePacketFromClientCBClientDBUpdate();
-                    }
+                    //}
                 }
                 catch (SocketException socketEx)
                 {
@@ -164,12 +164,20 @@ namespace MyService.Handler.Handler_Socket
                 //DB에 ID와 PW로 접근.
                 //if () Access Fail -> Loop.
                 //if () Access Success
-                if (packet.Opt == 1)
-                { //  : 프린트 계속한다는 얘기.
-                    Exit = true;
-                    packet.Opt = 0;
-                    return;
+                //if (packet.Opt == 1)
+                //{ //  : 프린트 계속한다는 얘기.
+                //    Exit = true;
+                //    packet.Opt = 0;
+                //    return;
+                //}
+
+                // 마일리지, 인쇄수 Update
+                while (DvPrinter.PageCntData == 0)
+                {
+                    Thread.Sleep(1000);
                 }
+
+                packet = UpdateMileage(packet, DvPrinter.PageCntData);
 
                 UpdateUsingReader(conn, packet);
                 ThreadHandler.MainPacket = packet;
@@ -181,7 +189,15 @@ namespace MyService.Handler.Handler_Socket
             finally
             {
                 //Monitor.Exit(ThreadHandler.lockObject);
+                DvPrinter.PageCntData = 0;
             }
+        }
+
+        public static DataPacket UpdateMileage(DataPacket p, int cnt)
+        {
+            p.Money -= (1000 * cnt);
+            p.TotalUsage += (cnt);
+            return p;
         }
     }
 }

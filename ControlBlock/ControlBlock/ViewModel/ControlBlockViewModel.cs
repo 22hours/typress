@@ -88,6 +88,7 @@ namespace ControlBlock.ViewModel
         {
             if (System.Windows.Forms.MessageBox.Show("출력할 인쇄물이 남았습니까?", "TYPRESS Print", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                System.Diagnostics.Debugger.Launch();
                 System.Windows.Forms.MessageBox.Show("출력을 진행합니다.");
 
                 App.PrintSocketConnect();
@@ -97,18 +98,19 @@ namespace ControlBlock.ViewModel
                 //
                 //UpdateDB(dp.ThisPrintJobCnt);
 
-                UpdateDB();
+                //UpdateDB();
                 // close exit status code : 0
                 //App.socket = null;
                 Thread.Sleep(4000);
 
-                dp.Opt = 1; // 소켓 종료 메세지
+                dp.Opt = 1; // 소켓 종료 메세지, 로그인 유지. 
                 App.SendPacketToServer(dp);
                 dp.Opt = 0;
 
-                pp.IsPrinted = true;
+                pp.IsPrinted = true; // unHook()
                 App.SendPrintPacketToServer(pp);
                 pp.IsPrinted = false;
+
 
                 System.Environment.Exit(0);
             }
