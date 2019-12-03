@@ -21,7 +21,6 @@ namespace MyService.Handler.Handler_Socket
     {
         public void ServerOpenPrint(object port)
         {
-            //System.Diagnostics.Debugger.Launch();
             while (true)
             {
                 try

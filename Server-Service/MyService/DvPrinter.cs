@@ -23,6 +23,8 @@ namespace MyService
         NktHook hookPrinterStart, hookPage, hookPrinterEnd;
         bool IsWorkedPrintStart = false, IsWorkedPrintEnd = false;
 
+        public static int PageCntData = 0;
+
         [DllImport("kernel32.dll")]
         static extern bool GetExitCodeProcess(IntPtr hProcess, ref int lpExitCode);
 
@@ -94,7 +96,7 @@ namespace MyService
             int exitcode = 0;
 
             TypressService.eventLog1.WriteEntry("Printer Request Event!");
-            PageCnt = 0;
+            PageCnt = PageCntData = 0;
             if (TypressService.packet.IsLogin == false)
             {
                 TypressService.eventLog1.WriteEntry("LoginForm 띄움");
@@ -143,6 +145,8 @@ namespace MyService
             TypressService.eventLog1.WriteEntry(PageCnt.ToString());
             TypressService.eventLog1.WriteEntry("인쇄작업 종료!");
             IsWorkedPrintEnd = true;
+            PageCntData = PageCnt;
+
         }
     }
 }

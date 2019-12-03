@@ -24,7 +24,6 @@ namespace TypressPacket
              Ranking y = (Ranking)_y;
             return x.Usage.CompareTo(y.Usage);
         }
-
     }
 
     [Serializable]
