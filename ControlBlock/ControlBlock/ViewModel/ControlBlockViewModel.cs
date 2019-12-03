@@ -23,13 +23,15 @@ namespace ControlBlock.ViewModel
         private int nowMoney;
         private int useMoney;
         private int remainMoney;
-        
+        private int remainPrintCount;
 
         public string Id { get => id; set { this.id = value; OnPropertyChanged("Id "); } }
         public int TotalPrintCount { get => totalPrintCount; set { this.totalPrintCount = value; OnPropertyChanged("TotalPrintCount "); } }
         public int NowMoney { get => nowMoney; set { this.nowMoney = value; OnPropertyChanged("NowMoney "); } }
         public int UseMoney { get => useMoney; set { this.useMoney = value; OnPropertyChanged("UseMoney "); } }
         public int RemainMoney { get => remainMoney; set { this.remainMoney = value; OnPropertyChanged("RemainMoney "); } }
+        public int RemainPrintCount { get => remainPrintCount; set { this.remainPrintCount = value; OnPropertyChanged("RemainPrintCount "); } }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
@@ -55,6 +57,7 @@ namespace ControlBlock.ViewModel
             NowMoney = dp.Money;
             //UseMoney = "-";
             UseMoney += 1000; // 1000 * dp.ThisPrintJobCnt;
+            RemainPrintCount = NowMoney / 1000;
 
             int nowmoney = NowMoney;
             int usemoney = UseMoney;
