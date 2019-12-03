@@ -172,10 +172,19 @@ namespace MyService.Handler.Handler_Socket
                 //}
 
                 // 마일리지, 인쇄수 Update
-                while (DvPrinter.PageCntData == 0)
+                if(packet.Opt == 0)
                 {
+                    ThreadHandler.MainPacket = new DataPacket();
+                    return;
+                }
+
+                int c = 0;
+                while (packet.Opt == 1 && DvPrinter.PageCntData == 0 && c < 60)
+                {
+                    c++;
                     Thread.Sleep(1000);
                 }
+                if (c >= 60) return;
 
                 packet = UpdateMileage(packet, DvPrinter.PageCntData);
 
