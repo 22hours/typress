@@ -78,6 +78,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -95,6 +96,8 @@
     <Compile Include="Handler\Handler_Socket\SocketHandler5002CB.cs" />
     <Compile Include="Handler\Handler_Socket\SocketHandler5003Print.cs" />
     <Compile Include="Handler\Handler_View\ViewHandler.cs" />
+    <Compile Include="PrintJobChangeEventArgs.cs" />
+    <Compile Include="PrintSpoolAPI.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>

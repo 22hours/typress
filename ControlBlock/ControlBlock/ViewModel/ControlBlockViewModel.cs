@@ -77,7 +77,7 @@ namespace ControlBlock.ViewModel
             // Close 버튼
             App.SendPacketToServer(new DataPacket());
 
-            if (System.Windows.Forms.MessageBox.Show("로그아웃 하시겠습니까?", "TYPRESS Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (System.Windows.Forms.MessageBox.Show("프린트를 중단하고, 로그아웃 하시겠습니까?", "TYPRESS Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 System.Windows.Forms.MessageBox.Show("로그아웃을 하였습니다 :)");
                 System.Environment.Exit(1);

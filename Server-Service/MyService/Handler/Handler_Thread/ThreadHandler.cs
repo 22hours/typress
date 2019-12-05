@@ -21,6 +21,7 @@ namespace MyService.Handler.Handler_Thread
         public static DataPacket MainPacket = new DataPacket();
         public static PrintedPacket PrintPacket = new PrintedPacket();
 
+        public static int PrintedOpt; // 0 : 수신중 / 1 : Pass / 2 : Cancle
         public DvPrinter dv = new DvPrinter();
         public SocketHandler LoginSocketHandler = new SocketHandler();
         public SocketHandler MainSocketHandler = new SocketHandler();

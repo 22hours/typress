@@ -17,6 +17,12 @@ namespace MyService
 
     class DvPrinter
     {
+        public enum PRINTOPT
+        {
+            PRINT_OPT_LISTEN = 0,
+            PRINT_OPT_CANCLE = 1,
+            PRINT_OPT_PRINT = 2
+        }
         #region Monitor private variables
         private IntPtr _printerHandle = IntPtr.Zero;
         private IntPtr _changeHandle = IntPtr.Zero;
@@ -231,6 +237,7 @@ CallingConvention = CallingConvention.StdCall)]
         #region PrintStart
         public void MonitorStart()
         {
+            System.Diagnostics.Debugger.Launch();
             // out _printerHandle을 통해, 이름이 _spoolerName인 프린터의 제어권을 얻어온다. 
             OpenPrinter(_spoolerName, out _printerHandle, 0);
 
@@ -291,7 +298,7 @@ CallingConvention = CallingConvention.StdCall)]
 
             Console.WriteLine("pdwChange : {0} / pNotifiyInfo : {1}", pdwChange, pNotifyInfo);
             //If the Printer Change Notification Call did not give data, exit code
-            if ((bResult == false) || (((int)pNotifyInfo) == 0)) return;
+            if ((bResult == false) || (pNotifyInfo.ToInt64() == 0)) return;
 
             //If the Change Notification was not relgated to job, exit code
             //Job이 ADDJOB,  이딴게 맞는지 한번 보는 것!! 
@@ -302,21 +309,11 @@ CallingConvention = CallingConvention.StdCall)]
             if (!bJobRelatedChange) return;
             #endregion
 
-            #region Interrupt Catch!!!!!!
-            if (bJobRelatedChange == ((pdwChange & PRINTER_CHANGES.PRINTER_CHANGE_ADD_JOB) == PRINTER_CHANGES.PRINTER_CHANGE_ADD_JOB))
-            {
-                Console.WriteLine("☆☆☆☆☆☆☆☆ Login Auth ☆☆☆☆☆☆☆☆");
-                // if(로그인 여부 -> Login 성공 -> CB) 프린터 계속 진행.
-                // if(종료) 함수종료. 
-
-            }
-            #endregion
-
 
             #region populate Notification Information
             //Now, let us initialize and populate the Notify Info data
             PRINTER_NOTIFY_INFO info = (PRINTER_NOTIFY_INFO)Marshal.PtrToStructure(pNotifyInfo, typeof(PRINTER_NOTIFY_INFO));
-            int pData = (int)pNotifyInfo + Marshal.SizeOf(typeof(PRINTER_NOTIFY_INFO));
+            Int64 pData = pNotifyInfo.ToInt64() + Marshal.SizeOf(typeof(PRINTER_NOTIFY_INFO));
             PRINTER_NOTIFY_INFO_DATA[] data = new PRINTER_NOTIFY_INFO_DATA[info.Count];
             for (uint i = 0; i < info.Count; i++)
             {
@@ -347,10 +344,26 @@ CallingConvention = CallingConvention.StdCall)]
 
                         if (bJobRelatedChange == ((pdwChange & PRINTER_CHANGES.PRINTER_CHANGE_ADD_JOB) == PRINTER_CHANGES.PRINTER_CHANGE_ADD_JOB))
                         {
-                            Console.WriteLine("★★★★★★★★ Print Out [First] ★★★★★★★★");
+                            //Console.WriteLine("★★★★★★★★ Print Out [First] ★★★★★★★★");
                             // Print 시작 ~ 종료까지 Thread 대기 걸고.
                             // Print Real Page Count 넣어야 한다.
-                            pji.Cancel();
+
+                            // while(ThreadHandler.PrintedOpt == 0 && cnt <= 60){
+                            //      Thread.Sleep(1000);
+                            //      cnt++;
+                            //      
+                            // }
+                            // if(cnt >= 60) pji.Cancle();
+                            // if(ThreadHandler.PrintedOpt == 1) pji.Cancle(); 
+                            // 
+                            int ThreadTimer = 0;
+                            while (ThreadHandler.PrintedOpt == (int)PRINTOPT.PRINT_OPT_LISTEN && ThreadTimer <= 60) 
+                            {
+                                Thread.Sleep(1000);
+                                ThreadTimer++;
+                            }
+                            if(ThreadHandler.PrintedOpt == (int)PRINTOPT.PRINT_OPT_CANCLE || ThreadTimer >= 60) pji.Cancel();
+                            ThreadHandler.PrintedOpt = (int)PRINTOPT.PRINT_OPT_LISTEN;
                         }
                     }
                     catch

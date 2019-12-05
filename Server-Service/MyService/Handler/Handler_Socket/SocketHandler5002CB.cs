@@ -49,7 +49,7 @@ namespace MyService.Handler.Handler_Socket
                     //System.Diagnostics.Debugger.Launch();
                     //while (ThreadHandler.MainPacket.IsLogin && !Exit)
                     //{
-                        ReceivePacketFromClientCBClientDBUpdate();
+                    ReceivePacketFromClientCBClientDBUpdate();
                     //}
                 }
                 catch (SocketException socketEx)
@@ -172,19 +172,21 @@ namespace MyService.Handler.Handler_Socket
                 //}
 
                 // 마일리지, 인쇄수 Update
-                if(packet.Opt == 0)
+                if(packet.Opt == 0) // Close
                 {
                     ThreadHandler.MainPacket = new DataPacket();
+                    ThreadHandler.PrintedOpt = 1; // 1 : Cancle
                     return;
                 }
 
                 int c = 0;
-                while (packet.Opt == 1 && DvPrinter.PageCntData == 0 && c < 60)
+                while (packet.Opt == 1 && DvPrinter.PageCntData == 0 && c < 60) // Print
                 {
                     c++;
                     Thread.Sleep(1000);
                 }
                 if (c >= 60) return;
+                if (packet.Money < 0) return;
 
                 packet = UpdateMileage(packet, DvPrinter.PageCntData);
 
