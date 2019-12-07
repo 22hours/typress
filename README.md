@@ -6,7 +6,7 @@
 - 동아리방 프린터멤버십제도 프로젝트인 **활자인쇄소(Typress)** 는 가톨릭대학교내 학회 및 동아리실을 이용하는 학생들을 대상으로 서비스를 런칭한 프로젝트이다.
 - 현재 90% 진행되었음.(19-11-09 20:24)
 - `typress-service` branch로 본격 진행중.
-
+- `Socket` / `Multi-Process` / `Multi-Thread` / `.NET` / `WPF` / `MVVM Pattern` / `x64 Porting` / `OS`
 
 # Typress 1.0.0 (19.11.12)
 - 서비스로 세팅가능
