@@ -160,7 +160,6 @@ CallingConvention = CallingConvention.StdCall)]
             Console.WriteLine("pdwChange : {0} / pNotifiyInfo : {1}", pdwChange, pNotifyInfo);
             //If the Printer Change Notification Call did not give data, exit code
             if ((bResult == false) || ((pNotifyInfo.ToInt64()) == 0)) return;
-
             //If the Change Notification was not relgated to job, exit code
             //Job이 ADDJOB,  이딴게 맞는지 한번 보는 것!! 
             bool bJobRelatedChange = ((pdwChange & PRINTER_CHANGES.PRINTER_CHANGE_ADD_JOB) == PRINTER_CHANGES.PRINTER_CHANGE_ADD_JOB) ||
@@ -200,6 +199,7 @@ CallingConvention = CallingConvention.StdCall)]
                      (data[i].Type == (ushort)PRINTERNOTIFICATIONTYPES.JOB_NOTIFY_TYPE)
                     )
                 {
+                    Console.WriteLine("hahah");
                     JOBSTATUS jStatus = (JOBSTATUS)Enum.Parse(typeof(JOBSTATUS), data[i].NotifyData.Data.cbBuf.ToString());
                     int intJobID = (int)data[i].Id;
                     string strJobName = "";

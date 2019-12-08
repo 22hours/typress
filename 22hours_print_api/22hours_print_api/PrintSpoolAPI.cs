@@ -606,5 +606,4 @@ dmPanningHeight == {26}",
         public uint Id;
         public PRINTER_NOTIFY_INFO_DATA_UNION NotifyData;
     }
-
 }
